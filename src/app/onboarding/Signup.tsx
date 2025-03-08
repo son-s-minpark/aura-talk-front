@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
-import clsx from "clsx";
 import { IoArrowBackOutline } from "react-icons/io5";
+import SignBtn from "@/components/sign/SignBtn";
 
 interface SignupProps {
   setPage: React.Dispatch<
@@ -27,6 +27,10 @@ const Signup = ({ setPage }: SignupProps) => {
     setCheckPw(e.target.value);
   }
 
+  function isFull() {
+    return checkPw != "" && pw != "" && mail != "";
+  }
+
   // function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
   //   e.preventDefault();
   //   // 대충 회원가입 요청 코드
@@ -49,39 +53,34 @@ const Signup = ({ setPage }: SignupProps) => {
         </div>
       </div>
       <div className="flex flex-col mt-[70px] text-white">
-        <Input label="이메일" value={mail} onChange={onChageMail} type="text" />
+        <div className="mb-[192px]">
+          <Input
+            label="이메일"
+            value={mail}
+            onChange={onChageMail}
+            type="text"
+          />
 
-        <Input
-          label="비밀번호"
-          value={pw}
-          onChange={onChagePw}
-          type="password"
-        />
+          <Input
+            label="비밀번호"
+            value={pw}
+            onChange={onChagePw}
+            type="password"
+          />
 
-        <Input
-          label="비밀번호 확인"
-          value={checkPw}
-          onChange={onChageCheckPw}
-          type="password"
-        />
+          <Input
+            label="비밀번호 확인"
+            value={checkPw}
+            onChange={onChageCheckPw}
+            type="password"
+          />
+        </div>
 
-        <button
-          className={clsx(
-            "mt-[192px] border-1 rounded-[16px] w-[327px] h-[48px]",
-            {
-              "bg-white text-[#797C7B]":
-                checkPw != "" && pw != "" && mail != "",
-              "bg-transparent text-white": !(
-                checkPw != "" &&
-                pw != "" &&
-                mail != ""
-              ),
-            }
-          )}
+        <SignBtn
+          value="완료"
+          isFull={isFull()}
           onClick={() => setPage("profile")}
-        >
-          완료
-        </button>
+        />
       </div>
     </div>
   );

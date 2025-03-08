@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
-import clsx from "clsx";
 import { IoArrowBackOutline } from "react-icons/io5";
+import SignBtn from "@/components/sign/SignBtn";
 
 interface SigninProps {
   setPage: React.Dispatch<
@@ -22,13 +22,17 @@ const Signin = ({ setPage }: SigninProps) => {
     setPw(e.target.value);
   }
 
+  function isFull() {
+    return mail != "" && pw != "";
+  }
+
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     // 대충 로그인 요청 코드
   }
 
   return (
-    <div>
+    <div className="w-full h-full">
       <div className="h-[76px] w-full">
         <button onClick={() => setPage("onBoarding")}>
           <IoArrowBackOutline width={24} height={24} className="text-white" />
@@ -44,7 +48,7 @@ const Signin = ({ setPage }: SigninProps) => {
             <p>친구들의 소식을 확인하러 가볼까요?</p>
           </div>
         </div>
-        <div className="flex flex-col mt-[70px] text-white">
+        <div className="mt-[70px] mb-[148px] text-white">
           <Input
             label="이메일"
             value={mail}
@@ -58,20 +62,8 @@ const Signin = ({ setPage }: SigninProps) => {
             onChange={onChagePw}
             type="password"
           />
-
-          <button
-            className={clsx(
-              "mt-[192px] border-1 rounded-[16px] w-[327px] h-[48px]",
-              {
-                "bg-white text-[#797C7B]": mail != "" && pw != "",
-                "bg-transparent text-white": mail == "" || pw == "",
-              }
-            )}
-            onClick={onSubmit}
-          >
-            로그인
-          </button>
         </div>
+        <SignBtn value="로그인" isFull={isFull()} onClick={() => onSubmit} />
       </div>
     </div>
   );

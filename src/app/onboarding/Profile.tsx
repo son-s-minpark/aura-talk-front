@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
-import clsx from "clsx";
 import { IoArrowBackOutline } from "react-icons/io5";
+import SignBtn from "@/components/sign/SignBtn";
 
 interface ProfilePros {
   setPage: React.Dispatch<
@@ -24,6 +24,10 @@ const Profile = ({ setPage }: ProfilePros) => {
     setId(e.target.value);
   }
 
+  function isFull() {
+    return name != "" && id != "";
+  }
+
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     // 대충 로그인 요청 코드
@@ -32,7 +36,7 @@ const Profile = ({ setPage }: ProfilePros) => {
   return (
     <div>
       <div className="h-[76px] w-full">
-        <button onClick={() => setPage("onBoarding")}>
+        <button onClick={() => setPage("signup")}>
           <IoArrowBackOutline width={24} height={24} className="text-white" />
         </button>
       </div>
@@ -47,27 +51,31 @@ const Profile = ({ setPage }: ProfilePros) => {
           </div>
         </div>
         <div>
-          <div></div>
-          <button> 편집 </button>
+          <form>
+            <input type="image" />
+            <button> 편집 </button>
+          </form>
         </div>
         <div className="flex flex-col mt-[70px] text-white">
-          <Input label="이름" value={name} onChange={onChageName} type="text" />
+          <div className="mb-[153px]">
+            <Input
+              label="이름"
+              value={name}
+              onChange={onChageName}
+              type="text"
+            />
 
-          <Input label="아이디" value={id} onChange={onChageid} type="text" />
+            <Input label="아이디" value={id} onChange={onChageid} type="text" />
 
-          <div>{/* 와 이걸 어떡하면 좋지 개 어려운데??????????????? */}</div>
-          <button
-            className={clsx(
-              "mt-[192px] border-1 rounded-[16px] w-[327px] h-[48px]",
-              {
-                "bg-white text-[#797C7B]": name != "" && id != "",
-                "bg-transparent text-white": name == "" || id == "",
-              }
-            )}
-            onClick={onSubmit}
-          >
-            가입하기
-          </button>
+            <div>
+              {/* 와 이걸 어떡하면 좋지 너무 어려운데??????????????? */}
+            </div>
+          </div>
+          <SignBtn
+            value="가입하기"
+            isFull={isFull()}
+            onClick={() => onSubmit}
+          />
         </div>
       </div>
     </div>

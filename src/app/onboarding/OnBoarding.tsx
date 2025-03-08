@@ -1,4 +1,6 @@
 import React from "react";
+// import Image from "next/image";
+import SignBtn from "@/components/sign/SignBtn";
 
 interface OnBoardingProps {
   setPage: React.Dispatch<
@@ -9,8 +11,9 @@ interface OnBoardingProps {
 const OnBoarding = ({ setPage }: OnBoardingProps) => {
   return (
     <div>
+      {/* <Image src={Logo-white}/> */}
       <div className="text-white text-[68px] font-extrabold">
-        <p>Let's</p>
+        <p>Let&apos;s</p>
         <p>Keep</p>
         <p>In</p>
         <p>Touch!</p>
@@ -21,12 +24,11 @@ const OnBoarding = ({ setPage }: OnBoardingProps) => {
         <p>자신의 범위를 넓혀보세요!</p>
       </div>
       <div className="mt-[69px]">
-        <button
-          className="w-[327px] h-[48px] bg-white text-[#797C7B] rounded-[16px]"
+        <SignBtn
+          value="로그인하기"
+          isFull={true}
           onClick={() => setPage("signin")}
-        >
-          로그인하기
-        </button>
+        />
       </div>
       <div className="w-[315px] h-[14px] text-white">
         <div className="flex w-[132px] bg-[#CDD1D0] h-[1px]" />
