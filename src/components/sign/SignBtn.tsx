@@ -4,7 +4,7 @@ import React from "react";
 interface SignBtnProps {
   value: string;
   isFull: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SignBtn = ({ value, isFull, onClick }: SignBtnProps) => {
