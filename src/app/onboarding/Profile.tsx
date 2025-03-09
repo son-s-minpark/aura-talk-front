@@ -4,6 +4,8 @@ import Image from "next/image";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
+import HobbyModal from "@/components/sign/HobbyModal";
 
 interface ProfileProps {
   setPage: React.Dispatch<
@@ -16,6 +18,7 @@ const Profile = ({ setPage }: ProfileProps) => {
   const [id, setId] = useState<string>("");
   const [img, setImg] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState<string | null>(null);
+  const [isHobbyDown, setIsHobbyDown] = useState<boolean>(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -45,7 +48,12 @@ const Profile = ({ setPage }: ProfileProps) => {
 
   return (
     <div className="w-full h-full">
-      <div className="h-[76px] w-full">
+      {isHobbyDown ? (
+        <div className="z-100 w-full h-full">
+          <HobbyModal setIsHobbyDown={setIsHobbyDown} />
+        </div>
+      ) : null}
+      <div className="h-[76px] w-full z-0">
         <button onClick={() => setPage("signup")}>
           <IoArrowBackOutline width={24} height={24} className="text-white" />
         </button>
@@ -96,6 +104,15 @@ const Profile = ({ setPage }: ProfileProps) => {
               type="text"
             />
             <Input label="아이디" value={id} onChange={onChageId} type="text" />
+            <div className="w-[327px] h-[58px] font-bold mt-[30px] border-b-1">
+              <p>관심사</p>
+              <div className="flex w-full">
+                <div className="h-[38px] w-[300px] mb-[6px] flex-none" />
+                <button onClick={() => setIsHobbyDown(!isHobbyDown)}>
+                  <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
+                </button>
+              </div>
+            </div>
           </div>
 
           <SignBtn
