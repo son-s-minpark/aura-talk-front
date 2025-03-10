@@ -7,7 +7,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr">
-      <body className="w-full h-[100vh]">{children}</body>
+      <body className="flex justify-center w-full h-[100vh]">
+        <div className="w-[375px] h-full">{children}</div>
+      </body>
     </html>
   );
 }

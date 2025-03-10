@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
-import { IoArrowBackOutline } from "react-icons/io5";
 import SignBtn from "@/components/sign/SignBtn";
+import Back from "@/components/sign/Back";
 
 interface SignupProps {
   setPage: React.Dispatch<
@@ -37,22 +37,18 @@ const Signup = ({ setPage }: SignupProps) => {
   // }
 
   return (
-    <div>
-      <div className="h-[76px] w-full">
-        <button onClick={() => setPage("onBoarding")}>
-          <IoArrowBackOutline width={24} height={24} className="text-white" />
-        </button>
-      </div>
-      <div>
-        <div className="">
+    <div className="w-full h-full">
+      <Back setPage={setPage} backComponent={"onBoarding"} />
+      <div className="mt-[69px] flex flex-col items-center">
+        <div>
           <p className="text-[20px] font-bold text-white">회원가입하기</p>
         </div>
-        <div className="text-[#DBDBDB] text-[14px]">
+        <div className="text-[#DBDBDB] text-[14px] text-center">
           <p>만나서 반가워요!</p>
           <p>새로운 친구들을 만들러 가볼까요?</p>
         </div>
       </div>
-      <div className="flex flex-col mt-[70px] text-white">
+      <div className="flex flex-col mt-[70px] text-white items-center">
         <div className="mb-[192px]">
           <Input
             label="이메일"

@@ -3,22 +3,23 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
-import { IoArrowBackOutline } from "react-icons/io5";
+import InterestModal from "@/components/sign/InterestModal";
+import Back from "@/components/sign/Back";
 import { IoChevronDown } from "react-icons/io5";
-import HobbyModal from "@/components/sign/HobbyModal";
 
 interface ProfileProps {
   setPage: React.Dispatch<
-    React.SetStateAction<"onBoarding" | "Profile" | "signup" | "profile">
+    React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
 }
 
 const Profile = ({ setPage }: ProfileProps) => {
   const [name, setName] = useState<string>("");
   const [id, setId] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [img, setImg] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState<string | null>(null);
-  const [isHobbyDown, setIsHobbyDown] = useState<boolean>(false);
+  const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -27,6 +28,10 @@ const Profile = ({ setPage }: ProfileProps) => {
 
   function onChageId(e: React.ChangeEvent<HTMLInputElement>) {
     setId(e.target.value);
+  }
+
+  function onChageDescription(e: React.ChangeEvent<HTMLInputElement>) {
+    setDescription(e.target.value);
   }
 
   async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,22 +53,22 @@ const Profile = ({ setPage }: ProfileProps) => {
 
   return (
     <div className="w-full h-full">
-      {isHobbyDown ? (
+      {isInterestDown ? (
         <div className="z-100 w-full h-full">
-          <HobbyModal setIsHobbyDown={setIsHobbyDown} />
+          <InterestModal setIsInterestDown={setIsInterestDown} />
         </div>
       ) : null}
-      <div className="h-[76px] w-full z-0">
-        <button onClick={() => setPage("signup")}>
-          <IoArrowBackOutline width={24} height={24} className="text-white" />
-        </button>
-      </div>
+      <Back setPage={setPage} backComponent={"signup"} />
       <div className="mt-[14px] flex flex-col items-center">
         <div>
-          <p className="text-[20px] font-bold text-white">프로필 입력</p>
-          <div className="text-[#DBDBDB] text-[14px]">
+          <div>
+            <p className="text-[20px] font-bold text-white text-center">
+              프로필 입력
+            </p>
+          </div>
+          <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
             <p>거의 다 끝났어요!</p>
-            <p>당신에 대해 알려줄래요?</p>
+            <p>당신에 대해 더 알려줄래요?</p>
           </div>
         </div>
 
@@ -95,8 +100,8 @@ const Profile = ({ setPage }: ProfileProps) => {
           className="hidden"
         />
 
-        <div className="flex flex-col mt-[70px] text-white">
-          <div className="mb-[153px]">
+        <div className="flex flex-col mt-[15px] text-white">
+          <div>
             <Input
               label="이름"
               value={name}
@@ -104,22 +109,30 @@ const Profile = ({ setPage }: ProfileProps) => {
               type="text"
             />
             <Input label="아이디" value={id} onChange={onChageId} type="text" />
+            <Input
+              label="한 줄 소개"
+              value={description}
+              onChange={onChageDescription}
+              type="text"
+            />
             <div className="w-[327px] h-[58px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
               <div className="flex w-full">
                 <div className="h-[38px] w-[300px] mb-[6px] flex-none" />
-                <button onClick={() => setIsHobbyDown(!isHobbyDown)}>
+                <button onClick={() => setIsInterestDown(!isInterestDown)}>
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
                 </button>
               </div>
             </div>
           </div>
 
-          <SignBtn
-            value="가입하기"
-            isFull={isFull()}
-            onClick={() => onSubmit}
-          />
+          <div className="mt-[51px]">
+            <SignBtn
+              value="가입하기"
+              isFull={isFull()}
+              onClick={() => onSubmit}
+            />
+          </div>
         </div>
       </div>
     </div>

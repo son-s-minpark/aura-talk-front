@@ -1,12 +1,12 @@
 import { FaCheck, FaPlus } from "react-icons/fa";
 import clsx from "clsx";
 
-interface HobbyBtnProps {
+interface InterestBtnProps {
   label: string;
   isSelected: boolean;
 }
 
-const HobbyBtn = ({ label, isSelected }: HobbyBtnProps) => {
+const InterestBtn = ({ label, isSelected }: InterestBtnProps) => {
   return (
     <button
       className={clsx(
@@ -27,4 +27,4 @@ const HobbyBtn = ({ label, isSelected }: HobbyBtnProps) => {
   );
 };
 
-export default HobbyBtn;
+export default InterestBtn;
