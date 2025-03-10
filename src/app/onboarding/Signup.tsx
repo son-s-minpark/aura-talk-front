@@ -43,7 +43,7 @@ const Signup = ({ setPage }: SignupProps) => {
         <div>
           <p className="text-[20px] font-bold text-white">회원가입하기</p>
         </div>
-        <div className="text-[#DBDBDB] text-[14px] text-center">
+        <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
           <p>만나서 반가워요!</p>
           <p>새로운 친구들을 만들러 가볼까요?</p>
         </div>
