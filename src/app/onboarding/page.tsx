@@ -11,7 +11,7 @@ const Page = () => {
   const [page, setPage] = useState<PageType>("onBoarding");
 
   return (
-    <div className="bg-[#1A1A1A] w-full h-full flex flex-col items-center">
+    <div className="bg-[#1A1A1A] w-full flex flex-col items-center">
       {page === "onBoarding" && <OnBoarding setPage={setPage} />}
       {page === "signin" && <Signin setPage={setPage} />}
       {page === "signup" && <Signup setPage={setPage} />}

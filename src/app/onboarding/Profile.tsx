@@ -6,6 +6,7 @@ import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
 import Back from "@/components/sign/Back";
 import { IoChevronDown } from "react-icons/io5";
+import clsx from "clsx";
 
 interface ProfileProps {
   setPage: React.Dispatch<
@@ -53,14 +54,20 @@ const Profile = ({ setPage }: ProfileProps) => {
 
   return (
     <div className="w-full h-full">
-      {isInterestDown ? (
-        <div className="z-100 w-full h-full">
-          <InterestModal setIsInterestDown={setIsInterestDown} />
-        </div>
-      ) : null}
-      <Back setPage={setPage} backComponent={"signup"} />
-      <div className="mt-[14px] flex flex-col items-center">
-        <div>
+      <div
+        className={clsx("z-100 w-full h-full", {
+          hidden: !isInterestDown,
+        })}
+      >
+        <InterestModal setIsInterestDown={setIsInterestDown} />
+      </div>
+      <div
+        className={clsx("flex flex-col items-center", {
+          hidden: isInterestDown,
+        })}
+      >
+        <Back setPage={setPage} backComponent={"signup"} />
+        <div className="mt-[14px]">
           <div>
             <p className="text-[20px] font-bold text-white text-center">
               프로필 입력
