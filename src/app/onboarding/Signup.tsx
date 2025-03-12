@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
+import useSignupState from "@/state/useSignupState";
 
 interface SignupProps {
   setPage: React.Dispatch<
@@ -14,6 +15,7 @@ const Signup = ({ setPage }: SignupProps) => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [checkPw, setCheckPw] = useState<string>("");
+  const { updateSignupState } = useSignupState();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -31,10 +33,14 @@ const Signup = ({ setPage }: SignupProps) => {
     return checkPw != "" && pw != "" && mail != "";
   }
 
-  // function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-  //   e.preventDefault();
-  //   // 대충 회원가입 요청 코드
-  // }
+  function onSubmit() {
+    updateSignupState({
+      mail: mail,
+      pw: pw,
+    });
+    console.log(useSignupState.getState().signupData);
+    setPage("profile");
+  }
 
   return (
     <div className="w-full h-full">
@@ -72,11 +78,7 @@ const Signup = ({ setPage }: SignupProps) => {
           />
         </div>
 
-        <SignBtn
-          value="완료"
-          isFull={isFull()}
-          onClick={() => setPage("profile")}
-        />
+        <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
       </div>
     </div>
   );

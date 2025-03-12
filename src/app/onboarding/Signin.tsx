@@ -26,8 +26,7 @@ const Signin = ({ setPage }: SigninProps) => {
     return mail != "" && pw != "";
   }
 
-  function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  function onSubmit() {
     // 대충 로그인 요청 코드
   }
 
@@ -59,7 +58,7 @@ const Signin = ({ setPage }: SigninProps) => {
             type="password"
           />
         </div>
-        <SignBtn value="로그인" isFull={isFull()} onClick={() => onSubmit} />
+        <SignBtn value="로그인" isFull={isFull()} onClick={onSubmit} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
 import Back from "@/components/sign/Back";
+import useSignupState from "@/state/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 
@@ -21,7 +22,9 @@ const Profile = ({ setPage }: ProfileProps) => {
   const [img, setImg] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState<string | null>(null);
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
+
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const { updateSignupState, consoleSignup } = useSignupState();
 
   function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
@@ -48,8 +51,13 @@ const Profile = ({ setPage }: ProfileProps) => {
     return name !== "" && id !== "";
   }
 
-  function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  function onSubmit() {
+    updateSignupState({
+      name: name,
+      id: id,
+      description: description,
+    });
+    consoleSignup();
   }
 
   return (
@@ -134,11 +142,7 @@ const Profile = ({ setPage }: ProfileProps) => {
           </div>
 
           <div className="mt-[51px]">
-            <SignBtn
-              value="가입하기"
-              isFull={isFull()}
-              onClick={() => onSubmit}
-            />
+            <SignBtn value="가입하기" isFull={isFull()} onClick={onSubmit} />
           </div>
         </div>
       </div>
