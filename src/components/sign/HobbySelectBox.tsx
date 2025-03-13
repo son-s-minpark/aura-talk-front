@@ -1,8 +1,8 @@
 import React from "react";
 
-interface InterestSelectBoxProps {
+type InterestSelectBoxProps = {
   name: string;
-}
+};
 
 const InterestSelectBox = ({ name }: InterestSelectBoxProps) => {
   return (

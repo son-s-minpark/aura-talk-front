@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 
-interface InputProps {
+type InputProps = {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: "text" | "password";
-}
+};
 
 const Input: React.FC<InputProps> = ({ label, value, onChange, type }) => {
   const [isLocked, setIsLocked] = useState(false);

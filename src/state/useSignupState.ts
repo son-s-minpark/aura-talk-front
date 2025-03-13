@@ -1,19 +1,21 @@
 import { create } from "zustand";
 
-interface SignupType {
+type SignupType = {
   mail: string;
   pw: string;
   name: string;
   id: string;
   description: string;
   interestList: string[];
-}
+};
 
-interface SignupState {
+type SignupState = {
   signupData: SignupType;
   updateSignupState: (newData: Partial<SignupType>) => void;
   consoleSignup: () => void;
-}
+  addInterest: (interest: string) => void;
+  removeInterest: (label: string) => void;
+};
 
 const useSignupState = create<SignupState>((set, get) => ({
   signupData: {
@@ -29,6 +31,20 @@ const useSignupState = create<SignupState>((set, get) => ({
   consoleSignup: () => {
     console.error(get().signupData);
   },
+  addInterest: (interest) =>
+    set((state) => ({
+      signupData: {
+        ...state.signupData,
+        interestList: [...state.signupData.interestList, interest],
+      },
+    })),
+  removeInterest: (label) =>
+    set((state) => ({
+      signupData: {
+        ...state.signupData,
+        interestList: state.signupData.interestList.filter((i) => i !== label),
+      },
+    })),
 }));
 
 export default useSignupState;

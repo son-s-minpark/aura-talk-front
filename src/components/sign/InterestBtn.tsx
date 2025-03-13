@@ -1,14 +1,29 @@
+"use client";
 import { FaCheck, FaPlus } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
+import useSignupState from "@/state/useSignupState";
+import { useState } from "react";
 
-interface InterestBtnProps {
+type InterestBtnProps = {
   label: string;
-  isSelected: boolean;
-}
+  selected: boolean;
+};
 
-const InterestBtn = ({ label, isSelected }: InterestBtnProps) => {
+const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
+  const [isSelected, setIsSelected] = useState<boolean>(selected);
+  const { addInterest, removeInterest } = useSignupState();
+  function toggleInterest() {
+    if (isSelected) {
+      removeInterest(label);
+    } else {
+      addInterest(label);
+    }
+    setIsSelected(!isSelected);
+  }
   return (
     <button
+      onClick={toggleInterest}
       className={clsx(
         "flex border-[3.5px] px-[13px] py-[0.5px] items-center rounded-[20px]",
         {
@@ -26,5 +41,16 @@ const InterestBtn = ({ label, isSelected }: InterestBtnProps) => {
     </button>
   );
 };
+
+const InterestBtnSml = ({ label }: { label: string }) => {
+  return (
+    <button className="flex px-[10px] gap-[2px] py-[1px] bg-transparent border-1 rounded-[20px] text-[12px]">
+      {label}
+      <IoIosClose className="w-[]" />
+    </button>
+  );
+};
+
+const InterestBtn = { InterestBtnBig, InterestBtnSml };
 
 export default InterestBtn;

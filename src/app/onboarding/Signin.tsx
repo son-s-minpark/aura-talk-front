@@ -4,11 +4,11 @@ import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
 
-interface SigninProps {
+type SigninProps = {
   setPage: React.Dispatch<
     React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
-}
+};
 
 const Signin = ({ setPage }: SigninProps) => {
   const [mail, setMail] = useState<string>("");

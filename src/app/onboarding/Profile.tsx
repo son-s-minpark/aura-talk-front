@@ -8,12 +8,13 @@ import Back from "@/components/sign/Back";
 import useSignupState from "@/state/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
+import InterestBtn from "@/components/sign/InterestBtn";
 
-interface ProfileProps {
+type ProfileProps = {
   setPage: React.Dispatch<
     React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
-}
+};
 
 const Profile = ({ setPage }: ProfileProps) => {
   const [name, setName] = useState<string>("");
@@ -24,7 +25,9 @@ const Profile = ({ setPage }: ProfileProps) => {
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
 
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const { updateSignupState, consoleSignup } = useSignupState();
+  const { updateSignupState, consoleSignup, signupData, removeInterest } =
+    useSignupState();
+  const { InterestBtnSml } = InterestBtn;
 
   function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
@@ -133,7 +136,13 @@ const Profile = ({ setPage }: ProfileProps) => {
             <div className="w-[327px] h-[58px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
               <div className="flex w-full">
-                <div className="h-[38px] w-[300px] mb-[6px] flex-none" />
+                <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
+                  {signupData.interestList.map((label, index) => (
+                    <div key={index} onClick={() => removeInterest(label)}>
+                      <InterestBtnSml label={label} />
+                    </div>
+                  ))}
+                </div>
                 <button onClick={() => setIsInterestDown(!isInterestDown)}>
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
                 </button>

@@ -2,11 +2,11 @@ import React from "react";
 // import Image from "next/image";
 import SignBtn from "@/components/sign/SignBtn";
 
-interface OnBoardingProps {
+type OnBoardingProps = {
   setPage: React.Dispatch<
     React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
-}
+};
 
 const OnBoarding = ({ setPage }: OnBoardingProps) => {
   return (

@@ -5,11 +5,11 @@ import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
 import useSignupState from "@/state/useSignupState";
 
-interface SignupProps {
+type SignupProps = {
   setPage: React.Dispatch<
     React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
-}
+};
 
 const Signup = ({ setPage }: SignupProps) => {
   const [mail, setMail] = useState<string>("");
@@ -17,15 +17,15 @@ const Signup = ({ setPage }: SignupProps) => {
   const [checkPw, setCheckPw] = useState<string>("");
   const { updateSignupState } = useSignupState();
 
-  function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
   }
 
-  function onChagePw(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangePw(e: React.ChangeEvent<HTMLInputElement>) {
     setPw(e.target.value);
   }
 
-  function onChageCheckPw(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeCheckPw(e: React.ChangeEvent<HTMLInputElement>) {
     setCheckPw(e.target.value);
   }
 
@@ -33,13 +33,30 @@ const Signup = ({ setPage }: SignupProps) => {
     return checkPw != "" && pw != "" && mail != "";
   }
 
+  function isSignupValid() {
+    // const emailRegEx =
+    //   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
+    // const pwRegEx = /^[A-Za-z0-9]{8,20}$/;
+
+    // return emailRegEx.test(mail) && pwRegEx.test(pw) && pw == checkPw;
+    return true;
+  }
+
   function onSubmit() {
-    updateSignupState({
-      mail: mail,
-      pw: pw,
-    });
-    console.log(useSignupState.getState().signupData);
-    setPage("profile");
+    if (!isFull) {
+    } else {
+      if (!isSignupValid()) {
+        console.log(isSignupValid());
+      } else {
+        console.log(isSignupValid());
+        updateSignupState({
+          mail: mail,
+          pw: pw,
+        });
+        console.log(useSignupState.getState().signupData);
+        setPage("profile");
+      }
+    }
   }
 
   return (
@@ -59,25 +76,24 @@ const Signup = ({ setPage }: SignupProps) => {
           <Input
             label="이메일"
             value={mail}
-            onChange={onChageMail}
+            onChange={onChangeMail}
             type="text"
           />
 
           <Input
             label="비밀번호"
             value={pw}
-            onChange={onChagePw}
+            onChange={onChangePw}
             type="password"
           />
 
           <Input
             label="비밀번호 확인"
             value={checkPw}
-            onChange={onChageCheckPw}
+            onChange={onChangeCheckPw}
             type="password"
           />
         </div>
-
         <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
       </div>
     </div>

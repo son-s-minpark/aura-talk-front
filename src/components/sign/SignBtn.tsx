@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import React from "react";
 
-interface SignBtnProps {
+type SignBtnProps = {
   value: string;
   isFull: boolean;
   onClick?: () => void;
-}
+};
 
 const SignBtn = ({ value, isFull, onClick }: SignBtnProps) => {
   return (

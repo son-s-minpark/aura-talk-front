@@ -3,22 +3,35 @@ import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import InterestBtn from "./InterestBtn";
 import InterestData from "../../data/interestData.json";
+import useSignupState from "@/state/useSignupState";
 
-interface InterestListProps {
+type InterestListProps = {
   [key: string]: string[];
-}
+};
 
-interface InterestModalProps {
+type InterestModalProps = {
   setIsInterestDown: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
+  const { signupData, removeInterest } = useSignupState();
   const InterestDataTyped: InterestListProps = InterestData;
+  const { InterestBtnBig, InterestBtnSml } = InterestBtn;
+
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <div className="flex w-[327px] h-[50px] font-bold mt-[39px] border-b-1 text-[#999999] items-end">
-        <div className="h-[38px] w-[300px] mb-[6px] flex-none"></div>
-        <button className="mb-[7px]" onClick={() => setIsInterestDown(false)}>
+      <div className="flex w-[327px] h-[50px] font-bold mt-[39px] border-b-1 text-white items-end">
+        <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
+          {signupData.interestList.map((label, index) => (
+            <div key={index} onClick={() => removeInterest(label)}>
+              <InterestBtnSml label={label} />
+            </div>
+          ))}
+        </div>
+        <button
+          className="mb-[7px] text-[#999999]"
+          onClick={() => setIsInterestDown(false)}
+        >
           <IoIosArrowUp className="w-[20px] h-[20px]" />
         </button>
       </div>
@@ -44,7 +57,11 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
             <div className="flex flex-wrap mt-[24px]">
               {InterestDataTyped[category].map((label, index) => (
                 <div key={index} className="mt-[15px] mr-[10px]">
-                  <InterestBtn label={label} isSelected={false} />
+                  {signupData.interestList.includes(label) ? (
+                    <InterestBtnBig label={label} selected={true} />
+                  ) : (
+                    <InterestBtnBig label={label} selected={false} />
+                  )}
                 </div>
               ))}
             </div>

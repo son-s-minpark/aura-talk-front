@@ -1,12 +1,12 @@
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-interface BackProps {
+type BackProps = {
   setPage: React.Dispatch<
     React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
   >;
   backComponent: "onBoarding" | "signin" | "signup" | "profile";
-}
+};
 
 const Back = ({ setPage, backComponent }: BackProps) => {
   return (
