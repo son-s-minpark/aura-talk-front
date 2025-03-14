@@ -4,7 +4,9 @@ import SignBtn from "@/components/sign/SignBtn";
 
 type OnBoardingProps = {
   setPage: React.Dispatch<
-    React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
+    React.SetStateAction<
+      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
+    >
   >;
 };
 
@@ -23,7 +25,7 @@ const OnBoarding = ({ setPage }: OnBoardingProps) => {
         <p>새로운 친구들도 사귀어서</p>
         <p>자신의 범위를 넓혀보세요!</p>
       </div>
-      <div className="mt-[69px]">
+      <div className="flex">
         <SignBtn
           value="로그인하기"
           isFull={true}

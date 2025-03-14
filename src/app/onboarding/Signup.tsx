@@ -7,15 +7,17 @@ import useSignupState from "@/state/useSignupState";
 
 type SignupProps = {
   setPage: React.Dispatch<
-    React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
+    React.SetStateAction<
+      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
+    >
   >;
 };
 
 const Signup = ({ setPage }: SignupProps) => {
-  const [mail, setMail] = useState<string>("");
-  const [pw, setPw] = useState<string>("");
-  const [checkPw, setCheckPw] = useState<string>("");
-  const { updateSignupState } = useSignupState();
+  const { updateSignupState, signupData } = useSignupState();
+  const [mail, setMail] = useState<string>(signupData.mail);
+  const [pw, setPw] = useState<string>(signupData.pw);
+  const [checkPw, setCheckPw] = useState<string>(signupData.pw);
 
   function onChangeMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -30,7 +32,7 @@ const Signup = ({ setPage }: SignupProps) => {
   }
 
   function isFull() {
-    return checkPw != "" && pw != "" && mail != "";
+    return checkPw != signupData && pw != signupData && mail != signupData;
   }
 
   function isSignupValid() {
@@ -62,7 +64,7 @@ const Signup = ({ setPage }: SignupProps) => {
   return (
     <div className="w-full h-full">
       <Back setPage={setPage} backComponent={"onBoarding"} />
-      <div className="mt-[69px] flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <div>
           <p className="text-[20px] font-bold text-white">회원가입하기</p>
         </div>

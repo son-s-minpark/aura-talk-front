@@ -1,6 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
@@ -12,21 +11,22 @@ import InterestBtn from "@/components/sign/InterestBtn";
 
 type ProfileProps = {
   setPage: React.Dispatch<
-    React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
+    React.SetStateAction<
+      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
+    >
   >;
 };
 
 const Profile = ({ setPage }: ProfileProps) => {
-  const [name, setName] = useState<string>("");
-  const [id, setId] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [img, setImg] = useState<File | null>(null);
-  const [prevImg, setPrevImg] = useState<string | null>(null);
-  const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-
-  const fileRef = useRef<HTMLInputElement | null>(null);
   const { updateSignupState, consoleSignup, signupData, removeInterest } =
     useSignupState();
+  const [name, setName] = useState<string>(signupData.name);
+  const [id, setId] = useState<string>(signupData.id);
+  const [description, setDescription] = useState<string>(
+    signupData.description
+  );
+  const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
+
   const { InterestBtnSml } = InterestBtn;
 
   function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,15 +41,6 @@ const Profile = ({ setPage }: ProfileProps) => {
     setDescription(e.target.value);
   }
 
-  async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target?.files ? e.target.files[0] : null;
-    if (file) {
-      const prevUrl = URL.createObjectURL(file);
-      setPrevImg(prevUrl);
-      setImg(file);
-    }
-  }
-
   function isFull() {
     return name !== "" && id !== "";
   }
@@ -61,6 +52,7 @@ const Profile = ({ setPage }: ProfileProps) => {
       description: description,
     });
     consoleSignup();
+    setPage("profileImg");
   }
 
   return (
@@ -72,13 +64,14 @@ const Profile = ({ setPage }: ProfileProps) => {
       >
         <InterestModal setIsInterestDown={setIsInterestDown} />
       </div>
+
       <div
         className={clsx("flex flex-col items-center", {
           hidden: isInterestDown,
         })}
       >
         <Back setPage={setPage} backComponent={"signup"} />
-        <div className="mt-[14px]">
+        <div>
           <div>
             <p className="text-[20px] font-bold text-white text-center">
               프로필 입력
@@ -90,35 +83,7 @@ const Profile = ({ setPage }: ProfileProps) => {
           </div>
         </div>
 
-        <div className="h-[100px] w-[100px] mt-[32px] mb-[21px]">
-          {prevImg ? (
-            <Image
-              src={prevImg}
-              alt="미리보기 이미지"
-              width={100}
-              height={100}
-              className="object-cover w-[100px] h-[100px] rounded-full"
-            />
-          ) : (
-            <div className="w-[100px] h-[100px] rounded-full border-1 text-[#797C7B]" />
-          )}
-        </div>
-        <button
-          type="button"
-          onClick={() => fileRef.current?.click()}
-          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-[#797C7B] rounded-[20px] text-[14px]"
-        >
-          편집
-        </button>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          onChange={addImage}
-          className="hidden"
-        />
-
-        <div className="flex flex-col mt-[15px] text-white">
+        <div className="flex flex-col mt-[60px] text-white">
           <div>
             <Input
               label="이름"
@@ -150,8 +115,8 @@ const Profile = ({ setPage }: ProfileProps) => {
             </div>
           </div>
 
-          <div className="mt-[51px]">
-            <SignBtn value="가입하기" isFull={isFull()} onClick={onSubmit} />
+          <div className="mt-[121px]">
+            <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
           </div>
         </div>
       </div>

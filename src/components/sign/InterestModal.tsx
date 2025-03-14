@@ -19,7 +19,7 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
   const { InterestBtnBig, InterestBtnSml } = InterestBtn;
 
   return (
-    <div className="w-full h-full flex flex-col items-center">
+    <div className="w-full h-full flex flex-col items-center overflow-scroll">
       <div className="flex w-[327px] h-[50px] font-bold mt-[39px] border-b-1 text-white items-end">
         <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
           {signupData.interestList.map((label, index) => (

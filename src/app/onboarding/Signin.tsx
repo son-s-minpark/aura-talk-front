@@ -6,7 +6,9 @@ import Back from "@/components/sign/Back";
 
 type SigninProps = {
   setPage: React.Dispatch<
-    React.SetStateAction<"onBoarding" | "signin" | "signup" | "profile">
+    React.SetStateAction<
+      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
+    >
   >;
 };
 
@@ -33,17 +35,16 @@ const Signin = ({ setPage }: SigninProps) => {
   return (
     <div className="w-full h-full">
       <Back setPage={setPage} backComponent={"onBoarding"} />
-      <div className="mt-[69px] flex flex-col items-center">
-        <div>
-          <div>
-            <p className="text-[20px] font-bold text-white">로그인하기</p>
-          </div>
-          <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
+      <div className="flex flex-col items-center">
+        <div className="text-center">
+          <p className="text-[20px] font-bold text-white ">로그인하기</p>
+          <div className="text-[#DBDBDB] text-[14px] mt-[19px]">
             <p>다시 만나서 반가워요!</p>
             <p>친구들의 소식을 확인하러 가볼까요?</p>
           </div>
         </div>
-        <div className="mt-[70px] mb-[148px] text-white">
+
+        <div className="mt-[70px] text-white">
           <Input
             label="이메일"
             value={mail}
@@ -58,7 +59,10 @@ const Signin = ({ setPage }: SigninProps) => {
             type="password"
           />
         </div>
-        <SignBtn value="로그인" isFull={isFull()} onClick={onSubmit} />
+
+        <div className="mt-[277px]">
+          <SignBtn value="로그인" isFull={isFull()} onClick={onSubmit} />
+        </div>
       </div>
     </div>
   );
