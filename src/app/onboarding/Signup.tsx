@@ -1,9 +1,9 @@
-"use client";
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
 import useSignupState from "@/state/useSignupState";
+import z from "zod";
 
 type SignupProps = {
   setPage: React.Dispatch<
@@ -13,11 +13,34 @@ type SignupProps = {
   >;
 };
 
+const SignupSchema = z.object({
+  mail: z
+    .string()
+    .nonempty({ message: "메일을 입력해주세요." })
+    .email({ message: "올바르지 않은 메일 형식입니다." }),
+  pw: z
+    .string()
+    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
+    .nonempty({ message: "비밀번호를 입력해주세요." })
+    .regex(
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/,
+      "비밀번호는 특수문자, 대문자, 숫자가 포함되어야 합니다."
+    ),
+  checkPw: z
+    .string()
+    .nonempty({ message: "비밀번호 확인 창에 다시 입력해주세요." }),
+});
+
 const Signup = ({ setPage }: SignupProps) => {
   const { updateSignupState, signupData } = useSignupState();
   const [mail, setMail] = useState<string>(signupData.mail);
   const [pw, setPw] = useState<string>(signupData.pw);
   const [checkPw, setCheckPw] = useState<string>(signupData.pw);
+  const [isMailValid, setIsMailValid] = useState<boolean>(true);
+  const [isPwValid, setIsPwValid] = useState<boolean>(true);
+  const [isCheckPwValid, setIsCheckPwValid] = useState<boolean>(true);
+
+  const [errMsg, setErrMsg] = useState<string>("");
 
   function onChangeMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -31,31 +54,74 @@ const Signup = ({ setPage }: SignupProps) => {
     setCheckPw(e.target.value);
   }
 
+  function validateMail() {
+    const result = SignupSchema.shape.mail.safeParse(mail);
+    if (!result.success) {
+      setIsMailValid(false);
+      return result.error.errors[0].message;
+    }
+    setIsMailValid(true);
+    return "";
+  }
+
+  function validatePw() {
+    const result = SignupSchema.shape.pw.safeParse(pw);
+    if (!result.success) {
+      setIsPwValid(false);
+      return result.error.errors[0].message;
+    }
+    setIsPwValid(true);
+    return "";
+  }
+
+  function validateCheckPw() {
+    if (checkPw !== pw) {
+      setIsCheckPwValid(false);
+      return "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
+    }
+    setIsCheckPwValid(true); // 비밀번호 확인이 일치할 때는 오류 메시지를 제거하고 유효성 상태를 true로 설정
+    return ""; // 비밀번호가 일치하면 빈 문자열 반환
+  }
+
   function isFull() {
-    return checkPw != signupData && pw != signupData && mail != signupData;
+    return checkPw !== "" && pw !== "" && mail !== "";
   }
 
   function isSignupValid() {
-    // const emailRegEx =
-    //   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
-    // const pwRegEx = /^[A-Za-z0-9]{8,20}$/;
+    const mailError = validateMail();
+    const pwError = validatePw();
 
-    // return emailRegEx.test(mail) && pwRegEx.test(pw) && pw == checkPw;
+    if (mailError || pwError) {
+      setErrMsg(
+        mailError && pwError
+          ? "이메일과 비밀번호의 양식이 올바르지 않습니다."
+          : mailError || pwError
+      );
+      validateCheckPw();
+      return false;
+    }
+
+    const checkPwError = validateCheckPw();
+    if (checkPwError) {
+      setErrMsg(checkPwError);
+      return false; // 유효성 검사 실패
+    }
+
+    setErrMsg(""); // 모든 검증 통과 후 에러 메시지 초기화
     return true;
   }
 
   function onSubmit() {
-    if (!isFull) {
+    if (!isFull()) {
+      // 값이 빈 곳이 있을 때 아무것도 하지 않음
+      return;
     } else {
-      if (!isSignupValid()) {
-        console.log(isSignupValid());
-      } else {
-        console.log(isSignupValid());
+      if (isSignupValid()) {
+        // 모든 유효성 검사를 통과했을 때
         updateSignupState({
           mail: mail,
           pw: pw,
         });
-        console.log(useSignupState.getState().signupData);
         setPage("profile");
       }
     }
@@ -80,6 +146,7 @@ const Signup = ({ setPage }: SignupProps) => {
             value={mail}
             onChange={onChangeMail}
             type="text"
+            isValid={isMailValid}
           />
 
           <Input
@@ -87,6 +154,7 @@ const Signup = ({ setPage }: SignupProps) => {
             value={pw}
             onChange={onChangePw}
             type="password"
+            isValid={isPwValid}
           />
 
           <Input
@@ -94,8 +162,16 @@ const Signup = ({ setPage }: SignupProps) => {
             value={checkPw}
             onChange={onChangeCheckPw}
             type="password"
+            isValid={isCheckPwValid}
           />
+
+          <div className="flex justify-center">
+            {errMsg === "" ? null : (
+              <p className="text-[#C81919] text-[12px] mt-[10px]"> {errMsg}</p>
+            )}
+          </div>
         </div>
+
         <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
       </div>
     </div>

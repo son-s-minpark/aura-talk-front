@@ -12,12 +12,11 @@ type SignupType = {
 type SignupState = {
   signupData: SignupType;
   updateSignupState: (newData: Partial<SignupType>) => void;
-  consoleSignup: () => void;
   addInterest: (interest: string) => void;
   removeInterest: (label: string) => void;
 };
 
-const useSignupState = create<SignupState>((set, get) => ({
+const useSignupState = create<SignupState>((set) => ({
   signupData: {
     mail: "",
     pw: "",
@@ -28,9 +27,6 @@ const useSignupState = create<SignupState>((set, get) => ({
   },
   updateSignupState: (newData) =>
     set((state) => ({ signupData: { ...state.signupData, ...newData } })),
-  consoleSignup: () => {
-    console.error(get().signupData);
-  },
   addInterest: (interest) =>
     set((state) => ({
       signupData: {

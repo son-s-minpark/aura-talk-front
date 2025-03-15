@@ -8,6 +8,7 @@ import useSignupState from "@/state/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import InterestBtn from "@/components/sign/InterestBtn";
+import { z } from "zod";
 
 type ProfileProps = {
   setPage: React.Dispatch<
@@ -17,14 +18,35 @@ type ProfileProps = {
   >;
 };
 
+const ProfileSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "이름은 1글자 이상이어야 합니다." })
+    .max(15, { message: "이름은 15자 이하여야 합니다." })
+    .refine((val) => !val.includes(" "), {
+      message: "이름에 공백이 포함되어서는 안 됩니다.",
+    }),
+
+  id: z
+    .string()
+    .min(3, { message: "아이디는 1글자 이상이어야 합니다." })
+    .max(15, { message: "아이디는 15자 이하여야 합니다." })
+    .refine((val) => !val.includes(" "), {
+      message: "이름에 공백이 포함되어서는 안 됩니다.",
+    }),
+});
+
 const Profile = ({ setPage }: ProfileProps) => {
-  const { updateSignupState, consoleSignup, signupData, removeInterest } =
-    useSignupState();
+  const { updateSignupState, signupData, removeInterest } = useSignupState();
   const [name, setName] = useState<string>(signupData.name);
   const [id, setId] = useState<string>(signupData.id);
   const [description, setDescription] = useState<string>(
     signupData.description
   );
+  const [isNameValid, setIsNameValid] = useState<boolean>(true);
+  const [isIdValid, setIsIdValid] = useState<boolean>(true);
+  const [errMsg, setErrMsg] = useState<string>("");
+
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
 
   const { InterestBtnSml } = InterestBtn;
@@ -40,19 +62,58 @@ const Profile = ({ setPage }: ProfileProps) => {
   function onChageDescription(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
   }
-
   function isFull() {
-    return name !== "" && id !== "";
+    return name !== "" && id !== "" && signupData.interestList.length !== 0;
+  }
+  function validateName() {
+    const result = ProfileSchema.shape.name.safeParse(name);
+    if (!result.success) {
+      setIsNameValid(false);
+      return result.error.errors[0].message; // 공백 포함 에러 메시지
+    }
+    setIsNameValid(true);
+    return "";
+  }
+
+  function validateId() {
+    const result = ProfileSchema.shape.id.safeParse(id);
+    if (!result.success) {
+      setIsIdValid(false);
+      return result.error.errors[0].message; // 공백 포함 에러 메시지
+    }
+    setIsIdValid(true);
+    return "";
+  }
+
+  function isProfileValid() {
+    const nameError = validateName();
+    const idError = validateId();
+    if (nameError || idError) {
+      setErrMsg(
+        nameError && idError
+          ? "이름과 아이디의 양식이 올바르지 않습니다."
+          : nameError || idError
+      );
+      return false;
+    }
+    setErrMsg(""); // 에러 메시지 초기화
+    return true;
   }
 
   function onSubmit() {
-    updateSignupState({
-      name: name,
-      id: id,
-      description: description,
-    });
-    consoleSignup();
-    setPage("profileImg");
+    if (!isFull()) {
+      // 빈 값이 있을 때 아무것도 하지 않음
+      return;
+    } else {
+      if (isProfileValid()) {
+        updateSignupState({
+          name: name,
+          id: id,
+          description: description,
+        });
+        setPage("profileImg");
+      }
+    }
   }
 
   return (
@@ -90,13 +151,21 @@ const Profile = ({ setPage }: ProfileProps) => {
               value={name}
               onChange={onChageName}
               type="text"
+              isValid={isNameValid}
             />
-            <Input label="아이디" value={id} onChange={onChageId} type="text" />
+            <Input
+              label="아이디"
+              value={id}
+              onChange={onChageId}
+              type="text"
+              isValid={isIdValid}
+            />
             <Input
               label="한 줄 소개"
               value={description}
               onChange={onChageDescription}
               type="text"
+              isValid={true}
             />
             <div className="w-[327px] h-[58px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
@@ -112,6 +181,11 @@ const Profile = ({ setPage }: ProfileProps) => {
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
                 </button>
               </div>
+            </div>
+            <div className="flex justify-center">
+              {errMsg == "" ? null : (
+                <p className="text-[#C81919] text-[12px] mt-[10px]">{errMsg}</p>
+              )}
             </div>
           </div>
 
