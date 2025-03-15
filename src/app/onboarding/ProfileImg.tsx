@@ -33,8 +33,8 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
   return (
     <div className="w-full h-full overflow-scroll">
       <Back setPage={setPage} backComponent={"profile"} />
-      <div>
-        <p className="text-[20px] font-bold text-white text-[18px] font-semibold text-center">
+      <div className="mt-[24px]">
+        <p className="text-[20px] font-bold text-white text-[18px] font-semibold mt-[12px] text-center leading-[20px]">
           프로필 확인
         </p>
         <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
@@ -44,7 +44,7 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
       </div>
 
       <div className="flex flex-col items-center">
-        <div className="h-[100px] w-[100px] mt-[32px] mb-[21px] mt-[22px]">
+        <div className="h-[100px] w-[100px] mt-[35px] mb-[21px]">
           {prevImg ? (
             <Image
               src={prevImg}
@@ -73,28 +73,32 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
         />
       </div>
 
-      <div className="mt-[55px] ml-[37px]">
+      <div className="flex flex-col mt-[55px] ml-[37px] gap-[22px]">
         <div>
-          <p className="text-[#BCBCBC] mb-[12px]">사용자 이름</p>
-          <p className="text-white text-[18px] font-semibold">
+          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">
+            사용자 이름
+          </p>
+          <p className="text-white text-[18px] font-semibold mt-[12px]">
             {signupData.name}
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] mb-[12px] mt-[22px]">아이디</p>
-          <p className="text-white text-[18px] font-semibold">
+          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">아이디</p>
+          <p className="text-white text-[18px] font-semibold mt-[12px]">
             {signupData.id}
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] mb-[12px] mt-[22px]">한 줄 소개</p>
-          <p className="text-white text-[18px] font-semibold">
+          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">
+            한 줄 소개
+          </p>
+          <p className="text-white text-[18px] font-semibold mt-[12px]">
             {signupData.description}
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] mb-[12px] mt-[22px]">관심사</p>
-          <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold">
+          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">관심사</p>
+          <div className="w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold mt-[12px]">
             {signupData.interestList.map((label, index) => (
               <div key={index} onClick={() => removeInterest(label)}>
                 <InterestBtnSml label={label} />

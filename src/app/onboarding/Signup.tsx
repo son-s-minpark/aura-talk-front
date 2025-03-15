@@ -79,8 +79,8 @@ const Signup = ({ setPage }: SignupProps) => {
       setIsCheckPwValid(false);
       return "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
     }
-    setIsCheckPwValid(true); // 비밀번호 확인이 일치할 때는 오류 메시지를 제거하고 유효성 상태를 true로 설정
-    return ""; // 비밀번호가 일치하면 빈 문자열 반환
+    setIsCheckPwValid(true);
+    return "";
   }
 
   function isFull() {
@@ -104,10 +104,10 @@ const Signup = ({ setPage }: SignupProps) => {
     const checkPwError = validateCheckPw();
     if (checkPwError) {
       setErrMsg(checkPwError);
-      return false; // 유효성 검사 실패
+      return false;
     }
 
-    setErrMsg(""); // 모든 검증 통과 후 에러 메시지 초기화
+    setErrMsg("");
     return true;
   }
 
@@ -130,17 +130,17 @@ const Signup = ({ setPage }: SignupProps) => {
   return (
     <div className="w-full h-full">
       <Back setPage={setPage} backComponent={"onBoarding"} />
-      <div className="flex flex-col items-center">
-        <div>
-          <p className="text-[20px] font-bold text-white">회원가입하기</p>
-        </div>
-        <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
+      <div className="flex flex-col items-center mt-[69px]">
+        <p className="text-[20px] font-bold text-white leading-[20px]">
+          회원가입하기
+        </p>
+        <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px] leading-[20px]">
           <p>만나서 반가워요!</p>
           <p>새로운 친구들을 만들러 가볼까요?</p>
         </div>
       </div>
-      <div className="flex flex-col mt-[70px] text-white items-center">
-        <div className="mb-[192px]">
+      <div className="flex flex-col mt-[37px] text-white items-center">
+        <div>
           <Input
             label="이메일"
             value={mail}
@@ -171,8 +171,9 @@ const Signup = ({ setPage }: SignupProps) => {
             )}
           </div>
         </div>
-
-        <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
+        <div className="mt-[192px]">
+          <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
+        </div>
       </div>
     </div>
   );

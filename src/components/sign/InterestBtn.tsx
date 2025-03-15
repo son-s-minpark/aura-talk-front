@@ -44,9 +44,9 @@ const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
 
 const InterestBtnSml = ({ label }: { label: string }) => {
   return (
-    <button className="flex px-[10px] gap-[2px] py-[1px] bg-transparent border-1 rounded-[20px] text-[12px]">
+    <button className="flex px-[10px] gap-[2px] py-[1px] bg-transparent border-1 rounded-[20px] text-[12px] items-center">
       {label}
-      <IoIosClose className="w-[]" />
+      <IoIosClose width={80} className="text-[20px]" />
     </button>
   );
 };

@@ -132,19 +132,19 @@ const Profile = ({ setPage }: ProfileProps) => {
         })}
       >
         <Back setPage={setPage} backComponent={"signup"} />
-        <div>
-          <div>
-            <p className="text-[20px] font-bold text-white text-center">
+        <div className="mt-[69px]">
+          <div className="text-center">
+            <p className="text-[20px] font-bold text-white leading-[20px]">
               프로필 입력
             </p>
-          </div>
-          <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
-            <p>거의 다 끝났어요!</p>
-            <p>당신에 대해 더 알려줄래요?</p>
+            <div className="text-[#DBDBDB] text-[14px] leading-[20px] mt-[19px]">
+              <p>거의 다 끝났어요!</p>
+              <p>당신에 대해 더 알려줄래요?</p>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col mt-[60px] text-white">
+        <div className="flex flex-col mt-[35px] text-white">
           <div>
             <Input
               label="이름"
@@ -167,10 +167,10 @@ const Profile = ({ setPage }: ProfileProps) => {
               type="text"
               isValid={true}
             />
-            <div className="w-[327px] h-[58px] font-bold mt-[30px] border-b-1">
+            <div className="w-[327px] h-[65px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
               <div className="flex w-full">
-                <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
+                <div className="h-[38px] w-[300px] flex items-center gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
                   {signupData.interestList.map((label, index) => (
                     <div key={index} onClick={() => removeInterest(label)}>
                       <InterestBtnSml label={label} />
@@ -182,6 +182,7 @@ const Profile = ({ setPage }: ProfileProps) => {
                 </button>
               </div>
             </div>
+
             <div className="flex justify-center">
               {errMsg == "" ? null : (
                 <p className="text-[#C81919] text-[12px] mt-[10px]">{errMsg}</p>
@@ -189,7 +190,7 @@ const Profile = ({ setPage }: ProfileProps) => {
             </div>
           </div>
 
-          <div className="mt-[121px]">
+          <div className="mt-[101px]">
             <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
           </div>
         </div>

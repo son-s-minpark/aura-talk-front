@@ -94,16 +94,18 @@ const Signin = ({ setPage }: SigninProps) => {
   return (
     <div className="w-full h-full">
       <Back setPage={setPage} backComponent={"onBoarding"} />
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-[69px]">
         <div className="text-center">
-          <p className="text-[20px] font-bold text-white">로그인하기</p>
-          <div className="text-[#DBDBDB] text-[14px] mt-[19px]">
+          <p className="text-[20px] font-bold text-white leading-[20px]">
+            로그인하기
+          </p>
+          <div className="text-[#DBDBDB] text-[14px] mt-[19px] leading-[20px]">
             <p>다시 만나서 반가워요!</p>
             <p>친구들의 소식을 확인하러 가볼까요?</p>
           </div>
         </div>
 
-        <div className="mt-[70px] text-white">
+        <div className="mt-[40px] text-white">
           <Input
             label="이메일"
             value={mail}

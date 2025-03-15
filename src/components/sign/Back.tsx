@@ -12,7 +12,7 @@ type BackProps = {
 
 const Back = ({ setPage, backComponent }: BackProps) => {
   return (
-    <div className="h-[76px] w-full mb-[69px] flex items-center">
+    <div className="h-[76px] w-full flex items-center">
       <button
         onClick={() => setPage(backComponent)}
         className="w-[30px] h-[30px]"
