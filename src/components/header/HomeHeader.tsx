@@ -1,22 +1,20 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../../../public/logo-none.png";
 import { IoSearch, IoNotifications } from "react-icons/io5";
-// import { useRouter } from "next/router";
+import logo from "../../../public/images/logo-none.png";
 
 const HomeHeader = () => {
-  // const router = useRouter();
   return (
-    <div className="h-[76px] w-full">
-      <button>
-        <Image src={logo} alt="아우라 톡 로고" height={41} width={41} />
+    <div className="h-[76px] w-full flex justify-between items-center">
+      <button className="ml-[13px]">
+        <Image src={logo} alt="아우라 톡 로고" className="w-[41px] h-[41px]" />
       </button>
-      <div>
+      <div className="text-white mr-[21px]">
         <button>
-          <IoSearch />
+          <IoSearch className="w-[24px] h-[24px] mr-[12px]" />
         </button>
         <button>
-          <IoNotifications />
+          <IoNotifications className="w-[24px] h-[24px]" />
         </button>
       </div>
     </div>
