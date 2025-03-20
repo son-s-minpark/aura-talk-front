@@ -7,3 +7,8 @@
   --color-darkGray: "#797C7B";
   --color-lightGray: "#BCBCBC";
 }
+
+.modal {
+  z-index: 100;
+  background-color: "#505050";
+}

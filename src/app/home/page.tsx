@@ -6,17 +6,21 @@ import {
   IoChatbubbles,
   IoPeople,
   IoSettings,
+  IoPersonAdd,
 } from "react-icons/io5";
 import Image from "next/image";
 import logo from "../../../public/images/logo-none.png";
 import clsx from "clsx";
+import ChatList from "@/components/chat/ChatList";
+import FriendList from "@/components/friend/FriendList";
+import SettingList from "@/components/setting/SettingList";
 
 type ListType = "chat" | "friend" | "setting";
 
 const Page = () => {
   const [list, setList] = useState<ListType>("chat");
   return (
-    <div className="w-full h-full bg-black flex flex-col flex justify-between">
+    <div className="w-full h-full bg-black flex flex-col justify-between">
       <div className="h-[76px] w-full items-center flex justify-between">
         <button className="ml-[13px]">
           <Image
@@ -25,9 +29,12 @@ const Page = () => {
             className="w-[41px] h-[41px]"
           />
         </button>
-        <div className="text-white mr-[21px]">
+        <div className="flex text-white mr-[21px] gap-[12px]">
           <button>
-            <IoSearch className="w-[24px] h-[24px] mr-[12px]" />
+            <IoPersonAdd className="w-[22px] h-[22px]" />
+          </button>
+          <button>
+            <IoSearch className="w-[24px] h-[24px]" />
           </button>
           <button>
             <IoNotifications className="w-[24px] h-[24px]" />
@@ -36,7 +43,11 @@ const Page = () => {
       </div>
 
       <div className="dark:bg-darkBg bg-white rounded-t-[20px]">
-        <div className="h-[543px] w-full"></div>
+        <div className="h-[543px] w-full">
+          {list == "chat" && <ChatList />}
+          {list == "friend" && <FriendList />}
+          {list == "setting" && <SettingList />}
+        </div>
 
         <div className="w-full h-[48px] border-t-[1px] border-[#999999] flex items-center justify-center">
           <div className="w-[301px] h-[29px] flex items-center justify-between">
