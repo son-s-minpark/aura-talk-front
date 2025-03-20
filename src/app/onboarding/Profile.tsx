@@ -7,8 +7,8 @@ import Back from "@/components/sign/Back";
 import useSignupState from "@/state/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
-import InterestBtn from "@/components/sign/InterestBtn";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
+import InterestBtnList from "@/components/sign/InterestBtnList";
 
 type ProfileProps = {
   setPage: React.Dispatch<
@@ -19,7 +19,7 @@ type ProfileProps = {
 };
 
 const Profile = ({ setPage }: ProfileProps) => {
-  const { updateSignupState, signupData, removeInterest } = useSignupState();
+  const { updateSignupState, signupData } = useSignupState();
   const [nickname, setnickname] = useState<string>(signupData.nickname);
   const [username, setusername] = useState<string>(signupData.username);
   const [description, setDescription] = useState<string>(
@@ -30,20 +30,17 @@ const Profile = ({ setPage }: ProfileProps) => {
   const [isusernameValusername, setIsusernameValusername] =
     useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
-
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
 
-  const { InterestBtnSml } = InterestBtn;
-
-  function onChagenickname(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
   }
 
-  function onChageusername(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeusername(e: React.ChangeEvent<HTMLInputElement>) {
     setusername(e.target.value);
   }
 
-  function onChageDescription(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeDescription(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
   }
   function isFull() {
@@ -55,7 +52,7 @@ const Profile = ({ setPage }: ProfileProps) => {
     const result = nicknameSchema.shape.nickname.safeParse(nickname);
     if (!result.success) {
       setIsnicknameValusername(false);
-      return result.error.errors[0].message; // 공백 포함 에러 메시지
+      return result.error.errors[0].message;
     }
     setIsnicknameValusername(true);
     return "";
@@ -65,7 +62,7 @@ const Profile = ({ setPage }: ProfileProps) => {
     const result = usernameSchema.shape.username.safeParse(username);
     if (!result.success) {
       setIsusernameValusername(false);
-      return result.error.errors[0].message; // 공백 포함 에러 메시지
+      return result.error.errors[0].message;
     }
     setIsusernameValusername(true);
     return "";
@@ -105,8 +102,8 @@ const Profile = ({ setPage }: ProfileProps) => {
   return (
     <div className="w-full h-full">
       <div
-        className={clsx("z-100 w-full h-full", {
-          husernameden: !isInterestDown,
+        className={clsx("w-full h-full", {
+          hidden: !isInterestDown,
         })}
       >
         <InterestModal setIsInterestDown={setIsInterestDown} />
@@ -114,7 +111,7 @@ const Profile = ({ setPage }: ProfileProps) => {
 
       <div
         className={clsx("flex flex-col items-center", {
-          husernameden: isInterestDown,
+          hidden: isInterestDown,
         })}
       >
         <Back setPage={setPage} backComponent={"signup"} />
@@ -135,33 +132,29 @@ const Profile = ({ setPage }: ProfileProps) => {
             <Input
               label="이름"
               value={nickname}
-              onChange={onChagenickname}
+              onChange={onChangeNickname}
               type="text"
               isValid={isnicknameValusername}
             />
             <Input
               label="아이디"
               value={username}
-              onChange={onChageusername}
+              onChange={onChangeusername}
               type="text"
               isValid={isusernameValusername}
             />
             <Input
               label="한 줄 소개"
               value={description}
-              onChange={onChageDescription}
+              onChange={onChangeDescription}
               type="text"
               isValid={true}
             />
             <div className="w-[327px] h-[65px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
               <div className="flex w-full">
-                <div className="h-[38px] w-[300px] flex items-center gap-[5px] overflow-x-scroll scrollbar-husernamee whitespace-nowrap">
-                  {signupData.interestList.map((label, index) => (
-                    <div key={index} onClick={() => removeInterest(label)}>
-                      <InterestBtnSml label={label} />
-                    </div>
-                  ))}
+                <div className="w-[300px] flex items-center">
+                  <InterestBtnList isScrollable={true} />
                 </div>
                 <button onClick={() => setIsInterestDown(!isInterestDown)}>
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
