@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
-import z from "zod";
+import { mailSchema, pwSchema } from "@/schema/signSchema";
 
 type SigninProps = {
   setPage: React.Dispatch<
@@ -12,21 +12,6 @@ type SigninProps = {
     >
   >;
 };
-
-const LoginSchema = z.object({
-  mail: z
-    .string()
-    .nonempty({ message: "메일을 입력해주세요." })
-    .email({ message: "올바르지 않은 메일 형식입니다." }),
-  pw: z
-    .string()
-    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
-    .nonempty({ message: "비밀번호를 입력해주세요." })
-    .regex(
-      /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/,
-      "올바르지 않은 비밀번호 형식입니다."
-    ),
-});
 
 const Signin = ({ setPage }: SigninProps) => {
   const [mail, setMail] = useState<string>("");
@@ -44,7 +29,7 @@ const Signin = ({ setPage }: SigninProps) => {
   }
 
   function validateMail() {
-    const result = LoginSchema.shape.mail.safeParse(mail);
+    const result = mailSchema.shape.mail.safeParse(mail);
     if (!result.success) {
       setIsMailValid(false);
       return result.error.errors[0].message;
@@ -54,7 +39,7 @@ const Signin = ({ setPage }: SigninProps) => {
   }
 
   function validatePw() {
-    const result = LoginSchema.shape.pw.safeParse(pw);
+    const result = pwSchema.shape.pw.safeParse(pw);
     if (!result.success) {
       setIsPwValid(false);
       return result.error.errors[0].message;

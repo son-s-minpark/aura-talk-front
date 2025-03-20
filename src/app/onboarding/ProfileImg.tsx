@@ -34,7 +34,7 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
     <div className="w-full h-full overflow-scroll">
       <Back setPage={setPage} backComponent={"profile"} />
       <div className="mt-[24px]">
-        <p className="text-[20px] font-bold text-white text-[18px] font-semibold mt-[12px] text-center leading-[20px]">
+        <p className="text-[20px] font-bold text-white  mt-[12px] text-center leading-[20px]">
           프로필 확인
         </p>
         <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">

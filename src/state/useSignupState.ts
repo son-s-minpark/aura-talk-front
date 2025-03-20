@@ -3,8 +3,8 @@ import { create } from "zustand";
 type SignupType = {
   mail: string;
   pw: string;
-  name: string;
-  id: string;
+  nickname: string;
+  username: string;
   description: string;
   interestList: string[];
 };
@@ -20,8 +20,8 @@ const useSignupState = create<SignupState>((set) => ({
   signupData: {
     mail: "",
     pw: "",
-    name: "",
-    id: "",
+    nickname: "",
+    username: "",
     description: "",
     interestList: [],
   },
