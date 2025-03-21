@@ -11,11 +11,11 @@ const SettingList = () => {
       <div className="w-full px-[25px] mt-[25px] flex flex-col gap-[30px]">
         <div className="flex">
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
-            <IoMdPerson className="w-[25px] h-[25px] text-[#787878] dark:text-[#BCBCBC]" />
+            <IoMdPerson className="w-[25px] h-[25px] text-[#787878] dark:text-lightGray" />
           </div>
           <div className="ml-[12px]">
             <p className="font-semibold text-[18px]"> 프로필 설정 </p>
-            <p className="text-[12px] text-[#797C7B]">
+            <p className="text-[12px] text-darkGray">
               이름, 한 줄 소개 등의 설정이 가능해요.
             </p>
           </div>
@@ -23,11 +23,11 @@ const SettingList = () => {
 
         <div className="flex">
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
-            <IoMdMoon className="w-[25px] h-[25px] text-[#787878] dark:text-[#BCBCBC]" />
+            <IoMdMoon className="w-[25px] h-[25px] text-[#787878] dark:text-lightGray" />
           </div>
           <div className="ml-[12px]">
             <p className="font-semibold text-[18px]"> 모드 변경 </p>
-            <p className="text-[12px] text-[#797C7B]">
+            <p className="text-[12px] text-darkGray">
               라이트모드, 다크모드로 전환할 수 있어요.
             </p>
           </div>
@@ -35,11 +35,11 @@ const SettingList = () => {
 
         <div className="flex">
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
-            <PiKeyFill className="w-[20px] h-[20px] text-[#787878] dark:text-[#BCBCBC]" />
+            <PiKeyFill className="w-[20px] h-[20px] text-[#787878] dark:text-lightGray" />
           </div>
           <div className="ml-[12px]">
             <p className="font-semibold text-[18px]"> 게정 관리 </p>
-            <p className="text-[12px] text-[#797C7B]">
+            <p className="text-[12px] text-darkGray">
               비밀번호 변경 등의 계정 관리가 가능해요.
             </p>
           </div>

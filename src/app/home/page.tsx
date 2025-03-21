@@ -53,8 +53,8 @@ const Page = () => {
           <div className="w-[301px] h-[29px] flex items-center justify-between">
             <button
               className={clsx({
-                "text-[#797C7B] dark:text-[#BCBCBC]": list != "chat",
-                "text-[#6EABFF] dark:text-[#8045FF]": list == "chat",
+                "text-darkGray dark:text-lightGray": list != "chat",
+                "text-pointBlue dark:text-pointPurple": list == "chat",
               })}
               onClick={() => setList("chat")}
             >
@@ -62,8 +62,8 @@ const Page = () => {
             </button>
             <button
               className={clsx({
-                "text-[#797C7B] dark:text-[#BCBCBC]": list != "friend",
-                "text-[#6EABFF] dark:text-[#8045FF]": list == "friend",
+                "text-darkGray dark:text-lightGray": list != "friend",
+                "text-pointBlue dark:text-pointPurple": list == "friend",
               })}
               onClick={() => setList("friend")}
             >
@@ -71,8 +71,8 @@ const Page = () => {
             </button>
             <button
               className={clsx({
-                "text-[#797C7B] dark:text-[#BCBCBC]": list != "setting",
-                "text-[#6EABFF] dark:text-[#8045FF]": list == "setting",
+                "text-darkGray dark:text-lightGray": list != "setting",
+                "text-pointBlue dark:text-pointPurple": list == "setting",
               })}
               onClick={() => setList("setting")}
             >

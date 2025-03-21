@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-pointBlue: "#6EABFF";
-  --color-pointPurple: "#8045FF";
-  --color-darkBg: "#2A2A2A";
-  --color-darkGray: "#797C7B";
-  --color-lightGray: "#BCBCBC";
+  --color-pointBlue: oklch(73.55% 0.1381 256.67);
+  --color-pointPurple: oklch(57.27% 0.255 290.47);
+  --color-darkBg: oklch(28.5% 0 0);
+  --color-darkGray: oklch(58.34% 0.0039 174.39);
+  --color-lightGray: oklch(79.52% 0 0);
 }
 
 .modal {
   z-index: 100;
-  background-color: "#505050";
+  background-color: oklch(43.13% 0 0);
 }
