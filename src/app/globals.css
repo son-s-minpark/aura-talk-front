@@ -11,4 +11,6 @@
 .modal {
   z-index: 100;
   background-color: oklch(43.13% 0 0);
+  opacity: 80%;
+  isolation: isolate;
 }
