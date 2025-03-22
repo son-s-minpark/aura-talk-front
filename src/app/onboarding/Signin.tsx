@@ -4,21 +4,16 @@ import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
+import { setPageType } from "@/type/onboarding/setPageType";
+import useAuth from "@/hooks/useAuth";
 
-type SigninProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const Signin = ({ setPage }: SigninProps) => {
+const Signin = ({ setPage }: setPageType) => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
+  const { useSigninMutation } = useAuth();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -67,12 +62,12 @@ const Signin = ({ setPage }: SigninProps) => {
     return true;
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!isFull()) {
       return;
     }
     if (isSigninValid()) {
-      // 로그인 코드
+      const res = await useSigninMutation.mutate({ mail, pw });
     }
   }
 

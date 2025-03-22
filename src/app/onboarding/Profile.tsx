@@ -4,21 +4,15 @@ import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
 import Back from "@/components/sign/Back";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/sign/InterestBtnList";
+import { setPageType } from "@/type/onboarding/setPageType";
+import useAuth from "@/hooks/useAuth";
 
-type ProfileProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const Profile = ({ setPage }: ProfileProps) => {
+const Profile = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();
   const [nickname, setnickname] = useState<string>(signupData.nickname);
   const [username, setusername] = useState<string>(signupData.username);
@@ -31,6 +25,7 @@ const Profile = ({ setPage }: ProfileProps) => {
     useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
+  const { useSignupMutation } = useAuth();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -93,6 +88,14 @@ const Profile = ({ setPage }: ProfileProps) => {
           nickname: nickname,
           username: username,
           description: description,
+        });
+        const res = useSignupMutation.mutate({
+          mail: signupData.mail,
+          pw: signupData.pw,
+          nickname: nickname,
+          username: username,
+          description: description,
+          interestList: signupData.interestList,
         });
         setPage("profileImg");
       }

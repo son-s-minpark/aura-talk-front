@@ -1,4 +1,4 @@
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";

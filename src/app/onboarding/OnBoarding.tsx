@@ -2,16 +2,9 @@ import React from "react";
 import Image from "next/image";
 import logoWhite from "../../../public/images/logo-white.png";
 import SignBtn from "@/components/sign/SignBtn";
+import { setPageType } from "@/type/onboarding/setPageType";
 
-type OnBoardingProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const OnBoarding = ({ setPage }: OnBoardingProps) => {
+const OnBoarding = ({ setPage }: setPageType) => {
   return (
     <div className="w-full h-full pt-[25px] px-[24px] overflow-scroll">
       <div className="-ml-[16px]">
@@ -24,7 +17,7 @@ const OnBoarding = ({ setPage }: OnBoardingProps) => {
         <p>Touch!</p>
       </div>
       <div className="text-[#999999] font-semibold mt-[16px]">
-        <p>관심사를 토대로 새로운 친구들과 소통하고</p>
+        <p>관심사를 토대로 친구들과 소통하고</p>
         <p>새로운 친구들도 사귀어서</p>
         <p>자신의 범위를 넓혀보세요!</p>
       </div>

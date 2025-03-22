@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/sign/Back";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
+import { setPageType } from "@/type/onboarding/setPageType";
 
-type SignupProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const Signup = ({ setPage }: SignupProps) => {
+const Signup = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();
   const [mail, setMail] = useState<string>(signupData.mail);
   const [pw, setPw] = useState<string>(signupData.pw);

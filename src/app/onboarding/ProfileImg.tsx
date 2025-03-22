@@ -3,18 +3,11 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Back from "@/components/sign/Back";
 import SignBtn from "@/components/sign/SignBtn";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import InterestBtnList from "@/components/sign/InterestBtnList";
+import { setPageType } from "@/type/onboarding/setPageType";
 
-type ProfileImgProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const ProfileImg = ({ setPage }: ProfileImgProps) => {
+const ProfileImg = ({ setPage }: setPageType) => {
   const [img, setImg] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);

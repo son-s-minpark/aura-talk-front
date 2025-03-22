@@ -1,17 +1,9 @@
 import { create } from "zustand";
-
-type SignupType = {
-  mail: string;
-  pw: string;
-  nickname: string;
-  username: string;
-  description: string;
-  interestList: string[];
-};
+import { signupType } from "@/type/sign/signupType";
 
 type SignupState = {
-  signupData: SignupType;
-  updateSignupState: (newData: Partial<SignupType>) => void;
+  signupData: signupType;
+  updateSignupState: (newData: Partial<signupType>) => void;
   addInterest: (interest: string) => void;
   removeInterest: (label: string) => void;
 };

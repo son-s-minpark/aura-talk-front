@@ -2,7 +2,7 @@
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import InterestData from "../../data/interestData.json";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import InterestBtnList from "./InterestBtnList";
 import { InterestBtnBig } from "./InterestBtn";
 
