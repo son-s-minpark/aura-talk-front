@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import logo from "../../../public/images/logo-none.png";
 import { IoSearch, IoNotifications, IoPersonAdd } from "react-icons/io5";
+import { redirect } from "next/navigation";
 
 const Header = () => {
   return (
@@ -13,7 +14,7 @@ const Header = () => {
         <button>
           <IoPersonAdd className="w-[22px] h-[22px]" />
         </button>
-        <button>
+        <button onClick={() => redirect("/search")}>
           <IoSearch className="w-[24px] h-[24px]" />
         </button>
         <button>
