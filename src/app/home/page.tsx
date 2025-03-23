@@ -14,7 +14,7 @@ const Page = () => {
     <div className="w-full h-full bg-black flex flex-col justify-between">
       <Header />
       <div className="dark:bg-darkBg bg-white rounded-t-[20px]">
-        <div className="h-[543px] w-full">
+        <div className="h-[543px] w-full pt-[46px]">
           {list == "chat" && <ChatList />}
           {list == "friend" && <FriendList />}
           {list == "setting" && <SettingList />}

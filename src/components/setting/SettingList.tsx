@@ -1,10 +1,42 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { IoMdMoon, IoMdPerson } from "react-icons/io";
 import { PiKeyFill } from "react-icons/pi";
+import ModeModal from "../modal/ModeModal";
+import AccountModal from "../modal/AccountModal";
+import ChangePwModal from "../modal/ChangePwModal";
+import QuitModal from "../modal/QuitModal";
+import LogoutModal from "../modal/LogoutModal";
+import RandomModal from "../modal/RandomModal";
+
+type modalType =
+  | "modeModal"
+  | "accountModal"
+  | "changePwModal"
+  | "logoutModal"
+  | "quitModal"
+  | "randomModal"
+  | "none";
 
 const SettingList = () => {
+  const [modal, setModal] = useState<modalType>("none");
   return (
     <div>
+      {modal == "none" ? null : (
+        <div
+          className="modal h-screen w-screen"
+          onClick={() => setModal("none")}
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            {modal == "modeModal" && <ModeModal />}
+            {modal == "accountModal" && <AccountModal setModal={setModal} />}
+            {modal == "changePwModal" && <ChangePwModal />}
+            {modal == "quitModal" && <QuitModal />}
+            {modal == "logoutModal" && <LogoutModal />}
+            {modal == "randomModal" && <RandomModal />}
+          </div>
+        </div>
+      )}
       <div className="w-full h-[102px] px-[22px] border-b-1 border-[#F3F6F6]">
         {/* 본인 프로필 */}
       </div>
@@ -21,7 +53,7 @@ const SettingList = () => {
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex" onClick={() => setModal("modeModal")}>
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
             <IoMdMoon className="w-[25px] h-[25px] text-[#787878] dark:text-lightGray" />
           </div>
@@ -33,7 +65,7 @@ const SettingList = () => {
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex" onClick={() => setModal("accountModal")}>
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
             <PiKeyFill className="w-[20px] h-[20px] text-[#787878] dark:text-lightGray" />
           </div>

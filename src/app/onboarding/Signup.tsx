@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
-import Back from "@/components/header/Back";
+import Back from "@/components/common/Back";
 import useSignupState from "@/state/useSignupState";
 import z from "zod";
 

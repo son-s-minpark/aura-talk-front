@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Back from "@/components/header/Back";
+import Back from "@/components/common/Back";
 import SignBtn from "@/components/sign/SignBtn";
 import useSignupState from "@/state/useSignupState";
 import InterestBtn from "@/components/sign/InterestBtn";

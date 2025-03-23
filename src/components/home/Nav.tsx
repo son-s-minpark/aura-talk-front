@@ -9,7 +9,7 @@ type NavProps = {
 
 const Nav = ({ setList, list }: NavProps) => {
   return (
-    <div className="w-full h-[48px] border-t-[1px] border-[#999999] flex items-center justify-center">
+    <div className="w-full h-[48px] border-t-[1px] border-[#999999] flex items-center justify-center bg-white">
       <div className="w-[301px] h-[29px] flex items-center justify-between">
         <button
           className={clsx({

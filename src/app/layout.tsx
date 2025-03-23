@@ -9,11 +9,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr">
-      <body
-        className="flex justify-center w-full h-[100vh]"
-        suppressHydrationWarning
-      >
-        <ThemeProvider attribute={"class"}>
+      <body className="flex justify-center w-full h-[100vh]">
+        <ThemeProvider attribute={"class"} defaultTheme="system">
           <div className="w-[375px] h-[812px]">{children}</div>
         </ThemeProvider>
       </body>
