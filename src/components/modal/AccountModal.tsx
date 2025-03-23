@@ -29,17 +29,17 @@ const AccountModal = ({ setModal }: AccountModalProps) => {
       </div>
       <div
         className="flex gap-[10px] items-center"
-        onClick={() => setModal("logoutModal")}
-      >
-        <MdLogout className="text-darkGray dark:text-lightGray w-[30px] h-[30px]" />
-        <p className="font-bold"> 로그아웃</p>
-      </div>
-      <div
-        className="flex gap-[10px] items-center"
         onClick={() => setModal("randomModal")}
       >
         <FaRandom className="text-darkGray dark:text-lightGray w-[30px] h-[30px]" />
         <p className="font-bold"> 랜덤채팅 설정</p>
+      </div>
+      <div
+        className="flex gap-[10px] items-center"
+        onClick={() => setModal("logoutModal")}
+      >
+        <MdLogout className="text-darkGray dark:text-lightGray w-[30px] h-[30px]" />
+        <p className="font-bold"> 로그아웃</p>
       </div>
       <div
         className="flex gap-[10px] items-center"

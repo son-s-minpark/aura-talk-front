@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import clsx from "clsx";
 
 const ToggleSwitch = () => {
   const [isOn, setIsOn] = useState(false);
@@ -7,14 +8,25 @@ const ToggleSwitch = () => {
   return (
     <button
       onClick={() => setIsOn(!isOn)}
-      className={`relative grid place-items-center w-14 h-7 rounded-full p-1 transition-colors duration-300 ${
-        isOn ? "bg-green-500" : "bg-gray-300"
-      }`}
+      className={clsx(
+        "relative grid place-items-center w-[46px] h-[29px] rounded-full p-1 transition-colors duration-300 ml-[32px]",
+        {
+          "bg-darkGray dark:bg-lightGray": isOn,
+          "bg-transparent": !isOn,
+          "border-4 border-darkGray dark:border-lightGray": true,
+        }
+      )}
     >
       <div
-        className={`w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-300 ${
-          isOn ? "translate-x-7" : "translate-x-0"
-        }`}
+        className={clsx(
+          "w-[15px] h-[15px] rounded-full shadow-md transition-all duration-300 absolute",
+          {
+            "bg-white": isOn,
+            "bg-darkGray": !isOn,
+            "left-[calc(100%_-_1.25rem)]": isOn,
+            "left-0": !isOn,
+          }
+        )}
       />
     </button>
   );
