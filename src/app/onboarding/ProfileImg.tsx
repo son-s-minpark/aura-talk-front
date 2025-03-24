@@ -3,23 +3,15 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Back from "@/components/common/Back";
 import SignBtn from "@/components/sign/SignBtn";
-import useSignupState from "@/state/useSignupState";
-import InterestBtn from "@/components/sign/InterestBtn";
+import useSignupState from "@/state/signState/useSignupState";
+import InterestBtnList from "@/components/sign/InterestBtnList";
+import { setPageType } from "@/type/onboarding/setPageType";
 
-type ProfileImgProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const ProfileImg = ({ setPage }: ProfileImgProps) => {
+const ProfileImg = ({ setPage }: setPageType) => {
   const [img, setImg] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const { signupData, removeInterest } = useSignupState();
-  const { InterestBtnSml } = InterestBtn;
+  const { signupData } = useSignupState();
 
   async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target?.files ? e.target.files[0] : null;
@@ -79,13 +71,13 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
             사용자 이름
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.name}
+            {signupData.nickname}
           </p>
         </div>
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.id}
+            {signupData.username}
           </p>
         </div>
         <div>
@@ -99,11 +91,7 @@ const ProfileImg = ({ setPage }: ProfileImgProps) => {
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">관심사</p>
           <div className="w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.interestList.map((label, index) => (
-              <div key={index} onClick={() => removeInterest(label)}>
-                <InterestBtnSml label={label} />
-              </div>
-            ))}
+            <InterestBtnList isScrollable={true} />
           </div>
         </div>
       </div>

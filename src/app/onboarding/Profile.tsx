@@ -4,95 +4,73 @@ import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
 import Back from "@/components/common/Back";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
-import InterestBtn from "@/components/sign/InterestBtn";
-import { z } from "zod";
+import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
+import InterestBtnList from "@/components/sign/InterestBtnList";
+import { setPageType } from "@/type/onboarding/setPageType";
+import useAuth from "@/hooks/useAuth";
 
-type ProfileProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const ProfileSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "이름은 1글자 이상이어야 합니다." })
-    .max(15, { message: "이름은 15자 이하여야 합니다." })
-    .refine((val) => !val.includes(" "), {
-      message: "이름에 공백이 포함되어서는 안 됩니다.",
-    }),
-
-  id: z
-    .string()
-    .min(3, { message: "아이디는 1글자 이상이어야 합니다." })
-    .max(15, { message: "아이디는 15자 이하여야 합니다." })
-    .refine((val) => !val.includes(" "), {
-      message: "이름에 공백이 포함되어서는 안 됩니다.",
-    }),
-});
-
-const Profile = ({ setPage }: ProfileProps) => {
-  const { updateSignupState, signupData, removeInterest } = useSignupState();
-  const [name, setName] = useState<string>(signupData.name);
-  const [id, setId] = useState<string>(signupData.id);
+const Profile = ({ setPage }: setPageType) => {
+  const { updateSignupState, signupData } = useSignupState();
+  const [nickname, setnickname] = useState<string>(signupData.nickname);
+  const [username, setusername] = useState<string>(signupData.username);
   const [description, setDescription] = useState<string>(
     signupData.description
   );
-  const [isNameValid, setIsNameValid] = useState<boolean>(true);
-  const [isIdValid, setIsIdValid] = useState<boolean>(true);
+  const [isnicknameValusername, setIsnicknameValusername] =
+    useState<boolean>(true);
+  const [isusernameValusername, setIsusernameValusername] =
+    useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
-
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
+  const { useSignupMutation } = useAuth();
 
-  const { InterestBtnSml } = InterestBtn;
-
-  function onChageName(e: React.ChangeEvent<HTMLInputElement>) {
-    setName(e.target.value);
+  function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
+    setnickname(e.target.value);
   }
 
-  function onChageId(e: React.ChangeEvent<HTMLInputElement>) {
-    setId(e.target.value);
+  function onChangeusername(e: React.ChangeEvent<HTMLInputElement>) {
+    setusername(e.target.value);
   }
 
-  function onChageDescription(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeDescription(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
   }
   function isFull() {
-    return name !== "" && id !== "" && signupData.interestList.length !== 0;
+    return (
+      nickname !== "" && username !== "" && signupData.interestList.length !== 0
+    );
   }
-  function validateName() {
-    const result = ProfileSchema.shape.name.safeParse(name);
+  function valusernameatenickname() {
+    const result = nicknameSchema.shape.nickname.safeParse(nickname);
     if (!result.success) {
-      setIsNameValid(false);
-      return result.error.errors[0].message; // 공백 포함 에러 메시지
+      setIsnicknameValusername(false);
+      return result.error.errors[0].message;
     }
-    setIsNameValid(true);
+    setIsnicknameValusername(true);
     return "";
   }
 
-  function validateId() {
-    const result = ProfileSchema.shape.id.safeParse(id);
+  function valusernameateusername() {
+    const result = usernameSchema.shape.username.safeParse(username);
     if (!result.success) {
-      setIsIdValid(false);
-      return result.error.errors[0].message; // 공백 포함 에러 메시지
+      setIsusernameValusername(false);
+      return result.error.errors[0].message;
     }
-    setIsIdValid(true);
+    setIsusernameValusername(true);
     return "";
   }
 
-  function isProfileValid() {
-    const nameError = validateName();
-    const idError = validateId();
-    if (nameError || idError) {
+  function isProfileValusername() {
+    const nicknameError = valusernameatenickname();
+    const usernameError = valusernameateusername();
+    if (nicknameError || usernameError) {
       setErrMsg(
-        nameError && idError
+        nicknameError && usernameError
           ? "이름과 아이디의 양식이 올바르지 않습니다."
-          : nameError || idError
+          : nicknameError || usernameError
       );
       return false;
     }
@@ -105,11 +83,19 @@ const Profile = ({ setPage }: ProfileProps) => {
       // 빈 값이 있을 때 아무것도 하지 않음
       return;
     } else {
-      if (isProfileValid()) {
+      if (isProfileValusername()) {
         updateSignupState({
-          name: name,
-          id: id,
+          nickname: nickname,
+          username: username,
           description: description,
+        });
+        const res = useSignupMutation.mutate({
+          mail: signupData.mail,
+          pw: signupData.pw,
+          nickname: nickname,
+          username: username,
+          description: description,
+          interestList: signupData.interestList,
         });
         setPage("profileImg");
       }
@@ -119,7 +105,7 @@ const Profile = ({ setPage }: ProfileProps) => {
   return (
     <div className="w-full h-full">
       <div
-        className={clsx("z-100 w-full h-full", {
+        className={clsx("w-full h-full", {
           hidden: !isInterestDown,
         })}
       >
@@ -148,34 +134,30 @@ const Profile = ({ setPage }: ProfileProps) => {
           <div>
             <Input
               label="이름"
-              value={name}
-              onChange={onChageName}
+              value={nickname}
+              onChange={onChangeNickname}
               type="text"
-              isValid={isNameValid}
+              isValid={isnicknameValusername}
             />
             <Input
               label="아이디"
-              value={id}
-              onChange={onChageId}
+              value={username}
+              onChange={onChangeusername}
               type="text"
-              isValid={isIdValid}
+              isValid={isusernameValusername}
             />
             <Input
               label="한 줄 소개"
               value={description}
-              onChange={onChageDescription}
+              onChange={onChangeDescription}
               type="text"
               isValid={true}
             />
             <div className="w-[327px] h-[65px] font-bold mt-[30px] border-b-1">
               <p>관심사</p>
               <div className="flex w-full">
-                <div className="h-[38px] w-[300px] flex items-center gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
-                  {signupData.interestList.map((label, index) => (
-                    <div key={index} onClick={() => removeInterest(label)}>
-                      <InterestBtnSml label={label} />
-                    </div>
-                  ))}
+                <div className="w-[300px] flex items-center">
+                  <InterestBtnList isScrollable={true} />
                 </div>
                 <button onClick={() => setIsInterestDown(!isInterestDown)}>
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />

@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
-import InterestBtn from "./InterestBtn";
 import InterestData from "../../data/interestData.json";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
+import InterestBtnList from "./InterestBtnList";
+import { InterestBtnBig } from "./InterestBtn";
 
 type InterestListProps = {
   [key: string]: string[];
@@ -14,19 +15,14 @@ type InterestModalProps = {
 };
 
 const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
-  const { signupData, removeInterest } = useSignupState();
+  const { signupData } = useSignupState();
   const InterestDataTyped: InterestListProps = InterestData;
-  const { InterestBtnBig, InterestBtnSml } = InterestBtn;
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-scroll">
       <div className="flex w-[327px] h-[50px] font-bold mt-[39px] border-b-1 text-white items-end">
-        <div className="h-[38px] w-[300px] mb-[6px] flex-none flex gap-[5px] overflow-x-scroll scrollbar-hide whitespace-nowrap">
-          {signupData.interestList.map((label, index) => (
-            <div key={index} onClick={() => removeInterest(label)}>
-              <InterestBtnSml label={label} />
-            </div>
-          ))}
+        <div className="h-[38px] w-[300px] flex-none flex">
+          <InterestBtnList isScrollable={true} />
         </div>
         <button
           className="mb-[7px] text-[#999999]"
@@ -34,19 +30,6 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
         >
           <IoIosArrowUp className="w-[20px] h-[20px]" />
         </button>
-      </div>
-
-      <div className="w-full  px-[26px]">
-        <div className="mt-[32px] flex gap-[19px] mb-[33px]">
-          {Object.keys(InterestDataTyped).map((category) => (
-            <div
-              key={category}
-              className="text-[24px] font-bold text-[#999999] "
-            >
-              {category}
-            </div>
-          ))}
-        </div>
       </div>
 
       <div className="flex flex-col items-start px-[17px]">

@@ -2,7 +2,7 @@
 import { FaCheck, FaPlus } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
-import useSignupState from "@/state/useSignupState";
+import useSignupState from "@/state/signState/useSignupState";
 import { useState } from "react";
 
 type InterestBtnProps = {
@@ -10,7 +10,7 @@ type InterestBtnProps = {
   selected: boolean;
 };
 
-const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
+export const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const { addInterest, removeInterest } = useSignupState();
   function toggleInterest() {
@@ -42,7 +42,7 @@ const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
   );
 };
 
-const InterestBtnSml = ({ label }: { label: string }) => {
+export const InterestBtnSml = ({ label }: { label: string }) => {
   return (
     <button className="flex px-[10px] gap-[2px] py-[1px] bg-transparent border-1 rounded-[20px] text-[12px] items-center">
       {label}
@@ -50,7 +50,3 @@ const InterestBtnSml = ({ label }: { label: string }) => {
     </button>
   );
 };
-
-const InterestBtn = { InterestBtnBig, InterestBtnSml };
-
-export default InterestBtn;

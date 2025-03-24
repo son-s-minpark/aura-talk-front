@@ -1,17 +1,9 @@
 import { create } from "zustand";
-
-type SignupType = {
-  mail: string;
-  pw: string;
-  name: string;
-  id: string;
-  description: string;
-  interestList: string[];
-};
+import { signupType } from "@/type/sign/signupType";
 
 type SignupState = {
-  signupData: SignupType;
-  updateSignupState: (newData: Partial<SignupType>) => void;
+  signupData: signupType;
+  updateSignupState: (newData: Partial<signupType>) => void;
   addInterest: (interest: string) => void;
   removeInterest: (label: string) => void;
 };
@@ -20,8 +12,8 @@ const useSignupState = create<SignupState>((set) => ({
   signupData: {
     mail: "",
     pw: "",
-    name: "",
-    id: "",
+    nickname: "",
+    username: "",
     description: "",
     interestList: [],
   },

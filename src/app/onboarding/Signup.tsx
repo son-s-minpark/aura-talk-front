@@ -2,36 +2,11 @@ import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import Back from "@/components/common/Back";
-import useSignupState from "@/state/useSignupState";
-import z from "zod";
+import useSignupState from "@/state/signState/useSignupState";
+import { mailSchema, pwSchema } from "@/schema/signSchema";
+import { setPageType } from "@/type/onboarding/setPageType";
 
-type SignupProps = {
-  setPage: React.Dispatch<
-    React.SetStateAction<
-      "onBoarding" | "signin" | "signup" | "profile" | "profileImg"
-    >
-  >;
-};
-
-const SignupSchema = z.object({
-  mail: z
-    .string()
-    .nonempty({ message: "메일을 입력해주세요." })
-    .email({ message: "올바르지 않은 메일 형식입니다." }),
-  pw: z
-    .string()
-    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
-    .nonempty({ message: "비밀번호를 입력해주세요." })
-    .regex(
-      /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/,
-      "비밀번호는 특수문자, 대문자, 숫자가 포함되어야 합니다."
-    ),
-  checkPw: z
-    .string()
-    .nonempty({ message: "비밀번호 확인 창에 다시 입력해주세요." }),
-});
-
-const Signup = ({ setPage }: SignupProps) => {
+const Signup = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();
   const [mail, setMail] = useState<string>(signupData.mail);
   const [pw, setPw] = useState<string>(signupData.pw);
@@ -55,7 +30,7 @@ const Signup = ({ setPage }: SignupProps) => {
   }
 
   function validateMail() {
-    const result = SignupSchema.shape.mail.safeParse(mail);
+    const result = mailSchema.shape.mail.safeParse(mail);
     if (!result.success) {
       setIsMailValid(false);
       return result.error.errors[0].message;
@@ -65,7 +40,7 @@ const Signup = ({ setPage }: SignupProps) => {
   }
 
   function validatePw() {
-    const result = SignupSchema.shape.pw.safeParse(pw);
+    const result = pwSchema.shape.pw.safeParse(pw);
     if (!result.success) {
       setIsPwValid(false);
       return result.error.errors[0].message;
