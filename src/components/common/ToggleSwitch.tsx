@@ -2,12 +2,26 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-const ToggleSwitch = () => {
+type ToggleSwitchProps = {
+  handleOn: () => void;
+  handleOff: () => void;
+};
+
+const ToggleSwitch = ({ handleOn, handleOff }: ToggleSwitchProps) => {
   const [isOn, setIsOn] = useState(false);
+
+  const handleToggle = () => {
+    setIsOn(!isOn);
+    if (!isOn) {
+      handleOn();
+    } else {
+      handleOff();
+    }
+  };
 
   return (
     <button
-      onClick={() => setIsOn(!isOn)}
+      onClick={handleToggle}
       className={clsx(
         "relative grid place-items-center w-[46px] h-[29px] rounded-full p-1 transition-colors duration-300 ml-[32px]",
         {

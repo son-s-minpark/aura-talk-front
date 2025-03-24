@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
   --color-pointBlue: oklch(73.55% 0.1381 256.67);
   --color-pointPurple: oklch(57.27% 0.255 290.47);
@@ -19,9 +21,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.modal-content {
-  background-color: white;
-  border-radius: 20px;
 }

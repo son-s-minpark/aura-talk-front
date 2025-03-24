@@ -19,7 +19,7 @@ type AccountModalProps = {
 
 const AccountModal = ({ setModal }: AccountModalProps) => {
   return (
-    <div className="modal-content flex flex-col gap-[25px] w-[281px] py-[25px] pl-[25px]">
+    <div className="modal-content flex flex-col gap-[25px] w-[281px] py-[25px] pl-[25px] bg-white dark:bg-darkBg rounded-[12px]">
       <div
         className="flex gap-[10px] items-center"
         onClick={() => setModal("changePwModal")}

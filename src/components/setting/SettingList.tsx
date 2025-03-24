@@ -23,11 +23,8 @@ const SettingList = () => {
   return (
     <div>
       {modal == "none" ? null : (
-        <div
-          className="modal h-screen w-screen"
-          onClick={() => setModal("none")}
-        >
-          <div onClick={(e) => e.stopPropagation()}>
+        <div className="modal h-screen" onClick={() => setModal("none")}>
+          <div onClick={(e) => e.stopPropagation()} className="dark:bg-darkBg">
             {modal == "modeModal" && <ModeModal />}
             {modal == "accountModal" && <AccountModal setModal={setModal} />}
             {modal == "changePwModal" && <ChangePwModal />}

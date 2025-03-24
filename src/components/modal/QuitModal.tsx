@@ -4,7 +4,7 @@ import { MdPersonOff } from "react-icons/md";
 
 const QuitModal = () => {
   return (
-    <div className="modal-content w-[281px] h-[139px] py-[28px] px-[22px]">
+    <div className="modal-content w-[281px] h-[139px] py-[28px] px-[22px] bg-white dark:bg-darkBg rounded-[12px]">
       <div className="flex">
         <MdPersonOff className="w-[30px] h-[30px] text-[#787878] dark:text-lightGray" />
         <p className="text-[20px] font-bold ml-[14px]">회원탈퇴하기</p>
