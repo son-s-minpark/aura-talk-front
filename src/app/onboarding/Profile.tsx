@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
 import InterestModal from "@/components/sign/InterestModal";
-import Back from "@/components/sign/Back";
+import Back from "@/components/common/Back";
 import useSignupState from "@/state/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";

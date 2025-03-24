@@ -70,7 +70,7 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
       </div>
       <div className="w-full flex justify-end mr-[21px] mb-[35px]">
         <button
-          className="h-[38px] w-[65px] rounded-[20px] bg-[#8045FF] text-white font-bold"
+          className="h-[38px] w-[65px] rounded-[20px] bg-pointPurple text-white font-bold"
           onClick={() => setIsInterestDown(false)}
         >
           완료

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Input from "@/components/sign/Input";
 import SignBtn from "@/components/sign/SignBtn";
-import Back from "@/components/sign/Back";
+import Back from "@/components/common/Back";
 import z from "zod";
 
 type SigninProps = {
