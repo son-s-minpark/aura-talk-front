@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { signupType } from "@/type/sign/signupType";
 import { signinType } from "@/type/sign/signiniType";
-// import React from 'react';
+import axiosInstance from "@/api/axiosInstance";
 
 const API = "/api/users";
 
@@ -10,35 +9,23 @@ const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signupType) => {
-      return axios.post(API, signupData);
+      return axiosInstance.post(API, signupData);
     },
     onSuccess: (res) => {
-      if (res.status == 201) {
-        return res.data;
-      } else {
-        return res;
-      }
+      return res;
     },
-    onError: (err) => {
-      return err;
-    },
+    onError: (err) => console.error(err),
   });
 
   // 로그인 요청
   const useSigninMutation = useMutation({
     mutationFn: async (signinData: signinType) => {
-      return axios.post(`${API}/login`, signinData);
+      return axiosInstance.post(`${API}/login`, signinData);
     },
     onSuccess: (res) => {
-      if (res.status == 201) {
-        return res.data;
-      } else {
-        return res;
-      }
+      return res;
     },
-    onError: (err) => {
-      return err;
-    },
+    onError: (err) => console.error(err),
   });
   return { useSigninMutation, useSignupMutation };
 };
