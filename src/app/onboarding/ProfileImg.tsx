@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Back from "@/components/sign/Back";
+import Back from "@/components/common/Back";
 import SignBtn from "@/components/sign/SignBtn";
 import useSignupState from "@/state/signState/useSignupState";
 import InterestBtnList from "@/components/sign/InterestBtnList";
@@ -26,7 +26,7 @@ const ProfileImg = ({ setPage }: setPageType) => {
     <div className="w-full h-full overflow-scroll">
       <Back setPage={setPage} backComponent={"profile"} />
       <div className="mt-[24px]">
-        <p className="text-[20px] font-bold text-white  mt-[12px] text-center leading-[20px]">
+        <p className="text-[20px] font-bold text-white mt-[12px] text-center leading-[20px]">
           프로필 확인
         </p>
         <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
@@ -46,13 +46,13 @@ const ProfileImg = ({ setPage }: setPageType) => {
               className="object-cover w-[100px] h-[100px] rounded-full"
             />
           ) : (
-            <div className="w-[100px] h-[100px] rounded-full border-1 text-[#797C7B]" />
+            <div className="w-[100px] h-[100px] rounded-full border-1 text-darkGray" />
           )}
         </div>
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-[#797C7B] rounded-[20px] text-[14px]"
+          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-darkGray rounded-[20px] text-[14px]"
         >
           편집
         </button>
@@ -67,7 +67,7 @@ const ProfileImg = ({ setPage }: setPageType) => {
 
       <div className="flex flex-col mt-[55px] ml-[37px] gap-[22px]">
         <div>
-          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">
+          <p className="text-lightGray text-[14px] leading-[14px]">
             사용자 이름
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
@@ -75,13 +75,13 @@ const ProfileImg = ({ setPage }: setPageType) => {
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">아이디</p>
+          <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
             {signupData.username}
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">
+          <p className="text-lightGray text-[14px] leading-[14px]">
             한 줄 소개
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
@@ -89,8 +89,8 @@ const ProfileImg = ({ setPage }: setPageType) => {
           </p>
         </div>
         <div>
-          <p className="text-[#BCBCBC] text-[14px] leading-[14px]">관심사</p>
-          <div className="w-[300px] mb-[6px] flex-none flex flex-wrap text-white text-[18px] font-semibold mt-[12px]">
+          <p className="text-lightGray text-[14px] leading-[14px]">관심사</p>
+          <div className="w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold mt-[12px]">
             <InterestBtnList isScrollable={true} />
           </div>
         </div>

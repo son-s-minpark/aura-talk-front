@@ -11,7 +11,7 @@ const SignBtn = ({ value, isFull, onClick }: SignBtnProps) => {
   return (
     <button
       className={clsx("w-[327px] h-[48px] rounded-[16px] border-1 mb-[49px]", {
-        "bg-white text-[#797C7B]": isFull,
+        "bg-white text-darkGray": isFull,
         "bg-transparent text-white": !isFull,
       })}
       onClick={onClick}
