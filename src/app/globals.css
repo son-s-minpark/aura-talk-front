@@ -3,12 +3,23 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  --color-pointBlue: oklch(73.55% 0.1381 256.67);
-  --color-pointPurple: oklch(57.27% 0.255 290.47);
-  --color-darkBg: oklch(28.5% 0 0);
-  --color-darkGray: oklch(58.34% 0.0039 174.39);
-  --color-lightGray: oklch(79.52% 0 0);
+  --color-commonGray: oklch(58.34% 0.0039 174.39);
 }
+
+@layer base {
+  [data-theme="light"] {
+    --color-background: oklch(100% 0 0);
+    --color-point: oklch(73.55% 0.1381 256.67);
+    --color-gray: oklch(57.27% 0 0);
+    /* -- */
+  }
+  [data-theme="dark"] {
+    --color-background: oklch(28.5% 0 0);
+    --color-point: oklch(57.27% 0.255 290.47);
+    --color-gray: oklch(79.52% 0 0);
+  }
+}
+
 .modal {
   width: 100%;
   height: 100%;

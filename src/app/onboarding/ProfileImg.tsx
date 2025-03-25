@@ -46,13 +46,13 @@ const ProfileImg = ({ setPage }: setPageType) => {
               className="object-cover w-[100px] h-[100px] rounded-full"
             />
           ) : (
-            <div className="w-[100px] h-[100px] rounded-full border-1 text-darkGray" />
+            <div className="w-[100px] h-[100px] rounded-full border-1 text-commonGray" />
           )}
         </div>
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-darkGray rounded-[20px] text-[14px]"
+          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
         >
           편집
         </button>

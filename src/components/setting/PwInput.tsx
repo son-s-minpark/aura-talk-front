@@ -16,13 +16,13 @@ const PwInput = ({ isValid, label, value, onChange }: pwInputProp) => {
     <div
       className={clsx(" h-[50px] font-bold mt-[15px] border-b-1", {
         "border-[#C81919]": !isValid,
-        "text-black dark:text-white": isValid,
+        "": isValid,
       })}
     >
       <p
         className={clsx({
           "text-[#C81919]": !isValid,
-          "text-black dark:text-white": isValid,
+          "": isValid,
         })}
       >
         {label}
