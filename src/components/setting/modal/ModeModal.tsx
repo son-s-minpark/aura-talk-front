@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { IoMdMoon, IoMdSunny } from "react-icons/io";
-import ToggleSwitch from "../common/ToggleSwitch";
+import ToggleSwitch from "../../common/ToggleSwitch";
 import { useTheme } from "next-themes";
 
 const ModeModal = () => {
@@ -12,7 +12,7 @@ const ModeModal = () => {
   }
 
   return (
-    <div className="modal-content w-[281px] h-[139px] py-[28px] px-[22px] rounded-[12px] bg-[var(--color-background)]">
+    <div className=" w-[281px] h-[139px] py-[28px] px-[22px] rounded-[12px] bg-[var(--color-background)]">
       <div className="flex">
         {isThemeDark() ? (
           <IoMdSunny className="w-[30px] h-[30px] text-[#787878] dark:text-[var(--color-gray)]" />

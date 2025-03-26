@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { IoMdMoon, IoMdPerson, IoMdSunny } from "react-icons/io";
 import { PiKeyFill } from "react-icons/pi";
-import ModeModal from "../modal/ModeModal";
-import AccountModal from "../modal/AccountModal";
-import ChangePwModal from "../modal/ChangePwModal";
-import QuitModal from "../modal/QuitModal";
-import LogoutModal from "../modal/LogoutModal";
-import RandomModal from "../modal/RandomModal";
+import ModeModal from "./modal/ModeModal";
+import AccountModal from "./modal/AccountModal";
+import ChangePwModal from "./modal/ChangePwModal";
+import QuitModal from "./modal/QuitModal";
+import LogoutModal from "./modal/LogoutModal";
+import RandomModal from "./modal/RandomModal";
 import { useTheme } from "next-themes";
 
 type modalType =
@@ -25,7 +25,10 @@ const SettingList = () => {
   return (
     <div>
       {modal == "none" ? null : (
-        <div className="modal h-screen" onClick={() => setModal("none")}>
+        <div
+          className="modal h-screen items-center justify-center"
+          onClick={() => setModal("none")}
+        >
           <div onClick={(e) => e.stopPropagation()}>
             {modal == "modeModal" && <ModeModal />}
             {modal == "accountModal" && <AccountModal setModal={setModal} />}
