@@ -1,17 +1,18 @@
 "use client";
+
 import React, { useState } from "react";
 import SelectBtn from "@/components/common/SelectBtn";
 import { IoMdPerson } from "react-icons/io";
 import { IoPeople } from "react-icons/io5";
-
 import { FaRandom } from "react-icons/fa";
 import clsx from "clsx";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type selectedChatType = "friend" | "group" | "random";
 
 const CreateChatModal = () => {
   const [chatType, setChatType] = useState<selectedChatType>("friend");
+  const router = useRouter();
   return (
     <div className="bg-[var(--color-background)] w-[375px] h-[215px] rounded-[20px]">
       <p className="font-bold pt-[23px] pl-[18px] text-[18px] leading-[25px]">
@@ -52,7 +53,7 @@ const CreateChatModal = () => {
       <div className="flex justify-end mt-[20px] mr-[17px]">
         <SelectBtn
           label="완료"
-          onClick={() => redirect(`createchat/${chatType}`)}
+          onClick={() => router.push(`/createchat?type=${chatType}`)}
         />
       </div>
     </div>

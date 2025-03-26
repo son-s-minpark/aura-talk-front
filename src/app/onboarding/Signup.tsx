@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Input from "@/components/sign/Input";
-import SignBtn from "@/components/sign/SignBtn";
-import Back from "@/components/common/Back";
+import Input from "@/components/onboarding/Input";
+import SignBtn from "@/components/onboarding/SignBtn";
+import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
 import { setPageType } from "@/type/onboarding/setPageType";

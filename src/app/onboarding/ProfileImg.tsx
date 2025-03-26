@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Back from "@/components/common/Back";
-import SignBtn from "@/components/sign/SignBtn";
+import Back from "@/components/onboarding/Back";
+import SignBtn from "@/components/onboarding/SignBtn";
 import useSignupState from "@/state/signState/useSignupState";
-import InterestBtnList from "@/components/sign/InterestBtnList";
+import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { setPageType } from "@/type/onboarding/setPageType";
 
 const ProfileImg = ({ setPage }: setPageType) => {
