@@ -103,7 +103,7 @@ const Profile = ({ setPage }: setPageType) => {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full text-white">
       <div
         className={clsx("w-full h-full", {
           hidden: !isInterestDown,

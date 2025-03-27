@@ -3,10 +3,11 @@ import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 type BackProps = {
+  setPage: setPageType["setPage"];
   backComponent: "onBoarding" | "signin" | "signup" | "profile";
 };
 
-const Back = (setPage: setPageType, backComponent: BackProps) => {
+const Back = ({ setPage, backComponent }: BackProps) => {
   return (
     <div className="h-[76px] w-full flex items-center">
       <button

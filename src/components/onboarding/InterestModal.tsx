@@ -32,7 +32,7 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
         </button>
       </div>
 
-      <div className="flex flex-col items-start px-[17px]">
+      <div className="flex flex-col items-start px-[17px] mt-[38px]">
         {Object.keys(InterestDataTyped).map((category) => (
           <div key={category} className="w-full mb-[81px]">
             <div className="text-white text-[20px] font-bold">{category}</div>
