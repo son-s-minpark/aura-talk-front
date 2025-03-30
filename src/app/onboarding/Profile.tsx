@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import Input from "@/components/sign/Input";
-import SignBtn from "@/components/sign/SignBtn";
-import InterestModal from "@/components/sign/InterestModal";
-import Back from "@/components/common/Back";
+import Input from "@/components/onboarding/Input";
+import SignBtn from "@/components/onboarding/SignBtn";
+import InterestModal from "@/components/onboarding/InterestModal";
+import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
-import InterestBtnList from "@/components/sign/InterestBtnList";
+import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { setPageType } from "@/type/onboarding/setPageType";
 import useAuth from "@/hooks/useAuth";
 
@@ -103,7 +103,7 @@ const Profile = ({ setPage }: setPageType) => {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full text-white">
       <div
         className={clsx("w-full h-full", {
           hidden: !isInterestDown,

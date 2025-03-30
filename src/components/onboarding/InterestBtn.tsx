@@ -27,13 +27,13 @@ export const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
       className={clsx(
         "flex border-[3.5px] px-[13px] py-[0.5px] items-center rounded-[20px]",
         {
-          "border-pointPurple": isSelected,
+          "border-[var(--color-point)]": isSelected,
           "border-[#999999]": !isSelected,
         }
       )}
     >
       {isSelected ? (
-        <FaCheck className="text-pointPurple" />
+        <FaCheck className="text-[var(--color-point)]" />
       ) : (
         <FaPlus className="text-[#999999]" />
       )}

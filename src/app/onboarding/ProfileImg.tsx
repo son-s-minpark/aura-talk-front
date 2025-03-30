@@ -1,29 +1,17 @@
 "use client";
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import Back from "@/components/common/Back";
-import SignBtn from "@/components/sign/SignBtn";
+import React from "react";
+import Back from "@/components/onboarding/Back";
+import SignBtn from "@/components/onboarding/SignBtn";
 import useSignupState from "@/state/signState/useSignupState";
-import InterestBtnList from "@/components/sign/InterestBtnList";
+import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { setPageType } from "@/type/onboarding/setPageType";
+import AddImage from "@/components/common/AddImage";
 
 const ProfileImg = ({ setPage }: setPageType) => {
-  const [img, setImg] = useState<File | null>(null);
-  const [prevImg, setPrevImg] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement | null>(null);
   const { signupData } = useSignupState();
 
-  async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target?.files ? e.target.files[0] : null;
-    if (file) {
-      const prevUrl = URL.createObjectURL(file);
-      setPrevImg(prevUrl);
-      setImg(file);
-    }
-  }
-
   return (
-    <div className="w-full h-full overflow-scroll">
+    <div className="w-full h-full overflow-scroll text-white">
       <Back setPage={setPage} backComponent={"profile"} />
       <div className="mt-[24px]">
         <p className="text-[20px] font-bold text-white mt-[12px] text-center leading-[20px]">
@@ -34,37 +22,9 @@ const ProfileImg = ({ setPage }: setPageType) => {
           <p>다 맞게 작성했나요?</p>
         </div>
       </div>
-
-      <div className="flex flex-col items-center">
-        <div className="h-[100px] w-[100px] mt-[35px] mb-[21px]">
-          {prevImg ? (
-            <Image
-              src={prevImg}
-              alt="미리보기 이미지"
-              width={100}
-              height={100}
-              className="object-cover w-[100px] h-[100px] rounded-full"
-            />
-          ) : (
-            <div className="w-[100px] h-[100px] rounded-full border-1 text-commonGray" />
-          )}
-        </div>
-        <button
-          type="button"
-          onClick={() => fileRef.current?.click()}
-          className="flex justify-center items-center w-[54px] h-[24px] bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
-        >
-          편집
-        </button>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          onChange={addImage}
-          className="hidden"
-        />
+      <div className="mt-[35px] mb-[15px]">
+        <AddImage imgSize={100} btnHeight={24} btnWidth={54} />
       </div>
-
       <div className="flex flex-col mt-[55px] ml-[37px] gap-[22px]">
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">

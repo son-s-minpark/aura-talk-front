@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdKey } from "react-icons/io";
-import PwInput from "../setting/PwInput";
-import SelectBtn from "../common/SelectBtn";
+import PwInput from "../PwInput";
+import SelectBtn from "../../common/SelectBtn";
 
 const ChangePwModal = () => {
   const [currPw, setCurrPw] = useState<string>("");
@@ -24,7 +24,7 @@ const ChangePwModal = () => {
   }
 
   return (
-    <div className="modal-content w-[281px] h-[335px] bg-[var(--color-background)] rounded-[12px]">
+    <div className=" w-[281px] h-[335px] bg-[var(--color-background)] rounded-[12px]">
       <div className="flex items-center pt-[28px] pl-[25px] gap-[10px]">
         <IoMdKey className=" w-[30px] h-[30px]" />
         <p className="text-[20px] font-bold"> 비밀번호 변경 </p>

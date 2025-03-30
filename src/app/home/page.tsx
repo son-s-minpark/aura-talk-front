@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import ChatList from "@/components/chat/ChatList";
-import FriendList from "@/components/friend/FriendList";
-import SettingList from "@/components/setting/SettingList";
+import Chat from "@/app/home/Chat";
+import FriendList from "@/app/home/Friend";
+import SettingList from "@/app/home/Setting";
 import Header from "@/components/home/Header";
 import Nav from "@/components/home/Nav";
 
@@ -15,7 +15,7 @@ const Page = () => {
       <Header />
       <div className="bg-point rounded-t-[20px] bg-[var(--color-background)]">
         <div className="h-[543px] w-full pt-[46px]">
-          {list == "chat" && <ChatList />}
+          {list == "chat" && <Chat />}
           {list == "friend" && <FriendList />}
           {list == "setting" && <SettingList />}
         </div>
