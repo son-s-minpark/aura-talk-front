@@ -15,7 +15,7 @@ const ChatHeader = () => {
         <button onClick={() => redirect("/home")}>
           <IoArrowBackOutline className="w-[24px] h-[24px]" />
         </button>
-        <div className="flex gap-[12px]">
+        <div className="flex gap-[12px] items-center">
           <div className="w-[44px] h-[44px] rounded-full"></div>
           <p className="text-[20px] font-bold"> 채팅방 이름</p>
         </div>

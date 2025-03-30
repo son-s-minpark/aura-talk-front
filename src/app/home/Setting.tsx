@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { IoMdMoon, IoMdPerson, IoMdSunny } from "react-icons/io";
 import { PiKeyFill } from "react-icons/pi";
-import ModeModal from "./modal/ModeModal";
-import AccountModal from "./modal/AccountModal";
-import ChangePwModal from "./modal/ChangePwModal";
-import QuitModal from "./modal/QuitModal";
-import LogoutModal from "./modal/LogoutModal";
-import RandomModal from "./modal/RandomModal";
+import ModeModal from "../../components/setting/modal/ModeModal";
+import AccountModal from "../../components/setting/modal/AccountModal";
+import ChangePwModal from "../../components/setting/modal/ChangePwModal";
+import QuitModal from "../../components/setting/modal/QuitModal";
+import LogoutModal from "../../components/setting/modal/LogoutModal";
+import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
 
 type modalType =
