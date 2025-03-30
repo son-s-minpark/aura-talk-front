@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import SelectBtn from "@/components/common/SelectBtn";
-import SetChatModal from "@/components/chat/modal/SetChatModal";
+import SetChatModal from "@/components/chat/modal/SetGroupChatModal";
 
 const Page = () => {
   const [modal, setModal] = useState<boolean>(false);

@@ -1,5 +1,6 @@
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const SetChatModal = () => {
@@ -22,8 +23,8 @@ const SetChatModal = () => {
           <p className="font-semibold">초대할 친구</p>
           <div className="h-[69px]"></div>
         </div>
-        <div className="mt-[7px] mb-[14px] mr-[20px] flex justify-end">
-          <SelectBtn label="생성" onClick={() => console.log("하기 실어어")} />
+        <div className="mt-[7px] mb-[14px] flex justify-end">
+          <SelectBtn label="생성" onClick={() => redirect("/chat/1")} />
         </div>
       </div>
     </div>
