@@ -18,12 +18,14 @@ const ChatHeader = () => {
           className="modal flex justify-end items-start"
           onClick={() => setModalDown("none")}
         >
-          {modalDown === "sidebar" && (
-            <ChatSideBar setModalDown={setModalDown} />
-          )}
-          {modalDown == "setting" && (
-            <ChatSetting setModalDown={setModalDown} />
-          )}
+          <div onClick={(e) => e.stopPropagation()}>
+            {modalDown === "sidebar" && (
+              <ChatSideBar setModalDown={setModalDown} />
+            )}
+            {modalDown == "setting" && (
+              <ChatSetting setModalDown={setModalDown} />
+            )}
+          </div>
         </div>
       ) : null}
       <div className="w-full h-[76px] pl-[24px] pr-[18px] flex justify-between text-white items-center">

@@ -2,7 +2,7 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import React from "react";
 import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
-import ChatFriend from "../ChatFriend";
+import ChatFriend from "../ChatRoomFriend";
 
 const data = [
   {
@@ -18,7 +18,7 @@ const data = [
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   return (
     <div
-      className="bg-[var(--color-background)] h-[358px] w-[271px] flex flex-col rounded-[20px]"
+      className="bg-[var(--color-background)] h-[358px] w-[271px] flex flex-col rounded-[12px]"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="h-[70px] w-full border-b-1 border-commonGray flex justify-between px-[22px] py-[15px]">
