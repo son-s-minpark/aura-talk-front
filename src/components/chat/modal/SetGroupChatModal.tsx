@@ -1,9 +1,30 @@
+"use client";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
-import { redirect } from "next/navigation";
-import React from "react";
+import ChatSetFriend from "../ChatSetFriend";
+import { useRouter } from "next/navigation";
+import React, { useRef } from "react";
+
+const data = [
+  {
+    name: "팀원팀원팀원팀원팀원팀원팀",
+    isLeader: true,
+  },
+  {
+    name: "ㅎㅎ",
+    isLeader: false,
+  },
+];
 
 const SetChatModal = () => {
+  const roomNameRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  function onSubmit() {
+    const roomname = roomNameRef.current?.value || "";
+    // 이름이랑 사진이랑 친구 목록 전송하기
+    router.push("/chat/1");
+  }
   return (
     <div className="bg-[var(--color-background)] w-[303px]  rounded-[12px] px-[21px] pt-[25px]">
       <div className="flex flex-col gap-[17px]">
@@ -15,16 +36,23 @@ const SetChatModal = () => {
           <p className="font-semibold">채팅방 이름</p>
           <div>
             <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
-              <input />
+              <input className="h-full w-full" />
             </div>
           </div>
         </div>
         <div>
           <p className="font-semibold">초대할 친구</p>
-          <div className="h-[69px]"></div>
+          <div>
+            <p className="font-semibold">친구 목록</p>
+            <div className="flex gap-[11px] mt-[9px]">
+              {data.map((friend, index) => (
+                <ChatSetFriend friend={friend} key={index} />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
-          <SelectBtn label="생성" onClick={() => redirect("/chat/1")} />
+          <SelectBtn label="생성" onClick={onSubmit} />
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import SelectBtn from "@/components/common/SelectBtn";
 import SetChatModal from "@/components/chat/modal/SetGroupChatModal";
+import FriendComponent from "@/components/friend/FriendComponent";
 
 const Page = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -33,7 +34,12 @@ const Page = () => {
       <div className="w-full h-[33px] flex items-center px-[24px]">
         <Search />
       </div>
-      <div></div>
+      <div className="mt-[34px] px-[24px]">
+        <div className="flex flex-col gap-[20px]">
+          <p> 친구 </p>
+          <FriendComponent />
+        </div>
+      </div>
     </div>
   );
 };
