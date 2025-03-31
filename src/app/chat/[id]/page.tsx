@@ -1,9 +1,9 @@
+import React from "react";
 import ChatList from "@/components/chat/ChatList";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatInput from "@/components/chat/ChatInput";
-import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <ChatHeader />
@@ -15,4 +15,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -4,7 +4,7 @@ import Input from "@/components/onboarding/Input";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
 
 const Signin = ({ setPage }: setPageType) => {

@@ -4,7 +4,7 @@ import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 
 const Signup = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();

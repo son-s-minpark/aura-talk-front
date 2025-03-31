@@ -4,7 +4,7 @@ import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
 import useSignupState from "@/state/signState/useSignupState";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 import AddImage from "@/components/common/AddImage";
 
 const ProfileImg = ({ setPage }: setPageType) => {
