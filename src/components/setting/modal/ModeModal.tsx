@@ -12,7 +12,7 @@ const ModeModal = () => {
   }
 
   return (
-    <div className=" w-[281px] h-[139px] py-[28px] px-[22px] rounded-[12px] bg-[var(--color-background)]">
+    <div className="modal-content w-[281px] h-[139px] py-[28px] px-[22px]">
       <div className="flex">
         {isThemeDark() ? (
           <IoMdSunny className="w-[30px] h-[30px] text-[#787878] dark:text-[var(--color-gray)]" />

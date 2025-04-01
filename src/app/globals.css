@@ -34,6 +34,11 @@
   align-items: center;
 }
 
+.modal-content {
+  background-color: var(--color-background);
+  border-radius: 12px;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

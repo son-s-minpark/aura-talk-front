@@ -18,7 +18,7 @@ const data = [
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   return (
     <div
-      className="bg-[var(--color-background)] h-[358px] w-[271px] flex flex-col rounded-[12px]"
+      className="modal-content h-[358px] w-[271px] flex flex-col"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="h-[70px] w-full border-b-1 border-commonGray flex justify-between px-[22px] py-[15px]">
@@ -47,8 +47,14 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
           onClick={() => setModalDown("setting")}
           className="w-[20px] h-[20px]"
         />
-        <IoShareSocial className="w-[20px] h-[20px]" />
-        <BsDoorOpenFill className="w-[20px] h-[20px]" />
+        <IoShareSocial
+          className="w-[20px] h-[20px]"
+          onClick={() => setModalDown("share")}
+        />
+        <BsDoorOpenFill
+          className="w-[20px] h-[20px]"
+          onClick={() => setModalDown("exit")}
+        />
       </div>
     </div>
   );

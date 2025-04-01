@@ -26,7 +26,7 @@ const SetChatModal = () => {
     router.push("/chat/1");
   }
   return (
-    <div className="bg-[var(--color-background)] w-[303px]  rounded-[12px] px-[21px] pt-[25px]">
+    <div className="modal-content w-[303px] px-[21px] pt-[25px]">
       <div className="flex flex-col gap-[17px]">
         <div>
           <p className="font-semibold">대표 사진</p>

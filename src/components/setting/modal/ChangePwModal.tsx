@@ -24,7 +24,7 @@ const ChangePwModal = () => {
   }
 
   return (
-    <div className=" w-[281px] h-[335px] bg-[var(--color-background)] rounded-[12px]">
+    <div className=" w-[281px] h-[335px]modal-content">
       <div className="flex items-center pt-[28px] pl-[25px] gap-[10px]">
         <IoMdKey className=" w-[30px] h-[30px]" />
         <p className="text-[20px] font-bold"> 비밀번호 변경 </p>

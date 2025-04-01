@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 import { IoArrowBackOutline, IoMenu } from "react-icons/io5";
 import ChatSideBar from "./modal/ChatSideBar";
 import ChatSetting from "./modal/ChatSetting";
+import ChatShare from "./modal/ChatShare";
+import ChatExit from "./modal/ChatExit";
 
 // type chatType = "friend" | "group";
 
-type setModalType = "none" | "sidebar" | "setting";
+type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
 
 const ChatHeader = () => {
   const [modalDown, setModalDown] = useState<setModalType>("none");
@@ -25,6 +27,8 @@ const ChatHeader = () => {
             {modalDown == "setting" && (
               <ChatSetting setModalDown={setModalDown} />
             )}
+            {modalDown == "share" && <ChatShare setModalDown={setModalDown} />}
+            {modalDown == "exit" && <ChatExit />}
           </div>
         </div>
       ) : null}

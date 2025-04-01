@@ -25,7 +25,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
     setModalDown("none");
   }
   return (
-    <div className="bg-[var(--color-background)] rounded-[12px] px-[21px] pt-[25px]">
+    <div className="model-content px-[21px] pt-[25px]">
       <div className="flex flex-col gap-[17px]">
         <div>
           <p className="font-semibold">대표 사진</p>
