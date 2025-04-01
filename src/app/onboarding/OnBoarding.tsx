@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import logoWhite from "../../../public/images/logo-white.png";
 import SignBtn from "@/components/onboarding/SignBtn";
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 
 const OnBoarding = ({ setPage }: setPageType) => {
   return (

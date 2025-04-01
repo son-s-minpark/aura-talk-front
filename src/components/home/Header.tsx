@@ -1,10 +1,12 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import logo from "../../../public/images/logo-none.png";
 import { IoSearch, IoNotifications, IoPersonAdd } from "react-icons/io5";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   return (
     <div className="h-[76px] w-full items-center flex justify-between">
       <button className="ml-[13px]">
@@ -14,7 +16,7 @@ const Header = () => {
         <button>
           <IoPersonAdd className="w-[22px] h-[22px]" />
         </button>
-        <button onClick={() => redirect("/search")}>
+        <button onClick={() => router.push("/search")}>
           <IoSearch className="w-[24px] h-[24px]" />
         </button>
         <button>

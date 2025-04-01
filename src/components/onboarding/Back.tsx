@@ -1,4 +1,4 @@
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 

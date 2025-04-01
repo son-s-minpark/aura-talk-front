@@ -14,7 +14,7 @@ const CreateChatModal = () => {
   const [chatType, setChatType] = useState<selectedChatType>("friend");
   const router = useRouter();
   return (
-    <div className="bg-[var(--color-background)] w-[375px] h-[215px] rounded-[20px]">
+    <div className="modal-content w-[375px] h-[215px]">
       <p className="font-bold pt-[23px] pl-[18px] text-[18px] leading-[25px]">
         누구와 대화를 시작해볼까요?
       </p>

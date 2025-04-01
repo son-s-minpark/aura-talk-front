@@ -9,7 +9,7 @@ import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import { setPageType } from "@/type/onboarding/setPageType";
+import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
 
 const Profile = ({ setPage }: setPageType) => {

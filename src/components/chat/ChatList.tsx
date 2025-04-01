@@ -16,7 +16,7 @@ const list = [
 
 const ChatList = () => {
   return (
-    <div className="pl-[24px] pr-[40px]">
+    <div className="pl-[24px] pr-[40px] bg-[var(--color-background)] h-full">
       {list.map((chat, index) => (
         <div key={index}>
           <ChatBubble chat={chat} />
