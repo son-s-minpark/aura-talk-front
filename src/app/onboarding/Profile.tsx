@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Input from "@/components/onboarding/Input";
 import SignBtn from "@/components/onboarding/SignBtn";
-import InterestModal from "@/components/onboarding/InterestModal";
+import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
 import { IoChevronDown } from "react-icons/io5";

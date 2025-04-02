@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { signupType } from "@/type/sign/signupType";
-import { signinType } from "@/type/sign/signiniType";
+import { signinType } from "@/type/sign/signinType";
 import axiosInstance from "@/api/axiosInstance";
 
 const API = "/api/users";

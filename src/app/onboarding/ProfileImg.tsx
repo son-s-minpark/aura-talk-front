@@ -1,17 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
 import useSignupState from "@/state/signState/useSignupState";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { setPageType } from "@/type/sign/setPageType";
 import AddImage from "@/components/common/AddImage";
+import TermsModal from "@/components/onboarding/modal/TermsModal";
 
 const ProfileImg = ({ setPage }: setPageType) => {
   const { signupData } = useSignupState();
+  const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
   return (
     <div className="w-full h-full overflow-scroll text-white">
+      {termsModalDown && (
+        <div onClick={() => setTermsModalDown(false)} className="modal">
+          <TermsModal />
+        </div>
+      )}
       <Back setPage={setPage} backComponent={"profile"} />
       <div className="mt-[24px]">
         <p className="text-[20px] font-bold text-white mt-[12px] text-center leading-[20px]">
@@ -57,7 +64,11 @@ const ProfileImg = ({ setPage }: setPageType) => {
       </div>
 
       <div className="flex justify-center mt-[56px]">
-        <SignBtn value="가입하기" isFull={true} />
+        <SignBtn
+          value="가입하기"
+          isFull={true}
+          onClick={() => setTermsModalDown(true)}
+        />
       </div>
     </div>
   );
