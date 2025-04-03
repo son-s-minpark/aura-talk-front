@@ -124,13 +124,18 @@ const Signup = ({ setPage }: setPageType) => {
             isValid={isMailValid}
           />
 
-          <Input
-            label="비밀번호"
-            value={pw}
-            onChange={onChangePw}
-            type="password"
-            isValid={isPwValid}
-          />
+          <div>
+            <Input
+              label="비밀번호"
+              value={pw}
+              onChange={onChangePw}
+              type="password"
+              isValid={isPwValid}
+            />
+            <p className="text-[10px] mt-[6px]">
+              * 비밀번호는 대소문자, 특수문자를 포함해 6자 이상이어야 합니다
+            </p>
+          </div>
 
           <Input
             label="비밀번호 확인"
