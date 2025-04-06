@@ -6,7 +6,6 @@ import Terms from "@/data/terms.json";
 const Page = () => {
   return (
     <div className="w-full h-full overflow-scroll">
-      {/* 상단 로고 및 타이틀 */}
       <div className="flex gap-[19px] mt-[19px] ml-[16px] items-center">
         <Image src={logo} alt="로고" className="w-[55px] h-[55px]" />
         <p className="text-[20px] font-extrabold">Aura Talk 이용 약관</p>
@@ -19,17 +18,23 @@ const Page = () => {
 
             <div className="w-full h-[500px] overflow-y-scroll bg-[#505050cc] rounded-[20px] p-[20px]">
               {termData.sections.map((section, secIndex) => (
-                <div key={secIndex}>
+                <div key={secIndex} className="mb-[20px]">
                   <p className="font-semibold mb-[10px]">{section.title}</p>
-                  <div className="text-[11px] leading-relaxed   ">
+                  <div className="text-[11px] leading-relaxed">
                     {Array.isArray(section.content) ? (
                       section.content.map((line, lineIndex) => (
                         <p key={lineIndex} className="mb-[5px]">
+                          <span className="font-semibold mr-[5px]">
+                            {lineIndex + 1}항
+                          </span>
                           {line}
                         </p>
                       ))
                     ) : (
-                      <p>{section.content}</p>
+                      <p>
+                        <span className="font-semibold mr-[5px]">1항</span>
+                        {section.content}
+                      </p>
                     )}
                   </div>
                 </div>

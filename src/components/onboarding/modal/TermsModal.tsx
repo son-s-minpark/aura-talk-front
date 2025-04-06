@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CheckBtn from "@/components/common/CheckBtn";
-import SelectBtn from "@/components/common/SelectBtn";
 import { useRouter } from "next/navigation";
 
 type CheckType = "all" | "fir" | "sec" | "thr";
@@ -100,7 +99,12 @@ const TermsModal = () => {
       </div>
 
       <div className="mb-[18px] mr-[19px] mt-[16px] flex justify-end">
-        <SelectBtn label="완료" onClick={onSubmit} />
+        <button
+          className="flex items-center justify-center rounded-[20px] bg-[#8045FF] text-white font-bold text-[14px] h-[24px] w-[54px]"
+          onClick={onSubmit}
+        >
+          확인
+        </button>
       </div>
     </div>
   );
