@@ -58,7 +58,15 @@ const TermsModal = () => {
         <CheckBtn isChecked={isAllChecked} />
         <div className="w-full flex justify-between items-center ml-[16px]">
           <p className="text-[20px] font-bold">약관 전제 동의</p>
-          <p className="text-[#999999] text-[10px] underline">내용 보기</p>
+          <p
+            className="text-[#999999] text-[10px] underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push("/terms");
+            }}
+          >
+            내용 보기
+          </p>
         </div>
       </div>
 
