@@ -2,7 +2,7 @@
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import InterestData from "../../../data/interestData.json";
-import useSignupState from "@/state/signState/useSignupState";
+import useProfileState from "@/state/signState/useProfileState";
 import InterestBtnList from "../InterestBtnList";
 import { InterestBtnBig } from "../InterestBtn";
 import SelectBtn from "@/components/common/SelectBtn";
@@ -16,7 +16,7 @@ type InterestModalProps = {
 };
 
 const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
-  const { signupData } = useSignupState();
+  const { profileData } = useProfileState();
   const InterestDataTyped: InterestListProps = InterestData;
 
   return (
@@ -42,7 +42,7 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
             <div className="flex flex-wrap ">
               {InterestDataTyped[category].map((label, index) => (
                 <div key={index} className="mt-[15px] mr-[10px]">
-                  {signupData.interestList.includes(label) ? (
+                  {profileData.interestList.includes(label) ? (
                     <InterestBtnBig label={label} selected={true} />
                   ) : (
                     <InterestBtnBig label={label} selected={false} />

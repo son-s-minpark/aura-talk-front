@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
-import useSignupState from "@/state/signState/useSignupState";
+import useProfileState from "@/state/signState/useProfileState";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { setPageType } from "@/type/sign/setPageType";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";
 
 const ProfileImg = ({ setPage }: setPageType) => {
-  const { signupData } = useSignupState();
+  const { profileData } = useProfileState();
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
   return (
@@ -38,13 +38,13 @@ const ProfileImg = ({ setPage }: setPageType) => {
             사용자 이름
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.nickname}
+            {profileData.nickname}
           </p>
         </div>
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.username}
+            {profileData.username}
           </p>
         </div>
         <div>
@@ -52,7 +52,7 @@ const ProfileImg = ({ setPage }: setPageType) => {
             한 줄 소개
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {signupData.description}
+            {profileData.description}
           </p>
         </div>
         <div>

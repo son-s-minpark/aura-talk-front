@@ -5,9 +5,11 @@ import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
 import { setPageType } from "@/type/sign/setPageType";
+import useAuth from "@/hooks/useAuth";
 
 const Signup = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();
+  const { useSignupMutation } = useAuth();
   const [mail, setMail] = useState<string>(signupData.mail);
   const [pw, setPw] = useState<string>(signupData.pw);
   const [checkPw, setCheckPw] = useState<string>(signupData.pw);
@@ -16,6 +18,8 @@ const Signup = ({ setPage }: setPageType) => {
   const [isCheckPwValid, setIsCheckPwValid] = useState<boolean>(true);
 
   const [errMsg, setErrMsg] = useState<string>("");
+  const [isValidateModalDown, setIsValidateModalDown] =
+    useState<boolean>(false);
 
   function onChangeMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -97,6 +101,8 @@ const Signup = ({ setPage }: setPageType) => {
           mail: mail,
           pw: pw,
         });
+        // const res = useSignupMutation.mutate({ mail: mail, pw: pw });
+        // console.log(res);
         setPage("profile");
       }
     }

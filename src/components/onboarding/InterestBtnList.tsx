@@ -1,4 +1,4 @@
-import useSignupState from "@/state/signState/useSignupState";
+import useProfileState from "@/state/signState/useProfileState";
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";
@@ -8,7 +8,7 @@ type InterestBtnProp = {
 };
 
 const InterestBtnList = ({ isScrollable }: InterestBtnProp) => {
-  const { signupData, removeInterest } = useSignupState();
+  const { profileData, removeInterest } = useProfileState();
   return (
     <div
       className={clsx("flex gap-[5px] items-center", {
@@ -16,7 +16,7 @@ const InterestBtnList = ({ isScrollable }: InterestBtnProp) => {
         "overflow-auto whitespace-normal": !isScrollable,
       })}
     >
-      {signupData.interestList.map((label, index) => (
+      {profileData.interestList.map((label, index) => (
         <div key={index} onClick={() => removeInterest(label)}>
           <InterestBtnSml label={label} />
         </div>

@@ -4,7 +4,7 @@ import Input from "@/components/onboarding/Input";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
-import useSignupState from "@/state/signState/useSignupState";
+import useProfileState from "@/state/signState/useProfileState";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
@@ -13,16 +13,14 @@ import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
 
 const Profile = ({ setPage }: setPageType) => {
-  const { updateSignupState, signupData } = useSignupState();
-  const [nickname, setnickname] = useState<string>(signupData.nickname);
-  const [username, setusername] = useState<string>(signupData.username);
+  const { updateProfileState, profileData } = useProfileState();
+  const [nickname, setnickname] = useState<string>(profileData.nickname);
+  const [username, setusername] = useState<string>(profileData.username);
   const [description, setDescription] = useState<string>(
-    signupData.description
+    profileData.description
   );
-  const [isnicknameValusername, setIsnicknameValusername] =
-    useState<boolean>(true);
-  const [isusernameValusername, setIsusernameValusername] =
-    useState<boolean>(true);
+  const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
+  const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSignupMutation } = useAuth();
@@ -40,32 +38,34 @@ const Profile = ({ setPage }: setPageType) => {
   }
   function isFull() {
     return (
-      nickname !== "" && username !== "" && signupData.interestList.length !== 0
+      nickname !== "" &&
+      username !== "" &&
+      profileData.interestList.length !== 0
     );
   }
-  function valusernameatenickname() {
+  function validateNickname() {
     const result = nicknameSchema.shape.nickname.safeParse(nickname);
     if (!result.success) {
-      setIsnicknameValusername(false);
+      setIsNicknameValid(false);
       return result.error.errors[0].message;
     }
-    setIsnicknameValusername(true);
+    setIsNicknameValid(true);
     return "";
   }
 
-  function valusernameateusername() {
+  function validateUsername() {
     const result = usernameSchema.shape.username.safeParse(username);
     if (!result.success) {
-      setIsusernameValusername(false);
+      setIsUsernameValid(false);
       return result.error.errors[0].message;
     }
-    setIsusernameValusername(true);
+    setIsUsernameValid(true);
     return "";
   }
 
-  function isProfileValusername() {
-    const nicknameError = valusernameatenickname();
-    const usernameError = valusernameateusername();
+  function isProfileValid() {
+    const nicknameError = validateNickname();
+    const usernameError = validateUsername();
     if (nicknameError || usernameError) {
       setErrMsg(
         nicknameError && usernameError
@@ -83,20 +83,18 @@ const Profile = ({ setPage }: setPageType) => {
       // 빈 값이 있을 때 아무것도 하지 않음
       return;
     } else {
-      if (isProfileValusername()) {
-        updateSignupState({
+      if (isProfileValid()) {
+        updateProfileState({
           nickname: nickname,
           username: username,
           description: description,
         });
-        const res = useSignupMutation.mutate({
-          mail: signupData.mail,
-          pw: signupData.pw,
-          nickname: nickname,
-          username: username,
-          description: description,
-          interestList: signupData.interestList,
-        });
+        // const res = useSignupMutation.mutate({
+        //   nickname: nickname,
+        //   username: username,
+        //   description: description,
+        //   interestList: profileData.interestList,
+        // });
         setPage("profileImg");
       }
     }
@@ -137,14 +135,14 @@ const Profile = ({ setPage }: setPageType) => {
               value={nickname}
               onChange={onChangeNickname}
               type="text"
-              isValid={isnicknameValusername}
+              isValid={isNicknameValid}
             />
             <Input
               label="아이디"
               value={username}
               onChange={onChangeusername}
               type="text"
-              isValid={isusernameValusername}
+              isValid={isusernameValid}
             />
             <Input
               label="한 줄 소개"
