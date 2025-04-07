@@ -1,13 +1,13 @@
-import { setPageType } from "@/type/sign/setPageType";
+import { useSetPageState } from "@/state/signState/usetSetPageState";
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 type BackProps = {
-  setPage: setPageType["setPage"];
   backComponent: "onBoarding" | "signin" | "signup" | "profile";
 };
 
-const Back = ({ setPage, backComponent }: BackProps) => {
+const Back = ({ backComponent }: BackProps) => {
+  const { setPage } = useSetPageState();
   return (
     <div className="h-[76px] w-full flex items-center">
       <button

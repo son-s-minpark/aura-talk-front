@@ -2,9 +2,10 @@ import React from "react";
 import Image from "next/image";
 import logoWhite from "../../../public/images/logo-white.png";
 import SignBtn from "@/components/onboarding/SignBtn";
-import { setPageType } from "@/type/sign/setPageType";
+import { useSetPageState } from "@/state/signState/usetSetPageState";
 
-const OnBoarding = ({ setPage }: setPageType) => {
+const OnBoarding = () => {
+  const { setPage } = useSetPageState();
   return (
     <div className="w-full h-full pt-[25px] px-[24px] overflow-scroll">
       <div className="-ml-[16px]">

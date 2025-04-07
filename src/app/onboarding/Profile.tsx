@@ -9,10 +9,10 @@ import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
+import { useSetPageState } from "@/state/signState/usetSetPageState";
 
-const Profile = ({ setPage }: setPageType) => {
+const Profile = () => {
   const { updateProfileState, profileData } = useProfileState();
   const [nickname, setnickname] = useState<string>(profileData.nickname);
   const [username, setusername] = useState<string>(profileData.username);
@@ -24,6 +24,7 @@ const Profile = ({ setPage }: setPageType) => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSignupMutation } = useAuth();
+  const { setPage } = useSetPageState();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -115,7 +116,7 @@ const Profile = ({ setPage }: setPageType) => {
           hidden: isInterestDown,
         })}
       >
-        <Back setPage={setPage} backComponent={"signup"} />
+        <Back backComponent={"signup"} />
         <div className="mt-[69px]">
           <div className="text-center">
             <p className="text-[20px] font-bold text-white leading-[20px]">

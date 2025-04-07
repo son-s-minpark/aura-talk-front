@@ -4,10 +4,9 @@ import Input from "@/components/onboarding/Input";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
-import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
 
-const Signin = ({ setPage }: setPageType) => {
+const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
@@ -73,7 +72,7 @@ const Signin = ({ setPage }: setPageType) => {
 
   return (
     <div className="w-full h-full">
-      <Back setPage={setPage} backComponent={"onBoarding"} />
+      <Back backComponent={"onBoarding"} />
       <div className="flex flex-col items-center mt-[69px]">
         <div className="text-center">
           <p className="text-[20px] font-bold text-white leading-[20px]">

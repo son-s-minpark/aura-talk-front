@@ -1,6 +1,8 @@
+import { useSetPageState } from "@/state/signState/usetSetPageState";
 import React, { useRef } from "react";
 
 const ValidateModal = () => {
+  const { setPage } = useSetPageState();
   const mailInputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = (e: React.FormEvent) => {
@@ -9,6 +11,7 @@ const ValidateModal = () => {
     if (mailInputRef.current) {
       const mailValue = mailInputRef.current.value;
       console.log("Submitted email:", mailValue);
+      setPage("profile");
     }
   };
 

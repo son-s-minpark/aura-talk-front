@@ -4,11 +4,10 @@ import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
 import useProfileState from "@/state/signState/useProfileState";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import { setPageType } from "@/type/sign/setPageType";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";
 
-const ProfileImg = ({ setPage }: setPageType) => {
+const ProfileImg = () => {
   const { profileData } = useProfileState();
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
@@ -19,7 +18,7 @@ const ProfileImg = ({ setPage }: setPageType) => {
           <TermsModal />
         </div>
       )}
-      <Back setPage={setPage} backComponent={"profile"} />
+      <Back backComponent={"profile"} />
       <div className="mt-[24px]">
         <p className="text-[20px] font-bold text-white mt-[12px] text-center leading-[20px]">
           프로필 확인
