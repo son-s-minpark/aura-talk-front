@@ -6,6 +6,7 @@ import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
 import { setPageType } from "@/type/sign/setPageType";
 import useAuth from "@/hooks/useAuth";
+import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 
 const Signup = ({ setPage }: setPageType) => {
   const { updateSignupState, signupData } = useSignupState();
@@ -101,15 +102,21 @@ const Signup = ({ setPage }: setPageType) => {
           mail: mail,
           pw: pw,
         });
+        setIsValidateModalDown(true);
         // const res = useSignupMutation.mutate({ mail: mail, pw: pw });
         // console.log(res);
-        setPage("profile");
+        // setPage("profile");
       }
     }
   }
 
   return (
     <div className="w-full h-full">
+      {isValidateModalDown && (
+        <div className="modal" onClick={() => setIsValidateModalDown(false)}>
+          <ValidateModal setPage={setPage} mail={mail} />
+        </div>
+      )}
       <Back setPage={setPage} backComponent={"onBoarding"} />
       <div className="flex flex-col items-center mt-[69px]">
         <p className="text-[20px] font-bold text-white leading-[20px]">
