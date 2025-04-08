@@ -12,7 +12,15 @@ const useAuth = () => {
       return axios.post(apiRoute.USER, JSON.stringify(signupData));
     },
     onSuccess: (res) => {
-      return res;
+      const data = JSON.parse(res.data);
+      const token = data.token;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+      } else {
+        alert("토큰을 받지 못 했습니다.");
+      }
+      console.log("회원가입 완료");
+      return res.data.success;
     },
     onError: (err) => console.error(err),
   });
@@ -20,13 +28,38 @@ const useAuth = () => {
   // 로그인 요청
   const useSigninMutation = useMutation({
     mutationFn: async (signinData: signinType) => {
-      return axios.post(apiRoute.USER_LOGIN, signinData);
+      console.error(signinData);
+      return axios.post(apiRoute.USER_LOGIN, JSON.stringify(signinData));
     },
     onSuccess: (res) => {
-      return res;
+      const data = JSON.parse(res.data);
+      const token = data.token;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+      } else {
+        alert("토큰을 받지 못 했습니다.");
+      }
+      console.log("로그인 완료");
+      return res.data.success;
     },
     onError: (err) => console.error(err),
   });
-  return { useSigninMutation, useSignupMutation };
+
+  // 로그아웃 요청
+  const useLogoutMutation = useMutation({
+    mutationFn: async () => {
+      return axiosInstance.delete(apiRoute.USER_LOGOUT);
+    },
+    onSuccess: (res) => {
+      const data = JSON.parse(res.data);
+      if (data.success) {
+        localStorage.removeItem("accessToken");
+      }
+      alert("로그아웃 상공");
+      return data;
+    },
+    onError: (err) => console.error(err),
+  });
+  return { useSigninMutation, useSignupMutation, useLogoutMutation };
 };
 export default useAuth;

@@ -2,6 +2,8 @@ const API = "https://api.auratalk.p-e.kr";
 const USER = `${API}/api/users`;
 
 export const apiRoute = {
+  BASE: API,
+
   // 유저 기능
   USER: USER,
   USER_VERIFY_EMAIL: `${USER}/verify-email`,

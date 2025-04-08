@@ -18,7 +18,7 @@ const ValidateModal = () => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="modal-content bg-[#2A2A2A] text-white h-[226px] w-[303px] pt-[27px]"
+      className="bg-[#2A2A2A] rounded-[12px] text-white h-[226px] w-[303px] pt-[27px]"
     >
       <p className="text-[20px] font-bold ml-[24px]">메일 인증</p>
       <div className="w-[265px] h-[52px] flex flex-col items-center justify-center mx-[17px] mt-[27px]">

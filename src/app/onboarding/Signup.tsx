@@ -6,6 +6,7 @@ import useSignupState from "@/state/signState/useSignupState";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
 import useAuth from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
+import { redirect } from "next/navigation";
 
 const Signup = () => {
   const { updateSignupState, signupData } = useSignupState();
@@ -102,8 +103,8 @@ const Signup = () => {
           pw: pw,
         });
         setIsValidateModalDown(true);
-        // const res = useSignupMutation.mutate({ mail: mail, pw: pw });
-        // console.log(res);
+        useSignupMutation.mutate({ mail: mail, pw: pw });
+        redirect("/home");
       }
     }
   }

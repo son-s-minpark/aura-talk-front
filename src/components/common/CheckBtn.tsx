@@ -1,10 +1,10 @@
 import React from "react";
 
-type CheckboxProps = {
+type CheckBtnProps = {
   isChecked: boolean;
 };
 
-const Checkbox = ({ isChecked }: CheckboxProps) => {
+const CheckBtn = ({ isChecked }: CheckBtnProps) => {
   return (
     <>
       <div className="flex items-center justify-center w-[18px] h-[18px] rounded-full border-2 border-[var(--color-point)]">
@@ -16,4 +16,4 @@ const Checkbox = ({ isChecked }: CheckboxProps) => {
   );
 };
 
-export default Checkbox;
+export default CheckBtn;

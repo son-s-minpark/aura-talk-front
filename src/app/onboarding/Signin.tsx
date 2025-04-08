@@ -66,7 +66,7 @@ const Signin = () => {
       return;
     }
     if (isSigninValid()) {
-      const res = await useSigninMutation.mutate({ mail, pw });
+      const res = useSigninMutation.mutate({ mail, pw });
     }
   }
 

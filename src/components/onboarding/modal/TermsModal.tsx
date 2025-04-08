@@ -1,9 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CheckBtn from "@/components/common/CheckBtn";
 import { useRouter } from "next/navigation";
 
 type CheckType = "all" | "fir" | "sec" | "thr";
+
+type CheckBtnProps = {
+  isChecked: boolean;
+};
+
+const CheckBtn = ({ isChecked }: CheckBtnProps) => {
+  return (
+    <>
+      <div className="flex items-center justify-center w-[18px] h-[18px] rounded-full border-2 border-[#8045FF]">
+        {isChecked && (
+          <div className="w-[10px] h-[10px] rounded-full bg-[#8045FF]" />
+        )}
+      </div>
+    </>
+  );
+};
 
 const TermsModal = () => {
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
@@ -49,7 +64,7 @@ const TermsModal = () => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="modal-content bg-[#2A2A2A] text-white h-[226px] w-[333px]"
+      className="bg-[#2A2A2A] rounded-[12px] text-white h-[226px] w-[333px]"
     >
       <div
         className="h-[67px] w-full border-b-1 border-[var(--color-commonGray)] px-[24px] pt-[25px] pb-[22px] flex items-center"

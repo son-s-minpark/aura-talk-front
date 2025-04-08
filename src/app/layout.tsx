@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="flex justify-center w-full h-[100vh]">
         <ThemeProvider enableSystem={true} defaultTheme="system">
           <QueryClientProvider client={queryClient}>
