@@ -4,12 +4,14 @@ import SelectBtn from "../../common/SelectBtn";
 import { MdPersonOff } from "react-icons/md";
 import { PwInput } from "@/components/common/ProfileInput";
 import useAuth from "@/hooks/useAuth";
+import { validatePw } from "@/util/validate/signValidate";
 
-const id = "";
+const id = "1";
 
 const DeleteAccountModal = () => {
-  const [isValid, setIsVaild] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState<boolean>(true);
   const [pw, setPw] = useState<string>("");
+  const [errMsg, setErrMsg] = useState<string>("");
   const { useDeleteAccoutMutation } = useAuth();
   const { mutateAsync } = useDeleteAccoutMutation(id);
 
@@ -17,15 +19,30 @@ const DeleteAccountModal = () => {
     setPw(e.target.value);
   }
 
+  function validatePassword() {
+    const pwError = validatePw(pw);
+    setIsValid(!pwError);
+    if (pwError) {
+      setErrMsg(pwError);
+      return false;
+    }
+    return true;
+  }
+
   async function onSubmit() {
-    if (pw != "") {
+    if (pw == "") {
+      return;
+    } else {
+      if (validatePassword()) {
+        setErrMsg("");
+      }
     }
     const res = await mutateAsync({ password: pw });
     console.error(res);
   }
 
   return (
-    <div className=" w-[281px] py-[28px] px-[22px] modal-content">
+    <div className="w-[281px] py-[28px] px-[22px] modal-content">
       <div className="flex">
         <MdPersonOff className="w-[30px] h-[30px] text-[#787878] dark:text-lightGray" />
         <p className="text-[20px] font-bold ml-[14px]">회원탈퇴</p>
@@ -38,6 +55,13 @@ const DeleteAccountModal = () => {
           onChange={onChangePw}
           value={pw}
         />
+      </div>
+      <div className="flex justify-center">
+        {errMsg === "" ? null : (
+          <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
+            {errMsg}
+          </p>
+        )}
       </div>
       <div className="flex justify-end mt-[26px]">
         <SelectBtn label="확인" onClick={onSubmit} />

@@ -76,7 +76,7 @@ const SettingList = () => {
             <PiKeyFill className="w-[20px] h-[20px] text-[#787878] dark:text-[var(--color-gray)]" />
           </div>
           <div className="ml-[12px]">
-            <p className="font-semibold text-[18px]"> 게정 관리 </p>
+            <p className="font-semibold text-[18px]"> 계정 관리 </p>
             <p className="text-[12px] text-commonGray">
               비밀번호 변경 등의 계정 관리가 가능해요.
             </p>

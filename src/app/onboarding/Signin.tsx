@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
-import { mailSchema, pwSchema } from "@/schema/signSchema";
+import { validateMail, validatePw } from "@/util/validate/signValidate";
 import useAuth from "@/hooks/useAuth";
 
 const Signin = () => {
@@ -22,24 +22,23 @@ const Signin = () => {
     setPw(e.target.value);
   }
 
-  function validateMail() {
-    const result = mailSchema.shape.mail.safeParse(mail);
-    if (!result.success) {
-      setIsMailValid(false);
-      return result.error.errors[0].message;
+  function validateEmail() {
+    const mailError = validateMail(mail);
+    setIsMailValid(!mailError);
+    if (mailError) {
+      setErrMsg(mailError);
     }
-    setIsMailValid(true);
-    return "";
+    return !mailError;
   }
 
-  function validatePw() {
-    const result = pwSchema.shape.pw.safeParse(pw);
-    if (!result.success) {
-      setIsPwValid(false);
-      return result.error.errors[0].message;
+  function validatePassword() {
+    const pwError = validatePw(pw);
+    setIsPwValid(!pwError);
+    if (pwError) {
+      setErrMsg(pwError);
+      return false;
     }
-    setIsPwValid(true);
-    return "";
+    return true;
   }
 
   function isFull() {
@@ -47,26 +46,20 @@ const Signin = () => {
   }
 
   function isSigninValid() {
-    const mailError = validateMail();
-    const pwError = validatePw();
-    if (mailError || pwError) {
-      setErrMsg(
-        mailError && pwError
-          ? "이메일과 비밀번호의 양식이 올바르지 않습니다."
-          : mailError || pwError
-      );
-      return false;
+    const isPasswordValid = validatePassword();
+    const isEmailValid = validateEmail();
+    if (isEmailValid && isPasswordValid) {
+      setErrMsg("");
     }
-    setErrMsg("");
-    return true;
+    return isEmailValid && isPasswordValid;
   }
 
   async function onSubmit() {
     if (!isFull()) {
-      return;
+      return; // 이메일과 비밀번호가 모두 입력되지 않으면 아무 작업도 하지 않음
     }
     if (isSigninValid()) {
-      const res = useSigninMutation.mutate({ mail, pw });
+      const res = await useSigninMutation.mutateAsync({ mail, pw });
       console.error(res);
     }
   }
@@ -90,18 +83,18 @@ const Signin = () => {
             label="이메일"
             value={mail}
             onChange={onChageMail}
-            isValid={isMailValid}
+            isValid={isMailValid} // 이메일 유효성 상태 전달
           />
 
           <PwInput
             label="비밀번호"
             value={pw}
             onChange={onChagePw}
-            isValid={isPwValid}
+            isValid={isPwValid} // 비밀번호 유효성 상태 전달
           />
 
           <div className="flex justify-center">
-            {errMsg == "" ? null : (
+            {errMsg === "" ? null : (
               <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
                 {errMsg}
               </p>

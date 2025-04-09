@@ -4,10 +4,10 @@ import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
-import { mailSchema, pwSchema } from "@/schema/signSchema";
 import useAuth from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { redirect } from "next/navigation";
+import { validateMail, validatePw } from "@/util/validate/signValidate";
 
 const Signup = () => {
   const { updateSignupState, signupData } = useSignupState();
@@ -17,7 +17,6 @@ const Signup = () => {
   const [checkPw, setCheckPw] = useState<string>(signupData.pw);
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
-  const [isCheckPwValid, setIsCheckPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isValidateModalDown, setIsValidateModalDown] =
     useState<boolean>(false);
@@ -34,78 +33,56 @@ const Signup = () => {
     setCheckPw(e.target.value);
   }
 
-  function validateMail() {
-    const result = mailSchema.shape.mail.safeParse(mail);
-    if (!result.success) {
-      setIsMailValid(false);
-      return result.error.errors[0].message;
+  function validateEmail() {
+    const mailError = validateMail(mail);
+    setIsMailValid(!mailError);
+    if (mailError) {
+      setErrMsg(mailError);
     }
-    setIsMailValid(true);
-    return "";
+    return !mailError;
   }
 
-  function validatePw() {
-    const result = pwSchema.shape.pw.safeParse(pw);
-    if (!result.success) {
+  function validatePassword() {
+    const pwError = validatePw(pw);
+    setIsPwValid(!pwError);
+    if (pwError) {
+      setErrMsg(pwError);
+      return false;
+    }
+
+    if (pw !== checkPw) {
       setIsPwValid(false);
-      return result.error.errors[0].message;
+      setErrMsg("비밀번호가 일치하지 않습니다.");
+      return false;
     }
-    setIsPwValid(true);
-    return "";
-  }
 
-  function validateCheckPw() {
-    if (checkPw !== pw) {
-      setIsCheckPwValid(false);
-      return "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
-    }
-    setIsCheckPwValid(true);
-    return "";
+    return true;
   }
 
   function isFull() {
-    return checkPw !== "" && pw !== "" && mail !== "";
+    return mail !== "" && pw !== "" && checkPw !== "";
   }
 
   function isSignupValid() {
-    const mailError = validateMail();
-    const pwError = validatePw();
-
-    if (mailError || pwError) {
-      setErrMsg(
-        mailError && pwError
-          ? "이메일과 비밀번호의 양식이 올바르지 않습니다."
-          : mailError || pwError
-      );
-      validateCheckPw();
-      return false;
-    }
-
-    const checkPwError = validateCheckPw();
-    if (checkPwError) {
-      setErrMsg(checkPwError);
-      return false;
-    }
-
-    setErrMsg("");
-    return true;
+    const isPasswordValid = validatePassword();
+    const isEmailValid = validateEmail();
+    return isEmailValid && isPasswordValid;
   }
 
   function onSubmit() {
     if (!isFull()) {
-      // 값이 빈 곳이 있을 때 아무것도 하지 않음
-      return;
-    } else {
-      if (isSignupValid()) {
-        // 모든 유효성 검사를 통과했을 때
-        updateSignupState({
-          mail: mail,
-          pw: pw,
-        });
-        setIsValidateModalDown(true);
-        useSignupMutation.mutate({ mail: mail, pw: pw });
-        redirect("/home");
-      }
+      return; // 빈 칸이 있으면 아무 작업도 하지 않음
+    }
+
+    if (isSignupValid()) {
+      // 모든 유효성 검사를 통과했을 때
+      updateSignupState({
+        mail: mail,
+        pw: pw,
+      });
+      setIsValidateModalDown(true);
+      useSignupMutation.mutate({ mail: mail, pw: pw });
+      redirect("/home");
     }
   }
 
@@ -113,7 +90,7 @@ const Signup = () => {
     <div className="w-full h-full">
       {isValidateModalDown && (
         <div className="modal" onClick={() => setIsValidateModalDown(false)}>
-          <ValidateModal mail={mail} />
+          <ValidateModal />
         </div>
       )}
       <Back backComponent={"onBoarding"} />
@@ -127,7 +104,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="flex flex-col mt-[37px] text-white items-center">
-        <div className="w-[327px] h-[58px]">
+        <div className="w-[327px]">
           <ProfileInput
             label="이메일"
             value={mail}
@@ -151,19 +128,18 @@ const Signup = () => {
             label="비밀번호 확인"
             value={checkPw}
             onChange={onChangeCheckPw}
-            isValid={isCheckPwValid}
+            isValid={isPwValid}
           />
 
           <div className="flex justify-center">
             {errMsg === "" ? null : (
-              <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
-                {" "}
+              <p className="text-[var(--color-errorRed)] text-[12px] pt-[10px]">
                 {errMsg}
               </p>
             )}
           </div>
         </div>
-        <div className="mt-[192px]">
+        <div className="mt-[192px] flex items-center">
           <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
         </div>
       </div>
