@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Input from "@/components/onboarding/Input";
+import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import { mailSchema, pwSchema } from "@/schema/signSchema";
@@ -67,6 +67,7 @@ const Signin = () => {
     }
     if (isSigninValid()) {
       const res = useSigninMutation.mutate({ mail, pw });
+      console.error(res);
     }
   }
 
@@ -85,25 +86,25 @@ const Signin = () => {
         </div>
 
         <div className="mt-[40px] text-white">
-          <Input
+          <ProfileInput
             label="이메일"
             value={mail}
             onChange={onChageMail}
-            type="text"
             isValid={isMailValid}
           />
 
-          <Input
+          <PwInput
             label="비밀번호"
             value={pw}
             onChange={onChagePw}
-            type="password"
             isValid={isPwValid}
           />
 
           <div className="flex justify-center">
             {errMsg == "" ? null : (
-              <p className="text-[#C81919] text-[12px] mt-[10px]"> {errMsg}</p>
+              <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
+                {errMsg}
+              </p>
             )}
           </div>
         </div>

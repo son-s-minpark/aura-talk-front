@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { signupType } from "@/type/sign/signupType";
-import { signinType } from "@/type/sign/signinType";
+import { signType } from "@/type/sign/signType";
 import axiosInstance from "@/api/axiosInstance";
 import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
+import { pwType } from "@/type/sign/pwType";
 
 const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
-    mutationFn: (signupData: signupType) => {
+    mutationFn: (signupData: signType) => {
       return axios.post(apiRoute.USER, JSON.stringify(signupData));
     },
     onSuccess: (res) => {
@@ -27,7 +27,7 @@ const useAuth = () => {
 
   // 로그인 요청
   const useSigninMutation = useMutation({
-    mutationFn: async (signinData: signinType) => {
+    mutationFn: async (signinData: signType) => {
       console.error(signinData);
       return axios.post(apiRoute.USER_LOGIN, JSON.stringify(signinData));
     },
@@ -60,6 +60,30 @@ const useAuth = () => {
     },
     onError: (err) => console.error(err),
   });
-  return { useSigninMutation, useSignupMutation, useLogoutMutation };
+
+  const useDeleteAccoutMutation = (id: string) =>
+    useMutation({
+      mutationFn: async (pwData: pwType) => {
+        return axiosInstance.delete(apiRoute.USER_DELETE_ACCOUNT(id), {
+          data: JSON.stringify(pwData),
+        });
+      },
+      onSuccess: (res) => {
+        const data = JSON.parse(res.data);
+        if (data.success) {
+          localStorage.removeItem("accessToken");
+        }
+        alert("회원탈퇴 상공");
+        return data;
+      },
+      onError: (err) => console.error(err),
+    });
+
+  return {
+    useSigninMutation,
+    useSignupMutation,
+    useLogoutMutation,
+    useDeleteAccoutMutation,
+  };
 };
 export default useAuth;

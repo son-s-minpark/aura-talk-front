@@ -10,7 +10,7 @@ type AccountModalProps = {
       | "accountModal"
       | "changePwModal"
       | "logoutModal"
-      | "quitModal"
+      | "DeleteAccountModal"
       | "randomModal"
       | "none"
     >
@@ -43,7 +43,7 @@ const AccountModal = ({ setModal }: AccountModalProps) => {
       </div>
       <div
         className="flex gap-[10px] items-center"
-        onClick={() => setModal("quitModal")}
+        onClick={() => setModal("DeleteAccountModal")}
       >
         <MdPersonOff className="text-[var(--color-gray)] w-[30px] h-[30px]" />
         <p className="font-bold"> 회원탈퇴</p>

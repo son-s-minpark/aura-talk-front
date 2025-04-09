@@ -5,7 +5,7 @@ import { PiKeyFill } from "react-icons/pi";
 import ModeModal from "../../components/setting/modal/ModeModal";
 import AccountModal from "../../components/setting/modal/AccountModal";
 import ChangePwModal from "../../components/setting/modal/ChangePwModal";
-import QuitModal from "../../components/setting/modal/QuitModal";
+import DeleteAccountModal from "../../components/setting/modal/DeleteAccountModal";
 import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
@@ -15,7 +15,7 @@ type modalType =
   | "accountModal"
   | "changePwModal"
   | "logoutModal"
-  | "quitModal"
+  | "DeleteAccountModal"
   | "randomModal"
   | "none";
 
@@ -33,7 +33,7 @@ const SettingList = () => {
             {modal == "modeModal" && <ModeModal />}
             {modal == "accountModal" && <AccountModal setModal={setModal} />}
             {modal == "changePwModal" && <ChangePwModal />}
-            {modal == "quitModal" && <QuitModal />}
+            {modal == "DeleteAccountModal" && <DeleteAccountModal />}
             {modal == "logoutModal" && <LogoutModal />}
             {modal == "randomModal" && <RandomModal />}
           </div>

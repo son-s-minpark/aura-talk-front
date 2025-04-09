@@ -2,36 +2,36 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { IoMdLock, IoMdUnlock } from "react-icons/io";
 
-type pwInputProp = {
+type InputProp = {
   label: string;
   isValid: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const PwInput = ({ isValid, label, value, onChange }: pwInputProp) => {
+export const PwInput = ({ isValid, label, value, onChange }: InputProp) => {
   const [isLocked, setIsLocked] = useState(false);
 
   return (
     <div
-      className={clsx(" h-[50px] font-bold mt-[15px] border-b-1", {
-        "border-[#C81919]": !isValid,
+      className={clsx("font-bold mt-[15px] w-full border-b-1", {
+        "border-[var(--color-errorRed)]": !isValid,
         "": isValid,
       })}
     >
       <p
         className={clsx({
-          "text-[#C81919]": !isValid,
+          "text-[var(--color-errorRed)]": !isValid,
           "": isValid,
         })}
       >
         {label}
       </p>
       {isLocked ? (
-        <div className="flex w-[200px]">
+        <div className="flex w-full">
           <input
             type="text"
-            className="h-[31px]  mb-[6px] flex-none"
+            className="h-[31px] mb-[6px] flex-1"
             value={value}
             onChange={onChange}
           />
@@ -40,10 +40,10 @@ const PwInput = ({ isValid, label, value, onChange }: pwInputProp) => {
           </button>
         </div>
       ) : (
-        <div className="flex w-[200px]">
+        <div className="flex w-full">
           <input
             type="password"
-            className="flex-none h-[31px] mb-[6px] "
+            className="flex-1 h-[31px] mb-[6px] "
             value={value}
             onChange={onChange}
           />
@@ -56,4 +56,33 @@ const PwInput = ({ isValid, label, value, onChange }: pwInputProp) => {
   );
 };
 
-export default PwInput;
+export const ProfileInput = ({
+  isValid,
+  label,
+  value,
+  onChange,
+}: InputProp) => {
+  return (
+    <div
+      className={clsx("font-bold mt-[30px] border-b-1", {
+        "border-[var(--color-errorRed)]": !isValid,
+        "text-white": isValid,
+      })}
+    >
+      <p
+        className={clsx({
+          "text-[var(--color-errorRed)]": !isValid,
+          "text-white": isValid,
+        })}
+      >
+        {label}
+      </p>
+      <input
+        type="text"
+        className="flex-none h-[38px] w-[300px] mb-[6px]"
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
+};

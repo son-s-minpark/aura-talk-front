@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Input from "@/components/onboarding/Input";
+import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
@@ -131,25 +131,22 @@ const Profile = () => {
 
         <div className="flex flex-col mt-[35px] text-white">
           <div>
-            <Input
+            <ProfileInput
               label="이름"
               value={nickname}
               onChange={onChangeNickname}
-              type="text"
               isValid={isNicknameValid}
             />
-            <Input
+            <ProfileInput
               label="아이디"
               value={username}
               onChange={onChangeusername}
-              type="text"
               isValid={isusernameValid}
             />
-            <Input
+            <ProfileInput
               label="한 줄 소개"
               value={description}
               onChange={onChangeDescription}
-              type="text"
               isValid={true}
             />
             <div className="w-[327px] h-[65px] font-bold mt-[30px] border-b-1">
@@ -166,7 +163,9 @@ const Profile = () => {
 
             <div className="flex justify-center">
               {errMsg == "" ? null : (
-                <p className="text-[#C81919] text-[12px] mt-[10px]">{errMsg}</p>
+                <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
+                  {errMsg}
+                </p>
               )}
             </div>
           </div>

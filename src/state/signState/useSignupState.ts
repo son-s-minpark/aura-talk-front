@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { signupType } from "@/type/sign/signupType";
+import { signType } from "@/type/sign/signType";
 
 type SignupState = {
-  signupData: signupType;
-  updateSignupState: (newData: Partial<signupType>) => void;
+  signupData: signType;
+  updateSignupState: (newData: Partial<signType>) => void;
 };
 
 const useSignupState = create<SignupState>((set) => ({
