@@ -1,15 +1,12 @@
 ---
 name: Frontend Template
 about: 프론트엔드 작업
-title: ''
+title: '[FE] (AuraTalk-front 컴포넌트 개발 또는 수정 작업)'
 labels: frontend
 assignees: minhong1126
 
 ---
 
-```
-title: [FRONT] (AuraTalk-front 컴포넌트 개발 또는 수정 작업)
-```
 
 ## 작업 설명
 구현하거나 수정할 UI/UX 기능에 대한 설명
