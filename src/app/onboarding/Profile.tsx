@@ -11,6 +11,7 @@ import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import useAuth from "@/hooks/useAuth";
 import { useSetPageState } from "@/state/signState/usetSetPageState";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const Profile = () => {
   const { updateProfileState, profileData } = useProfileState();
@@ -162,11 +163,7 @@ const Profile = () => {
             </div>
 
             <div className="flex justify-center">
-              {errMsg == "" ? null : (
-                <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
-                  {errMsg}
-                </p>
-              )}
+              {errMsg != "" && <ErrorMessage msg={errMsg} />}
             </div>
           </div>
 

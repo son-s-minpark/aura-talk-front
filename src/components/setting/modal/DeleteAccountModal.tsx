@@ -5,6 +5,7 @@ import { MdPersonOff } from "react-icons/md";
 import { PwInput } from "@/components/common/ProfileInput";
 import useAuth from "@/hooks/useAuth";
 import { validatePw } from "@/util/validate/signValidate";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const id = "1";
 
@@ -57,11 +58,7 @@ const DeleteAccountModal = () => {
         />
       </div>
       <div className="flex justify-center">
-        {errMsg === "" ? null : (
-          <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
-            {errMsg}
-          </p>
-        )}
+        {errMsg != "" && <ErrorMessage msg={errMsg} />}
       </div>
       <div className="flex justify-end mt-[26px]">
         <SelectBtn label="확인" onClick={onSubmit} />

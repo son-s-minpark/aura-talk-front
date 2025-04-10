@@ -5,6 +5,7 @@ import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import useAuth from "@/hooks/useAuth";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
@@ -94,11 +95,7 @@ const Signin = () => {
           />
 
           <div className="flex justify-center">
-            {errMsg === "" ? null : (
-              <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
-                {errMsg}
-              </p>
-            )}
+            {errMsg != "" && <ErrorMessage msg={errMsg} />}
           </div>
         </div>
 

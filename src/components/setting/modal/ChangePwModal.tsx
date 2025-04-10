@@ -3,6 +3,7 @@ import { IoMdKey } from "react-icons/io";
 import { PwInput } from "@/components/common/ProfileInput";
 import SelectBtn from "../../common/SelectBtn";
 import { validatePw } from "@/util/validate/signValidate";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const ChangePwModal = () => {
   const [currPw, setCurrPw] = useState<string>("");
@@ -99,11 +100,7 @@ const ChangePwModal = () => {
           />
         </div>
         <div className="flex justify-center">
-          {errMsg === "" ? null : (
-            <p className="text-[var(--color-errorRed)] text-[12px] mt-[10px]">
-              {errMsg}
-            </p>
-          )}
+          {errMsg != "" && <ErrorMessage msg={errMsg} />}
         </div>
       </div>
       <div className="flex items-end justify-end mt-[44px] mr-[24px] pb-[16px]">

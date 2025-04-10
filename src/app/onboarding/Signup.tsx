@@ -8,6 +8,7 @@ import useAuth from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { redirect } from "next/navigation";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
+import ErrorMessage from "@/components/common/ErrorMessage";
 
 const Signup = () => {
   const { updateSignupState, signupData } = useSignupState();
@@ -132,11 +133,7 @@ const Signup = () => {
           />
 
           <div className="flex justify-center">
-            {errMsg === "" ? null : (
-              <p className="text-[var(--color-errorRed)] text-[12px] pt-[10px]">
-                {errMsg}
-              </p>
-            )}
+            {errMsg != "" && <ErrorMessage msg={errMsg} />}
           </div>
         </div>
         <div className="mt-[192px] flex items-center">
