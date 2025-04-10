@@ -1,18 +1,51 @@
+"use client";
 import { useSetPageState } from "@/state/signState/usetSetPageState";
-import React, { useRef } from "react";
+import React, { useState } from "react";
+import { useMailAuth } from "@/hooks/useAuth";
+import useSignupState from "@/state/signState/useSignupState";
 
 const ValidateModal = () => {
   const { setPage } = useSetPageState();
-  const mailInputRef = useRef<HTMLInputElement>(null);
+  const [codeInput, setCodeInput] = useState<string>("");
+  const [isSent, setIsSent] = useState<boolean>(false);
+  const { useMailValidateMutation, useMailResendMutation } = useMailAuth();
+  const { signupData } = useSignupState();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Submitted email:", codeInput);
+  };
 
-    if (mailInputRef.current) {
-      const mailValue = mailInputRef.current.value;
-      console.log("Submitted email:", mailValue);
-      setPage("profile");
+  async function onMailSubmit() {
+    if (!isSent) {
+      try {
+        setIsSent(true);
+        const data = await useMailValidateMutation.mutateAsync(
+          signupData.email
+        );
+        const code = data.data.code;
+        if (code == codeInput) {
+          setPage("profile");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        setIsSent(true);
+        const data = await useMailResendMutation.mutateAsync(signupData.email);
+        const code = data.data.code;
+        if (code == codeInput) {
+          setPage("profile");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
+  }
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCodeInput(e.target.value);
   };
 
   return (
@@ -26,13 +59,17 @@ const ValidateModal = () => {
           <div className="bg-[#4B4B4B] h-[28px] w-[189px] rounded-[10px] px-[10px] flex items-center">
             <p>mail</p>
           </div>
-          <button className="flex items-center justify-center rounded-[10px] bg-[#8045FF] font-bold text-[14px] h-[25px] w-[57px]">
-            전송
+          <button
+            className="flex items-center justify-center rounded-[10px] bg-[#8045FF] font-bold text-[14px] h-[25px] w-[57px]"
+            onClick={onMailSubmit}
+          >
+            {isSent ? <span>전송</span> : <span>재전송</span>}
           </button>
         </div>
         <div className="w-[265px] h-[52px] pt-[21px] flex items-center justify-center">
           <input
-            ref={mailInputRef}
+            value={codeInput} // 상태 값을 input에 연결
+            onChange={handleCodeChange} // 입력값 변화 시 상태 업데이트
             type="text"
             name="mail"
             placeholder="코드를 입력해주세요"

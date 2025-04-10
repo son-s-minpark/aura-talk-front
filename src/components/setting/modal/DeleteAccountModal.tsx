@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SelectBtn from "../../common/SelectBtn";
 import { MdPersonOff } from "react-icons/md";
 import { PwInput } from "@/components/common/ProfileInput";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 

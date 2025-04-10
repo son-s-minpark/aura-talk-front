@@ -4,7 +4,7 @@ import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import useSignupState from "@/state/signState/useSignupState";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { redirect } from "next/navigation";
 import { validateMail, validatePw } from "@/util/validate/signValidate";

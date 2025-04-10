@@ -8,7 +8,7 @@ type SignupState = {
 
 const useSignupState = create<SignupState>((set) => ({
   signupData: {
-    mail: "",
+    email: "",
     pw: "",
   },
   updateSignupState: (newData) =>

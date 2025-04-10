@@ -4,7 +4,7 @@ import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 
 const Signin = () => {

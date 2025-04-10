@@ -9,7 +9,7 @@ import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useSetPageState } from "@/state/signState/usetSetPageState";
 import ErrorMessage from "@/components/common/ErrorMessage";
 

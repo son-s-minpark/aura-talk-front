@@ -1,7 +1,7 @@
 import React from "react";
 import { MdLogout } from "react-icons/md";
 import SelectBtn from "../../common/SelectBtn";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const LogoutModal = () => {
   const { useLogoutMutation } = useAuth();

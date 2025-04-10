@@ -1,4 +1,4 @@
-const API = "https://api.auratalk.p-e.kr";
+const API = "https://api.auratalk.kro.kr";
 const USER = `${API}/api/users`;
 
 export const apiRoute = {

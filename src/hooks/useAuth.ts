@@ -5,7 +5,7 @@ import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
 
-const useAuth = () => {
+export const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {
@@ -20,7 +20,7 @@ const useAuth = () => {
         alert("토큰을 받지 못 했습니다.");
       }
       console.log("회원가입 완료");
-      return res.data.success;
+      return data;
     },
     onError: (err) => console.error(err),
   });
@@ -40,7 +40,7 @@ const useAuth = () => {
         alert("토큰을 받지 못 했습니다.");
       }
       console.log("로그인 완료");
-      return res.data.success;
+      return data;
     },
     onError: (err) => console.error(err),
   });
@@ -55,7 +55,7 @@ const useAuth = () => {
       if (data.success) {
         localStorage.removeItem("accessToken");
       }
-      alert("로그아웃 상공");
+      console.error("로그아웃 상공");
       return data;
     },
     onError: (err) => console.error(err),
@@ -73,7 +73,7 @@ const useAuth = () => {
         if (data.success) {
           localStorage.removeItem("accessToken");
         }
-        alert("회원탈퇴 상공");
+        console.error("회원탈퇴 상공");
         return data;
       },
       onError: (err) => console.error(err),
@@ -86,4 +86,49 @@ const useAuth = () => {
     useDeleteAccoutMutation,
   };
 };
-export default useAuth;
+
+export const useMailAuth = () => {
+  const useMailValidateMutation = useMutation({
+    mutationFn: async (mailData: string) => {
+      const token = localStorage.getItem("accessToken");
+      return axios.post(
+        apiRoute.USER_VERIFY_EMAIL,
+        JSON.stringify({
+          email: mailData,
+          token: token,
+        })
+      );
+    },
+    onSuccess: (res) => {
+      const data = JSON.parse(res.data);
+      console.log("메일 요청 완료");
+      return data;
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
+  const useMailResendMutation = useMutation({
+    mutationFn: async (mailData: string) => {
+      const token = localStorage.getItem("accessToken");
+      return axios.post(
+        apiRoute.USER_RESEND_EMAIL,
+        JSON.stringify({
+          email: mailData,
+          token: token,
+        })
+      );
+    },
+    onSuccess: (res) => {
+      const data = JSON.parse(res.data);
+      console.log("메일 재전송 요청 완료");
+      return data;
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
+  return { useMailValidateMutation, useMailResendMutation };
+};
