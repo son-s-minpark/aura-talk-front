@@ -21,20 +21,12 @@ export const useAuth = () => {
   const useSigninMutation = useMutation({
     mutationFn: async (signinData: signType) => {
       console.error(signinData);
-      return axios.post(apiRoute.USER_LOGIN, JSON.stringify(signinData));
+      return axios.post(apiRoute.USER_LOGIN, signinData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
-    onSuccess: (res) => {
-      const data = res.data;
-      const token = data.token;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-      } else {
-        alert("토큰을 받지 못 했습니다.");
-      }
-      console.log("로그인 완료");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
   // 로그아웃 요청

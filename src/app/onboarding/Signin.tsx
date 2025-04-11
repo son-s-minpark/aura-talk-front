@@ -6,7 +6,8 @@ import Back from "@/components/onboarding/Back";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
-
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -14,6 +15,7 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
+  const router = useRouter();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -60,8 +62,27 @@ const Signin = () => {
       return; // 이메일과 비밀번호가 모두 입력되지 않으면 아무 작업도 하지 않음
     }
     if (isSigninValid()) {
-      const res = await useSigninMutation.mutateAsync({ mail, pw });
-      console.error(res);
+      try {
+        const res = await useSigninMutation.mutateAsync({
+          email: mail,
+          password: pw,
+        });
+        const data = res.data;
+        if (data.success) {
+          const token = data.data.token;
+          if (token) {
+            localStorage.setItem("accesToken", token);
+          } else {
+            alert("토큰을 받지 못 했습니다.");
+            return;
+          }
+          localStorage.setItem("userId", data.data.user.id);
+          router.push("/home");
+        }
+      } catch (error: unknown) {
+        const err = error as AxiosError;
+        console.error(err);
+      }
     }
   }
 
@@ -84,14 +105,14 @@ const Signin = () => {
             label="이메일"
             value={mail}
             onChange={onChageMail}
-            isValid={isMailValid} // 이메일 유효성 상태 전달
+            isValid={isMailValid}
           />
 
           <PwInput
             label="비밀번호"
             value={pw}
             onChange={onChagePw}
-            isValid={isPwValid} // 비밀번호 유효성 상태 전달
+            isValid={isPwValid}
           />
 
           <div className="flex justify-center">
