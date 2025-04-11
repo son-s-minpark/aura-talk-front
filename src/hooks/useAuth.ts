@@ -9,20 +9,12 @@ export const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {
-      return axios.post(apiRoute.USER, JSON.stringify(signupData));
+      return axios.post(apiRoute.USER, signupData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      const token = data.token;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-      } else {
-        alert("토큰을 받지 못 했습니다.");
-      }
-      console.log("회원가입 완료");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
   // 로그인 요청
@@ -32,7 +24,7 @@ export const useAuth = () => {
       return axios.post(apiRoute.USER_LOGIN, JSON.stringify(signinData));
     },
     onSuccess: (res) => {
-      const data = JSON.parse(res.data);
+      const data = res.data;
       const token = data.token;
       if (token) {
         localStorage.setItem("accessToken", token);
@@ -51,7 +43,7 @@ export const useAuth = () => {
       return axiosInstance.delete(apiRoute.USER_LOGOUT);
     },
     onSuccess: (res) => {
-      const data = JSON.parse(res.data);
+      const data = res.data;
       if (data.success) {
         localStorage.removeItem("accessToken");
       }
@@ -69,7 +61,7 @@ export const useAuth = () => {
         });
       },
       onSuccess: (res) => {
-        const data = JSON.parse(res.data);
+        const data = res.data;
         if (data.success) {
           localStorage.removeItem("accessToken");
         }
@@ -100,7 +92,7 @@ export const useMailAuth = () => {
       );
     },
     onSuccess: (res) => {
-      const data = JSON.parse(res.data);
+      const data = res.data;
       console.log("메일 요청 완료");
       return data;
     },
@@ -121,7 +113,7 @@ export const useMailAuth = () => {
       );
     },
     onSuccess: (res) => {
-      const data = JSON.parse(res.data);
+      const data = res.data;
       console.log("메일 재전송 요청 완료");
       return data;
     },
