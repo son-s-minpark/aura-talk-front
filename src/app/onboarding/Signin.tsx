@@ -71,7 +71,7 @@ const Signin = () => {
         if (data.success) {
           const token = data.data.token;
           if (token) {
-            localStorage.setItem("accesToken", token);
+            localStorage.setItem("accessToken", token);
           } else {
             alert("토큰을 받지 못 했습니다.");
             return;

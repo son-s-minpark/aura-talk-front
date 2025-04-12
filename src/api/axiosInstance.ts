@@ -1,36 +1,26 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios from "axios";
 import { apiRoute } from "./apiRoute";
 
 const axiosInstance = axios.create({
   baseURL: apiRoute.BASE,
   timeout: 100000,
   headers: {
-    "content-type": "application/json",
-    accept: "application/json",
+    "Content-type": "application/json",
   },
 });
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  (config) => {
     const accessToken = localStorage.getItem("accessToken");
-
     if (accessToken) {
-      if (!config.headers["Authorization"]) {
-        config.headers["Authorization"] = `Bearer ${accessToken}`;
-      }
-    } else {
-      console.error("인터셉트 에러러");
+      config.headers.Authorization = `Bearer ${accessToken}`;
+      console.error(config.headers);
     }
-    console.error(config);
-
     return config;
   },
-  (err) => {
-    alert("인터셉트 에러");
-    console.error(err);
-    return Promise.reject(err);
+  (error) => {
+    return Promise.reject(error);
   }
 );
-
 export default axiosInstance;

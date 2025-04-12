@@ -4,8 +4,11 @@ import axiosInstance from "@/api/axiosInstance";
 import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
+import { profileType } from "@/type/user/profileType";
+import useUserState from "@/state/user/useUserStore";
 
 export const useAuth = () => {
+  const { userData } = useUserState();
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {
@@ -32,17 +35,10 @@ export const useAuth = () => {
   // 로그아웃 요청
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
-      return axiosInstance.delete(apiRoute.USER_LOGOUT);
+      return axiosInstance.delete(apiRoute.USER_LOGOUT, {
+        data: { userId: 3 },
+      });
     },
-    onSuccess: (res) => {
-      const data = res.data;
-      if (data.success) {
-        localStorage.removeItem("accessToken");
-      }
-      console.error("로그아웃 상공");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
   const useDeleteAccoutMutation = (id: string) =>
@@ -63,11 +59,23 @@ export const useAuth = () => {
       onError: (err) => console.error(err),
     });
 
+  const useProfileMutation = useMutation({
+    mutationFn: async (profileData: profileType) => {
+      console.error(profileData);
+      console.error(userData.userId);
+      return axiosInstance.post(
+        apiRoute.USER_PROFILE(userData.userId),
+        profileData
+      );
+    },
+  });
+
   return {
     useSigninMutation,
     useSignupMutation,
     useLogoutMutation,
     useDeleteAccoutMutation,
+    useProfileMutation,
   };
 };
 

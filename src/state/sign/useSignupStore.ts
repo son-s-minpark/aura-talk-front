@@ -3,16 +3,16 @@ import { signType } from "@/type/sign/signType";
 
 type SignupState = {
   signupData: signType;
-  updateSignupState: (newData: Partial<signType>) => void;
+  setSignupData: (newData: Partial<signType>) => void;
 };
 
-const useSignupState = create<SignupState>((set) => ({
+const useSignupStore = create<SignupState>((set) => ({
   signupData: {
     email: "",
-    pw: "",
+    password: "",
   },
-  updateSignupState: (newData) =>
+  setSignupData: (newData) =>
     set((state) => ({ signupData: { ...state.signupData, ...newData } })),
 }));
 
-export default useSignupState;
+export default useSignupStore;

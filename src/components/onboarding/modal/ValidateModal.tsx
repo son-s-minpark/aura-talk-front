@@ -1,15 +1,15 @@
 "use client";
-import { useSetPageState } from "@/state/signState/usetSetPageState";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import React, { useState } from "react";
 import { useMailAuth } from "@/hooks/useAuth";
-import useSignupState from "@/state/signState/useSignupState";
+import useSignupStore from "@/state/sign/useSignupStore";
 
 const ValidateModal = () => {
-  const { setPage } = useSetPageState();
+  const { setPage } = useSetPageStore();
   const [codeInput, setCodeInput] = useState<string>("");
   const [isSent, setIsSent] = useState<boolean>(false);
   const { useMailValidateMutation, useMailResendMutation } = useMailAuth();
-  const { signupData } = useSignupState();
+  const { signupData } = useSignupStore();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();

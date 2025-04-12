@@ -10,6 +10,6 @@ export const apiRoute = {
   USER_RESEND_EMAIL: `${USER}/resend-verification`,
   USER_LOGIN: `${USER}/login`,
   USER_LOGOUT: `${USER}/logout`,
-  USER_DELETE_ACCOUNT: (id: string) => `${USER}/${id}`,
-  USER_PROFILE: (id: string) => `${USER}/${id}/profile`,
+  USER_DELETE_ACCOUNT: (id: number) => `${USER}/${id}`,
+  USER_PROFILE: (id: number) => `${USER}/${id}/profile`,
 };

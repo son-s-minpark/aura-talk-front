@@ -3,15 +3,17 @@ import React, { useState } from "react";
 import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
-import useSignupState from "@/state/signState/useSignupState";
+import useSignupStore from "@/state/sign/useSignupStore";
 import { useAuth } from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
+import useUserState from "@/state/user/useUserStore";
 
 const Signup = () => {
-  const { updateSignupState, signupData } = useSignupState();
+  const { setSignupData, signupData } = useSignupStore();
+  const { setUserData } = useUserState();
   const { useSignupMutation } = useAuth();
   const [mail, setMail] = useState<string>(signupData.email);
   const [pw, setPw] = useState<string>(signupData.password);
@@ -77,7 +79,7 @@ const Signup = () => {
 
     if (isSignupValid()) {
       // 모든 유효성 검사를 통과했을 때
-      updateSignupState({
+      setSignupData({
         email: mail,
         password: pw,
       });
@@ -87,20 +89,22 @@ const Signup = () => {
           email: mail,
           password: pw,
         });
+        console.error(res.data);
         if (res.data.success) {
           const token = res.data.data.token;
           if (token) {
-            localStorage.setItem("accesToken", token);
+            localStorage.setItem("accessToken", token);
           } else {
             alert("토큰을 받지 못 했습니다.");
           }
-          localStorage.setItem("userId", res.data.data.userId);
+          setUserData({ userId: res.data.data.userId });
           setIsValidateModalDown(true);
         }
       } catch (error: unknown) {
         const err = error as AxiosError;
         if (err.response?.status == 409) {
           setErrMsg("이미 존재하는 이메일입니다.");
+          setIsMailValid(false);
         }
       }
     }
