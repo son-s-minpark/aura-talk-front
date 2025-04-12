@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import useUserState from "@/state/user/useUserStore";
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -15,6 +16,7 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
+  const { setUserData } = useUserState();
   const router = useRouter();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
@@ -76,7 +78,7 @@ const Signin = () => {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
-          localStorage.setItem("userId", data.data.user.id);
+          setUserData({ userId: res.data.data.userId });
           router.push("/home");
         }
       } catch (error: unknown) {

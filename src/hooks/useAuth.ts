@@ -36,34 +36,27 @@ export const useAuth = () => {
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
       return axiosInstance.delete(apiRoute.USER_LOGOUT, {
-        data: { userId: 3 },
+        data: { userId: userData.userId },
       });
     },
   });
 
-  const useDeleteAccoutMutation = (id: string) =>
-    useMutation({
-      mutationFn: async (pwData: pwType) => {
-        return axiosInstance.delete(apiRoute.USER_DELETE_ACCOUNT(id), {
-          data: JSON.stringify(pwData),
-        });
-      },
-      onSuccess: (res) => {
-        const data = res.data;
-        if (data.success) {
-          localStorage.removeItem("accessToken");
-        }
-        console.error("회원탈퇴 상공");
-        return data;
-      },
-      onError: (err) => console.error(err),
-    });
+  // 회원탈퇴 요청
+  const useDeleteAccoutMutation = useMutation({
+    mutationFn: async (pwData: pwType) => {
+      return axiosInstance.delete(
+        apiRoute.USER_DELETE_ACCOUNT(userData.userId),
+        { data: pwData }
+      );
+    },
+  });
 
+  // 프로필 설정 요청
   const useProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
       console.error(profileData);
       console.error(userData.userId);
-      return axiosInstance.post(
+      return axiosInstance.put(
         apiRoute.USER_PROFILE(userData.userId),
         profileData
       );

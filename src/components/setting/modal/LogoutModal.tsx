@@ -2,13 +2,22 @@ import React from "react";
 import { MdLogout } from "react-icons/md";
 import SelectBtn from "../../common/SelectBtn";
 import { useAuth } from "@/hooks/useAuth";
+import { AxiosError } from "axios";
+import { redirect } from "next/navigation";
 
 const LogoutModal = () => {
   const { useLogoutMutation } = useAuth();
 
   async function onLogout() {
-    const res = await useLogoutMutation.mutateAsync();
-    console.error(res);
+    try {
+      const res = await useLogoutMutation.mutateAsync();
+      console.error(res);
+      localStorage.clear();
+      redirect("/onboarding");
+    } catch (error: unknown) {
+      const err = error as AxiosError;
+      console.error(err);
+    }
   }
 
   return (
