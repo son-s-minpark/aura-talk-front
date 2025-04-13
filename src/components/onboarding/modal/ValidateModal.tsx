@@ -64,7 +64,7 @@ const ValidateModal = () => {
             className="flex items-center justify-center rounded-[10px] bg-[#8045FF] font-bold text-[14px] h-[25px] w-[57px]"
             onClick={onMailSubmit}
           >
-            {isSent ? <span>전송</span> : <span>재전송</span>}
+            {!isSent ? <span>전송</span> : <span>재전송</span>}
           </button>
         </div>
         <div className="w-[265px] h-[52px] pt-[21px] flex items-center justify-center">

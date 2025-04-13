@@ -4,7 +4,7 @@ import axiosInstance from "@/api/axiosInstance";
 import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
-import { profileType } from "@/type/user/profileType";
+import { profileType, randomChatType } from "@/type/user/profileType";
 import useUserState from "@/state/user/useUserStore";
 
 export const useAuth = () => {
@@ -60,12 +60,22 @@ export const useAuth = () => {
     },
   });
 
+  const useRandomChatToggleMutation = useMutation({
+    mutationFn: async (randomData: randomChatType) => {
+      return axiosInstance.put(
+        apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId),
+        randomData
+      );
+    },
+  });
+
   return {
     useSigninMutation,
     useSignupMutation,
     useLogoutMutation,
     useDeleteAccoutMutation,
     useProfileMutation,
+    useRandomChatToggleMutation,
   };
 };
 

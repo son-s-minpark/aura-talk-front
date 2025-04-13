@@ -4,3 +4,7 @@ export type profileType = {
   description: string;
   interests: string[];
 };
+
+export type randomChatType = {
+  randomChatEnabled: boolean;
+};
