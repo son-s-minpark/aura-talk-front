@@ -70,6 +70,7 @@ const Signin = () => {
           password: pw,
         });
         const data = res.data;
+        console.error(data);
         if (data.success) {
           const token = data.data.token;
           if (token) {
@@ -78,7 +79,7 @@ const Signin = () => {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
-          setUserData({ userId: res.data.data.userId });
+          setUserData({ userId: data.data.user.id });
           router.push("/home");
         }
       } catch (error: unknown) {

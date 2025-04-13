@@ -35,15 +35,14 @@ export const useAuth = () => {
   // 로그아웃 요청
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
-      return axiosInstance.delete(apiRoute.USER_LOGOUT, {
-        data: { userId: userData.userId },
-      });
+      return axiosInstance.post(apiRoute.USER_LOGOUT);
     },
   });
 
   // 회원탈퇴 요청
   const useDeleteAccoutMutation = useMutation({
     mutationFn: async (pwData: pwType) => {
+      console.error(userData.userId);
       return axiosInstance.delete(
         apiRoute.USER_DELETE_ACCOUNT(userData.userId),
         { data: pwData }
@@ -54,8 +53,6 @@ export const useAuth = () => {
   // 프로필 설정 요청
   const useProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
-      console.error(profileData);
-      console.error(userData.userId);
       return axiosInstance.put(
         apiRoute.USER_PROFILE(userData.userId),
         profileData
