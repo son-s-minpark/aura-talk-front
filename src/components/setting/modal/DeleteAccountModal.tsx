@@ -7,12 +7,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
 const DeleteAccountModal = () => {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [pw, setPw] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
   const { useDeleteAccoutMutation } = useAuth();
+  const router = useRouter();
 
   function onChangePw(e: React.ChangeEvent<HTMLInputElement>) {
     setPw(e.target.value);
@@ -39,6 +41,8 @@ const DeleteAccountModal = () => {
             password: pw,
           });
           console.error(res);
+          localStorage.clear();
+          router.replace("/onboarding");
         } catch (error: unknown) {
           const err = error as AxiosError;
           console.error(err);
