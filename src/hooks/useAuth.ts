@@ -4,129 +4,93 @@ import axiosInstance from "@/api/axiosInstance";
 import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
+import { profileType, randomChatType } from "@/type/user/profileType";
+import useUserState from "@/state/user/useUserStore";
+import { mailType } from "@/type/sign/mailType";
 
 export const useAuth = () => {
+  const { userData } = useUserState();
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {
-      return axios.post(apiRoute.USER, JSON.stringify(signupData));
+      return axios.post(apiRoute.USER, signupData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      const token = data.token;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-      } else {
-        alert("토큰을 받지 못 했습니다.");
-      }
-      console.log("회원가입 완료");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
   // 로그인 요청
   const useSigninMutation = useMutation({
     mutationFn: async (signinData: signType) => {
       console.error(signinData);
-      return axios.post(apiRoute.USER_LOGIN, JSON.stringify(signinData));
+      return axios.post(apiRoute.USER_LOGIN, signinData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      const token = data.token;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-      } else {
-        alert("토큰을 받지 못 했습니다.");
-      }
-      console.log("로그인 완료");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
   // 로그아웃 요청
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
-      return axiosInstance.delete(apiRoute.USER_LOGOUT);
+      return axiosInstance.post(apiRoute.USER_LOGOUT);
     },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      if (data.success) {
-        localStorage.removeItem("accessToken");
-      }
-      console.error("로그아웃 상공");
-      return data;
-    },
-    onError: (err) => console.error(err),
   });
 
-  const useDeleteAccoutMutation = (id: string) =>
-    useMutation({
-      mutationFn: async (pwData: pwType) => {
-        return axiosInstance.delete(apiRoute.USER_DELETE_ACCOUNT(id), {
-          data: JSON.stringify(pwData),
-        });
-      },
-      onSuccess: (res) => {
-        const data = JSON.parse(res.data);
-        if (data.success) {
-          localStorage.removeItem("accessToken");
-        }
-        console.error("회원탈퇴 상공");
-        return data;
-      },
-      onError: (err) => console.error(err),
-    });
+  // 회원탈퇴 요청
+  const useDeleteAccoutMutation = useMutation({
+    mutationFn: async (pwData: pwType) => {
+      console.error(userData.userId);
+      return axiosInstance.delete(
+        apiRoute.USER_DELETE_ACCOUNT(userData.userId),
+        { data: pwData }
+      );
+    },
+  });
+
+  // 프로필 설정 요청
+  const useProfileMutation = useMutation({
+    mutationFn: async (profileData: profileType) => {
+      return axiosInstance.put(
+        apiRoute.USER_PROFILE(userData.userId),
+        profileData
+      );
+    },
+  });
+
+  // 랜덤 채팅 설정 변경 요청
+  const useRandomChatToggleMutation = useMutation({
+    mutationFn: async (randomData: randomChatType) => {
+      return axiosInstance.put(
+        apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId),
+        randomData
+      );
+    },
+  });
 
   return {
     useSigninMutation,
     useSignupMutation,
     useLogoutMutation,
     useDeleteAccoutMutation,
+    useProfileMutation,
+    useRandomChatToggleMutation,
   };
 };
 
 export const useMailAuth = () => {
   const useMailValidateMutation = useMutation({
-    mutationFn: async (mailData: string) => {
-      const token = localStorage.getItem("accessToken");
-      return axios.post(
-        apiRoute.USER_VERIFY_EMAIL,
-        JSON.stringify({
-          email: mailData,
-          token: token,
-        })
-      );
-    },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      console.log("메일 요청 완료");
-      return data;
-    },
-    onError: (err) => {
-      console.error(err);
+    mutationFn: async (mailData: mailType) => {
+      return axios.post(apiRoute.USER_VERIFY_EMAIL, mailData);
     },
   });
 
   const useMailResendMutation = useMutation({
-    mutationFn: async (mailData: string) => {
-      const token = localStorage.getItem("accessToken");
-      return axios.post(
-        apiRoute.USER_RESEND_EMAIL,
-        JSON.stringify({
-          email: mailData,
-          token: token,
-        })
-      );
-    },
-    onSuccess: (res) => {
-      const data = JSON.parse(res.data);
-      console.log("메일 재전송 요청 완료");
-      return data;
-    },
-    onError: (err) => {
-      console.error(err);
+    mutationFn: async (mailData: mailType) => {
+      return axios.post(apiRoute.USER_RESEND_EMAIL, mailData);
     },
   });
 

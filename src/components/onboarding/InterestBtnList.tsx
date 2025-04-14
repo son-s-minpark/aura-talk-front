@@ -1,4 +1,4 @@
-import useProfileState from "@/state/signState/useProfileState";
+import useProfileStore from "@/state/sign/useProfileStore";
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";
@@ -8,7 +8,7 @@ type InterestBtnProp = {
 };
 
 const InterestBtnList = ({ isScrollable }: InterestBtnProp) => {
-  const { profileData, removeInterest } = useProfileState();
+  const { profileData, removeInterest } = useProfileStore();
   return (
     <div
       className={clsx("flex gap-[5px] items-center", {
@@ -16,7 +16,7 @@ const InterestBtnList = ({ isScrollable }: InterestBtnProp) => {
         "overflow-auto whitespace-normal": !isScrollable,
       })}
     >
-      {profileData.interestList.map((label, index) => (
+      {profileData.interests.map((label, index) => (
         <div key={index} onClick={() => removeInterest(label)}>
           <InterestBtnSml label={label} />
         </div>

@@ -1,4 +1,4 @@
-import { useSetPageState } from "@/state/signState/usetSetPageState";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 
@@ -7,7 +7,7 @@ type BackProps = {
 };
 
 const Back = ({ backComponent }: BackProps) => {
-  const { setPage } = useSetPageState();
+  const { setPage } = useSetPageStore();
   return (
     <div className="h-[76px] w-full flex items-center">
       <button

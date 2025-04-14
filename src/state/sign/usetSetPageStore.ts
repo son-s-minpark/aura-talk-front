@@ -7,7 +7,7 @@ interface Store {
   setPage: (page: PageType) => void;
 }
 
-export const useSetPageState = create<Store>((set) => ({
+export const useSetPageStore = create<Store>((set) => ({
   page: "onBoarding",
   setPage: (page) => set({ page }),
 }));

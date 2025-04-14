@@ -3,19 +3,21 @@ import React, { useState } from "react";
 import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
-import useSignupState from "@/state/signState/useSignupState";
+import useSignupStore from "@/state/sign/useSignupStore";
 import { useAuth } from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
-import { redirect } from "next/navigation";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import { AxiosError } from "axios";
+import useUserState from "@/state/user/useUserStore";
 
 const Signup = () => {
-  const { updateSignupState, signupData } = useSignupState();
+  const { setSignupData, signupData } = useSignupStore();
+  const { setUserData } = useUserState();
   const { useSignupMutation } = useAuth();
-  const [mail, setMail] = useState<string>(signupData.mail);
-  const [pw, setPw] = useState<string>(signupData.pw);
-  const [checkPw, setCheckPw] = useState<string>(signupData.pw);
+  const [mail, setMail] = useState<string>(signupData.email);
+  const [pw, setPw] = useState<string>(signupData.password);
+  const [checkPw, setCheckPw] = useState<string>(signupData.password);
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
@@ -70,20 +72,41 @@ const Signup = () => {
     return isEmailValid && isPasswordValid;
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!isFull()) {
       return; // 빈 칸이 있으면 아무 작업도 하지 않음
     }
 
     if (isSignupValid()) {
       // 모든 유효성 검사를 통과했을 때
-      updateSignupState({
-        mail: mail,
-        pw: pw,
+      setSignupData({
+        email: mail,
+        password: pw,
       });
-      setIsValidateModalDown(true);
-      useSignupMutation.mutate({ mail: mail, pw: pw });
-      redirect("/home");
+
+      try {
+        const res = await useSignupMutation.mutateAsync({
+          email: mail,
+          password: pw,
+        });
+        console.error(res.data);
+        if (res.data.success) {
+          const token = res.data.data.token;
+          if (token) {
+            localStorage.setItem("accessToken", token);
+          } else {
+            alert("토큰을 받지 못 했습니다.");
+          }
+          setUserData({ userId: res.data.data.userId });
+          setIsValidateModalDown(true);
+        }
+      } catch (error: unknown) {
+        const err = error as AxiosError;
+        if (err.response?.status == 409) {
+          setErrMsg("이미 존재하는 이메일입니다.");
+          setIsMailValid(false);
+        }
+      }
     }
   }
 
@@ -121,7 +144,8 @@ const Signup = () => {
               isValid={isPwValid}
             />
             <p className="text-[10px] mt-[6px]">
-              * 비밀번호는 대소문자, 특수문자를 포함해 6자 이상이어야 합니다
+              * 비밀번호는 대소문자, 특수문자, 숫자를 포함해 6자 이상이어야
+              합니다
             </p>
           </>
 

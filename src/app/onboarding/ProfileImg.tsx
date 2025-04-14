@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
-import useProfileState from "@/state/signState/useProfileState";
+import useProfileStore from "@/state/sign/useProfileStore";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";
 
 const ProfileImg = () => {
-  const { profileData } = useProfileState();
+  const { profileData } = useProfileStore();
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
   return (

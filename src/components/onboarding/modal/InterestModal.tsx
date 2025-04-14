@@ -2,12 +2,12 @@
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import InterestData from "../../../data/interestData.json";
-import useProfileState from "@/state/signState/useProfileState";
+import useProfileStore from "@/state/sign/useProfileStore";
 import InterestBtnList from "../InterestBtnList";
 import { InterestBtnBig } from "../InterestBtn";
 import SelectBtn from "@/components/common/SelectBtn";
 
-type InterestListProps = {
+type interestsProps = {
   [key: string]: string[];
 };
 
@@ -16,8 +16,8 @@ type InterestModalProps = {
 };
 
 const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
-  const { profileData } = useProfileState();
-  const InterestDataTyped: InterestListProps = InterestData;
+  const { profileData } = useProfileStore();
+  const InterestDataTyped: interestsProps = InterestData;
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-scroll">
@@ -42,7 +42,7 @@ const InterestModal = ({ setIsInterestDown }: InterestModalProps) => {
             <div className="flex flex-wrap ">
               {InterestDataTyped[category].map((label, index) => (
                 <div key={index} className="mt-[15px] mr-[10px]">
-                  {profileData.interestList.includes(label) ? (
+                  {profileData.interests.includes(label) ? (
                     <InterestBtnBig label={label} selected={true} />
                   ) : (
                     <InterestBtnBig label={label} selected={false} />

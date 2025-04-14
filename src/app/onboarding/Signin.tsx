@@ -6,7 +6,11 @@ import Back from "@/components/onboarding/Back";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
-
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import useUserState from "@/state/user/useUserStore";
+import useProfileStore from "@/state/sign/useProfileStore";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -14,6 +18,10 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
+  const { setUserData } = useUserState();
+  const { setProfileData } = useProfileStore();
+  const { setPage } = useSetPageStore();
+  const router = useRouter();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -60,8 +68,54 @@ const Signin = () => {
       return; // 이메일과 비밀번호가 모두 입력되지 않으면 아무 작업도 하지 않음
     }
     if (isSigninValid()) {
-      const res = await useSigninMutation.mutateAsync({ mail, pw });
-      console.error(res);
+      try {
+        const res = await useSigninMutation.mutateAsync({
+          email: mail,
+          password: pw,
+        });
+        const data = res.data;
+        console.error(data);
+        if (data.success) {
+          const token = data.data.token;
+          if (token) {
+            localStorage.setItem("accessToken", token);
+          } else {
+            alert("토큰을 받지 못 했습니다.");
+            return;
+          }
+          const userData = data.data.user;
+          setUserData({
+            userId: userData.id,
+            createdAt: userData.createdAt,
+            randomChatEnabled: userData.randomChatEnabled,
+            status: userData.status,
+          });
+          setProfileData({
+            description: userData.description,
+            nickname: userData.nickname,
+            username: userData.username,
+            interests: userData.interests,
+          });
+          if (
+            userData.username == "임시 사용자명" &&
+            userData.nickname == "임시 닉네임"
+          ) {
+            const answer = confirm(
+              "프로필이 설정되어 있지 않습니다. 설정하러 가시겠습니까?"
+            );
+            if (answer) {
+              setPage("profile");
+            } else {
+              router.push("/home");
+            }
+          } else {
+            router.push("/home");
+          }
+        }
+      } catch (error: unknown) {
+        const err = error as AxiosError;
+        console.error(err);
+      }
     }
   }
 
@@ -84,14 +138,14 @@ const Signin = () => {
             label="이메일"
             value={mail}
             onChange={onChageMail}
-            isValid={isMailValid} // 이메일 유효성 상태 전달
+            isValid={isMailValid}
           />
 
           <PwInput
             label="비밀번호"
             value={pw}
             onChange={onChagePw}
-            isValid={isPwValid} // 비밀번호 유효성 상태 전달
+            isValid={isPwValid}
           />
 
           <div className="flex justify-center">

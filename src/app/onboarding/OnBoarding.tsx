@@ -2,10 +2,10 @@ import React from "react";
 import Image from "next/image";
 import logoWhite from "../../../public/images/logo-white.png";
 import SignBtn from "@/components/onboarding/SignBtn";
-import { useSetPageState } from "@/state/signState/usetSetPageState";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 
 const OnBoarding = () => {
-  const { setPage } = useSetPageState();
+  const { setPage } = useSetPageStore();
   return (
     <div className="w-full h-full pt-[25px] px-[24px] overflow-scroll">
       <div className="-ml-[16px]">

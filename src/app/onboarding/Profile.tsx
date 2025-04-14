@@ -4,17 +4,18 @@ import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
-import useProfileState from "@/state/signState/useProfileState";
+import useProfileStore from "@/state/sign/useProfileStore";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { useAuth } from "@/hooks/useAuth";
-import { useSetPageState } from "@/state/signState/usetSetPageState";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import { AxiosError } from "axios";
 
 const Profile = () => {
-  const { updateProfileState, profileData } = useProfileState();
+  const { setProfileData, profileData } = useProfileStore();
   const [nickname, setnickname] = useState<string>(profileData.nickname);
   const [username, setusername] = useState<string>(profileData.username);
   const [description, setDescription] = useState<string>(
@@ -24,8 +25,8 @@ const Profile = () => {
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-  const { useSignupMutation } = useAuth();
-  const { setPage } = useSetPageState();
+  const { useProfileMutation } = useAuth();
+  const { setPage } = useSetPageStore();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -40,9 +41,7 @@ const Profile = () => {
   }
   function isFull() {
     return (
-      nickname !== "" &&
-      username !== "" &&
-      profileData.interestList.length !== 0
+      nickname !== "" && username !== "" && profileData.interests.length !== 0
     );
   }
   function validateNickname() {
@@ -80,24 +79,30 @@ const Profile = () => {
     return true;
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     if (!isFull()) {
       // 빈 값이 있을 때 아무것도 하지 않음
       return;
     } else {
       if (isProfileValid()) {
-        updateProfileState({
+        setProfileData({
           nickname: nickname,
           username: username,
           description: description,
         });
-        // const res = useSignupMutation.mutate({
-        //   nickname: nickname,
-        //   username: username,
-        //   description: description,
-        //   interestList: profileData.interestList,
-        // });
-        setPage("profileImg");
+        try {
+          const res = await useProfileMutation.mutateAsync({
+            nickname: nickname,
+            username: username,
+            description: description,
+            interests: profileData.interests,
+          });
+          console.error(res);
+          setPage("profileImg");
+        } catch (error: unknown) {
+          const err = error as AxiosError;
+          console.error(err);
+        }
       }
     }
   }

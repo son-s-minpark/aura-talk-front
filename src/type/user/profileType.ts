@@ -2,5 +2,9 @@ export type profileType = {
   nickname: string;
   username: string;
   description: string;
-  interestList: string[];
+  interests: string[];
+};
+
+export type randomChatType = {
+  randomChatEnabled: boolean;
 };

@@ -6,15 +6,15 @@ import { PwInput } from "@/components/common/ProfileInput";
 import { useAuth } from "@/hooks/useAuth";
 import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
-
-const id = "1";
+import { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
 const DeleteAccountModal = () => {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [pw, setPw] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
   const { useDeleteAccoutMutation } = useAuth();
-  const { mutateAsync } = useDeleteAccoutMutation(id);
+  const router = useRouter();
 
   function onChangePw(e: React.ChangeEvent<HTMLInputElement>) {
     setPw(e.target.value);
@@ -36,10 +36,19 @@ const DeleteAccountModal = () => {
     } else {
       if (validatePassword()) {
         setErrMsg("");
+        try {
+          const res = await useDeleteAccoutMutation.mutateAsync({
+            password: pw,
+          });
+          console.error(res);
+          localStorage.clear();
+          router.replace("/onboarding");
+        } catch (error: unknown) {
+          const err = error as AxiosError;
+          console.error(err);
+        }
       }
     }
-    const res = await mutateAsync({ password: pw });
-    console.error(res);
   }
 
   return (

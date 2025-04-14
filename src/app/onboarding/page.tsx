@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useSetPageState } from "@/state/signState/usetSetPageState";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import OnBoarding from "./OnBoarding";
 import Signin from "./Signin";
 import Signup from "./Signup";
@@ -8,7 +8,7 @@ import Profile from "./Profile";
 import ProfileImg from "./ProfileImg";
 
 const Page = () => {
-  const { page } = useSetPageState();
+  const { page } = useSetPageStore();
 
   return (
     <div className="bg-[#1A1A1A] w-full h-full">

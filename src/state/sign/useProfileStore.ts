@@ -1,36 +1,36 @@
 import { create } from "zustand";
-import { profileType } from "@/type/sign/profileType";
+import { profileType } from "@/type/user/profileType";
 
 type setProfileType = {
   profileData: profileType;
-  updateProfileState: (newData: Partial<profileType>) => void;
+  setProfileData: (newData: Partial<profileType>) => void;
   addInterest: (interest: string) => void;
   removeInterest: (label: string) => void;
 };
 
-const useProfileState = create<setProfileType>((set) => ({
+const useProfileStore = create<setProfileType>((set) => ({
   profileData: {
     nickname: "",
     username: "",
     description: "",
-    interestList: [],
+    interests: [],
   },
-  updateProfileState: (newData) =>
+  setProfileData: (newData) =>
     set((state) => ({ profileData: { ...state.profileData, ...newData } })),
   addInterest: (interest) =>
     set((state) => ({
       profileData: {
         ...state.profileData,
-        interestList: [...state.profileData.interestList, interest],
+        interests: [...state.profileData.interests, interest],
       },
     })),
   removeInterest: (label) =>
     set((state) => ({
       profileData: {
         ...state.profileData,
-        interestList: state.profileData.interestList.filter((i) => i !== label),
+        interests: state.profileData.interests.filter((i) => i !== label),
       },
     })),
 }));
 
-export default useProfileState;
+export default useProfileStore;
