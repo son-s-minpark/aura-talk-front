@@ -9,7 +9,12 @@ type InputProp = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const PwInput = ({ isValid, label, value, onChange }: InputProp) => {
+export const PwInput = ({
+  isValid,
+  label,
+  value = "",
+  onChange,
+}: InputProp) => {
   const [isLocked, setIsLocked] = useState(false);
 
   return (
@@ -59,7 +64,7 @@ export const PwInput = ({ isValid, label, value, onChange }: InputProp) => {
 export const ProfileInput = ({
   isValid,
   label,
-  value,
+  value = "",
   onChange,
 }: InputProp) => {
   return (

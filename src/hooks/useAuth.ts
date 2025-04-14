@@ -6,6 +6,7 @@ import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
 import { profileType, randomChatType } from "@/type/user/profileType";
 import useUserState from "@/state/user/useUserStore";
+import { mailType } from "@/type/sign/mailType";
 
 export const useAuth = () => {
   const { userData } = useUserState();
@@ -60,6 +61,7 @@ export const useAuth = () => {
     },
   });
 
+  // 랜덤 채팅 설정 변경 요청
   const useRandomChatToggleMutation = useMutation({
     mutationFn: async (randomData: randomChatType) => {
       return axiosInstance.put(
@@ -81,44 +83,14 @@ export const useAuth = () => {
 
 export const useMailAuth = () => {
   const useMailValidateMutation = useMutation({
-    mutationFn: async (mailData: string) => {
-      const token = localStorage.getItem("accessToken");
-      return axios.post(
-        apiRoute.USER_VERIFY_EMAIL,
-        JSON.stringify({
-          email: mailData,
-          token: token,
-        })
-      );
-    },
-    onSuccess: (res) => {
-      const data = res.data;
-      console.log("메일 요청 완료");
-      return data;
-    },
-    onError: (err) => {
-      console.error(err);
+    mutationFn: async (mailData: mailType) => {
+      return axios.post(apiRoute.USER_VERIFY_EMAIL, mailData);
     },
   });
 
   const useMailResendMutation = useMutation({
-    mutationFn: async (mailData: string) => {
-      const token = localStorage.getItem("accessToken");
-      return axios.post(
-        apiRoute.USER_RESEND_EMAIL,
-        JSON.stringify({
-          email: mailData,
-          token: token,
-        })
-      );
-    },
-    onSuccess: (res) => {
-      const data = res.data;
-      console.log("메일 재전송 요청 완료");
-      return data;
-    },
-    onError: (err) => {
-      console.error(err);
+    mutationFn: async (mailData: mailType) => {
+      return axios.post(apiRoute.USER_RESEND_EMAIL, mailData);
     },
   });
 

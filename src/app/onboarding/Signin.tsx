@@ -9,6 +9,8 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import useUserState from "@/state/user/useUserStore";
+import useProfileStore from "@/state/sign/useProfileStore";
+import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -17,6 +19,8 @@ const Signin = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
   const { setUserData } = useUserState();
+  const { setProfileData } = useProfileStore();
+  const { setPage } = useSetPageStore();
   const router = useRouter();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
@@ -79,8 +83,34 @@ const Signin = () => {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
-          setUserData({ userId: data.data.user.id });
-          router.push("/home");
+          const userData = data.data.user;
+          setUserData({
+            userId: userData.id,
+            createdAt: userData.createdAt,
+            randomChatEnabled: userData.randomChatEnabled,
+            status: userData.status,
+          });
+          setProfileData({
+            description: userData.description,
+            nickname: userData.nickname,
+            username: userData.username,
+            interests: userData.interests,
+          });
+          if (
+            userData.username == "임시 사용자명" &&
+            userData.nickname == "임시 닉네임"
+          ) {
+            const answer = confirm(
+              "프로필이 설정되어 있지 않습니다. 설정하러 가시겠습니까?"
+            );
+            if (answer) {
+              setPage("profile");
+            } else {
+              router.push("/home");
+            }
+          } else {
+            router.push("/home");
+          }
         }
       } catch (error: unknown) {
         const err = error as AxiosError;

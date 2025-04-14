@@ -18,12 +18,15 @@ const ValidateModal = () => {
   };
 
   async function onMailSubmit() {
+    const token = localStorage.getItem("accessToken") || "";
     if (!isSent) {
       try {
         setIsSent(true);
-        const data = await useMailValidateMutation.mutateAsync(
-          signupData.email
-        );
+        const data = await useMailValidateMutation.mutateAsync({
+          email: signupData.email,
+          token: token,
+        });
+        console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
           setPage("profile");
@@ -33,8 +36,11 @@ const ValidateModal = () => {
       }
     } else {
       try {
-        setIsSent(true);
-        const data = await useMailResendMutation.mutateAsync(signupData.email);
+        const data = await useMailResendMutation.mutateAsync({
+          email: signupData.email,
+          token: token,
+        });
+        console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
           setPage("profile");
@@ -58,7 +64,7 @@ const ValidateModal = () => {
       <div className="w-[265px] h-[52px] flex flex-col items-center justify-center mx-[17px] mt-[27px]">
         <div className="flex items-center mx-[8px] gap-[4px]">
           <div className="bg-[#4B4B4B] h-[28px] w-[189px] rounded-[10px] px-[10px] flex items-center">
-            <p>mail</p>
+            <p>{signupData.email}</p>
           </div>
           <button
             className="flex items-center justify-center rounded-[10px] bg-[#8045FF] font-bold text-[14px] h-[25px] w-[57px]"
@@ -69,8 +75,8 @@ const ValidateModal = () => {
         </div>
         <div className="w-[265px] h-[52px] pt-[21px] flex items-center justify-center">
           <input
-            value={codeInput} // 상태 값을 input에 연결
-            onChange={handleCodeChange} // 입력값 변화 시 상태 업데이트
+            value={codeInput}
+            onChange={handleCodeChange}
             type="text"
             name="mail"
             placeholder="코드를 입력해주세요"
