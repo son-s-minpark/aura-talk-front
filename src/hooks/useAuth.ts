@@ -5,11 +5,11 @@ import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
 import { profileType, randomChatType } from "@/type/user/profileType";
-import useUserState from "@/state/user/useUserStore";
+import useUserStore from "@/state/user/useUserStore";
 import { mailType } from "@/type/sign/mailType";
 
 export const useAuth = () => {
-  const { userData } = useUserState();
+  const { userData } = useUserStore();
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {

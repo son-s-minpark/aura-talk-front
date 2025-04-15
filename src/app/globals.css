@@ -10,7 +10,7 @@
 @layer base {
   [data-theme="light"] {
     --color-background: oklch(100% 0 0);
-    --color-point: oklch(73.55% 0.1381 256.67);
+    --color-point: oklch(0.78 0.1144 256.49);
     --color-gray: oklch(57.27% 0 0);
     /* -- */
   }

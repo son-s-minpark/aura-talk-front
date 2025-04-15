@@ -11,7 +11,7 @@ type ListType = "chat" | "friend" | "setting";
 const Page = () => {
   const [list, setList] = useState<ListType>("chat");
   return (
-    <div className="w-full h-full bg-blue-600 flex flex-col justify-between">
+    <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
       <Header />
       <div className="bg-point rounded-t-[20px] bg-[var(--color-background)]">
         <div className="h-[543px] w-full pt-[46px]">

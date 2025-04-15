@@ -9,11 +9,11 @@ import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
-import useUserState from "@/state/user/useUserStore";
+import useUserStore from "@/state/user/useUserStore";
 
 const Signup = () => {
   const { setSignupData, signupData } = useSignupStore();
-  const { setUserData } = useUserState();
+  const { setUserData } = useUserStore();
   const { useSignupMutation } = useAuth();
   const [mail, setMail] = useState<string>(signupData.email);
   const [pw, setPw] = useState<string>(signupData.password);
