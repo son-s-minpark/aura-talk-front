@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../../../public/images/logo-none.png";
+import logo from "../../../public/images/logo/logo-none.png";
 import Terms from "@/data/terms.json";
 
 const Page = () => {
