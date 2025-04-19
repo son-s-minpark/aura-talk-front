@@ -1,20 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { ProfileInput } from "@/components/common/ProfileInput";
-import SignBtn from "@/components/onboarding/SignBtn";
-import InterestModal from "@/components/onboarding/modal/InterestModal";
-import Back from "@/components/onboarding/Back";
-import useProfileStore from "@/state/sign/useProfileStore";
-import { IoChevronDown } from "react-icons/io5";
-import clsx from "clsx";
-import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
+import AddImage from "@/components/common/AddImage";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
-import { useProfile } from "@/hooks/useProfile";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import ErrorMessage from "@/components/common/ErrorMessage";
+import SelectBtn from "@/components/common/SelectBtn";
+import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
+import useProfileStore from "@/state/sign/useProfileStore";
+import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
+import { IoChevronDown } from "react-icons/io5";
 
-const Profile = () => {
+type ProfileEditModalProps = {
+  setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   const { setProfileData, profileData } = useProfileStore();
   const [nickname, setnickname] = useState<string>(profileData.nickname);
   const [username, setusername] = useState<string>(profileData.username);
@@ -26,7 +27,6 @@ const Profile = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSetProfileMutation } = useProfile();
-  const { setPage } = useSetPageStore();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -39,11 +39,13 @@ const Profile = () => {
   function onChangeDescription(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
   }
+
   function isFull() {
     return (
       nickname !== "" && username !== "" && profileData.interests.length !== 0
     );
   }
+
   function validateNickname() {
     const result = nicknameSchema.shape.nickname.safeParse(nickname);
     if (!result.success) {
@@ -98,7 +100,9 @@ const Profile = () => {
             interests: profileData.interests,
           });
           console.error(res);
-          setPage("profileImg");
+          if (res.data.success) {
+            setIsModalDown(false);
+          }
         } catch (error: unknown) {
           const err = error as AxiosError;
           console.error(err);
@@ -108,77 +112,56 @@ const Profile = () => {
   }
 
   return (
-    <div className="w-full h-full text-white">
-      <div
-        className={clsx("w-full h-full", {
-          hidden: !isInterestDown,
-        })}
-      >
-        <InterestModal setIsInterestDown={setIsInterestDown} />
+    <div
+      className="modal-content px-[20px] w-[303px] pt-[20px]"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div>
+        <p className="font-semibold">대표 사진</p>
+        <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
       </div>
-
-      <div
-        className={clsx("flex flex-col items-center", {
-          hidden: isInterestDown,
-        })}
-      >
-        <Back backComponent={"signup"} />
-        <div className="mt-[69px]">
-          <div className="text-center">
-            <p className="text-[20px] font-bold text-white leading-[20px]">
-              프로필 입력
-            </p>
-            <div className="text-[#DBDBDB] text-[14px] leading-[20px] mt-[19px]">
-              <p>거의 다 끝났어요!</p>
-              <p>당신에 대해 더 알려줄래요?</p>
+      <div className="flex flex-col mt-[34px]">
+        <div>
+          <ProfileInput
+            label="이름"
+            value={nickname}
+            onChange={onChangeNickname}
+            isValid={isNicknameValid}
+          />
+          <ProfileInput
+            label="아이디"
+            value={username}
+            onChange={onChangeusername}
+            isValid={isusernameValid}
+          />
+          <ProfileInput
+            label="한 줄 소개"
+            value={description}
+            onChange={onChangeDescription}
+            isValid={true}
+          />
+          <div className="w-full h-[65px] font-bold mt-[30px] border-b-1">
+            <p>관심사</p>
+            <div className="flex w-full">
+              <div className="w-[300px] flex items-center">
+                <InterestBtnList isScrollable={true} />
+              </div>
+              <button onClick={() => setIsInterestDown(!isInterestDown)}>
+                <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
+              </button>
             </div>
+          </div>
+
+          <div className="flex justify-center">
+            {errMsg != "" && <ErrorMessage msg={errMsg} />}
           </div>
         </div>
-
-        <div className="flex flex-col mt-[35px] text-white">
-          <div>
-            <ProfileInput
-              label="이름"
-              value={nickname}
-              onChange={onChangeNickname}
-              isValid={isNicknameValid}
-            />
-            <ProfileInput
-              label="아이디"
-              value={username}
-              onChange={onChangeusername}
-              isValid={isusernameValid}
-            />
-            <ProfileInput
-              label="한 줄 소개"
-              value={description}
-              onChange={onChangeDescription}
-              isValid={true}
-            />
-            <div className="w-[327px] h-[65px] font-bold mt-[30px] border-b-1">
-              <p>관심사</p>
-              <div className="flex w-full">
-                <div className="w-[300px] flex items-center">
-                  <InterestBtnList isScrollable={true} />
-                </div>
-                <button onClick={() => setIsInterestDown(!isInterestDown)}>
-                  <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              {errMsg != "" && <ErrorMessage msg={errMsg} />}
-            </div>
-          </div>
-
-          <div className="mt-[101px]">
-            <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
-          </div>
+        <div className="flex justify-end mt-[41px] ml-[20px] mb-[13px]">
+          <SelectBtn label="완료" onClick={onSubmit} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default ProfileEditModal;

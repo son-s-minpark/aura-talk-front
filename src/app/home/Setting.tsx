@@ -10,7 +10,6 @@ import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
 import useProfileStore from "@/state/sign/useProfileStore";
-import useUserStore from "@/state/user/useUserStore";
 import { useRouter } from "next/navigation";
 
 type modalType =
@@ -26,7 +25,6 @@ const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
   const { profileData } = useProfileStore();
-  const { userData } = useUserStore();
   const router = useRouter();
   return (
     <div>
@@ -48,7 +46,7 @@ const SettingList = () => {
 
       <div
         className="w-full h-[102px] px-[21px] border-b-1 border-commonGray flex gap-[12px] items-center"
-        onClick={() => router.push(`/profile/${userData.userId}`)}
+        onClick={() => router.push(`/profile/self`)}
       >
         <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full"></div>
         <div className="flex flex-col">

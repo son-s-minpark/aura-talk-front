@@ -4,12 +4,12 @@ import axiosInstance from "@/api/axiosInstance";
 import { apiRoute } from "@/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
-import { profileType, randomChatType } from "@/type/user/profileType";
 import useUserStore from "@/state/user/useUserStore";
 import { mailType } from "@/type/sign/mailType";
 
 export const useAuth = () => {
   const { userData } = useUserStore();
+
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: (signupData: signType) => {
@@ -51,33 +51,11 @@ export const useAuth = () => {
     },
   });
 
-  // 프로필 설정 요청
-  const useProfileMutation = useMutation({
-    mutationFn: async (profileData: profileType) => {
-      return axiosInstance.put(
-        apiRoute.USER_PROFILE(userData.userId),
-        profileData
-      );
-    },
-  });
-
-  // 랜덤 채팅 설정 변경 요청
-  const useRandomChatToggleMutation = useMutation({
-    mutationFn: async (randomData: randomChatType) => {
-      return axiosInstance.put(
-        apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId),
-        randomData
-      );
-    },
-  });
-
   return {
     useSigninMutation,
     useSignupMutation,
     useLogoutMutation,
     useDeleteAccoutMutation,
-    useProfileMutation,
-    useRandomChatToggleMutation,
   };
 };
 

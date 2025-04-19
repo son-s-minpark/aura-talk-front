@@ -94,6 +94,8 @@ const Signup = () => {
           const token = res.data.data.token;
           if (token) {
             localStorage.setItem("accessToken", token);
+
+            localStorage.setItem("userId", res.data.data.userId);
           } else {
             alert("토큰을 받지 못 했습니다.");
           }

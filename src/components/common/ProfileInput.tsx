@@ -71,13 +71,13 @@ export const ProfileInput = ({
     <div
       className={clsx("font-bold mt-[30px] border-b-1", {
         "border-[var(--color-errorRed)]": !isValid,
-        "text-white": isValid,
+        "": isValid,
       })}
     >
       <p
         className={clsx({
           "text-[var(--color-errorRed)]": !isValid,
-          "text-white": isValid,
+          "": isValid,
         })}
       >
         {label}

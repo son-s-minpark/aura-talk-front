@@ -77,13 +77,14 @@ const Signin = () => {
         console.error(data);
         if (data.success) {
           const token = data.data.token;
+          const userData = data.data.user;
           if (token) {
             localStorage.setItem("accessToken", token);
+            localStorage.setItem("userId", userData.id);
           } else {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
-          const userData = data.data.user;
           setUserData({
             userId: userData.id,
             createdAt: userData.createdAt,
