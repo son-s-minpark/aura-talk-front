@@ -25,9 +25,7 @@ const Page = () => {
     <div className="h-full w-full">
       {modal ? (
         <div className="modal" onClick={() => setModal(false)}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <SetChatModal />
-          </div>
+          <SetChatModal />
         </div>
       ) : null}
       <Back />
