@@ -114,7 +114,10 @@ const Profile = () => {
           hidden: !isInterestDown,
         })}
       >
-        <InterestModal setIsInterestDown={setIsInterestDown} />
+        <InterestModal
+          setIsInterestDown={setIsInterestDown}
+          isOnBoarding={true}
+        />
       </div>
 
       <div

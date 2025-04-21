@@ -27,7 +27,7 @@ const SettingList = () => {
   const { profileData } = useProfileStore();
   const router = useRouter();
   return (
-    <div>
+    <>
       {modal == "none" ? null : (
         <div
           className="modal h-screen items-center justify-center"
@@ -102,7 +102,7 @@ const SettingList = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

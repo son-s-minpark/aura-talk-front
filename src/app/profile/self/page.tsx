@@ -1,15 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import Back from "@/components/common/Back";
-import { InterestBtnSml } from "@/components/onboarding/InterestBtn";
 import useProfileStore from "@/state/sign/useProfileStore";
 import ProfileEditModal from "@/components/profile/modal/ProfileEditModal";
+import InterestBtn from "@/components/profile/InterestBtn";
 
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
   const { profileData } = useProfileStore();
 
-  console.error(profileData);
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
       {isEditModalDown && (
@@ -53,9 +52,9 @@ const Page = () => {
           </div>
           <div className="flex flex-col gap-[9px]">
             <p className="text-[var(--color-commonGray)]">관심사</p>
-            <div className="flex w-full gap-[10px]">
+            <div className="flex w-full gap-[10px] flex-wrap">
               {profileData.interests?.map((interest: string, index: number) => (
-                <InterestBtnSml label={interest} key={index} />
+                <InterestBtn label={interest} key={index} />
               ))}
             </div>
           </div>

@@ -8,9 +8,14 @@ import { useState } from "react";
 type InterestBtnProps = {
   label: string;
   selected: boolean;
+  isOnBoarding: boolean;
 };
 
-export const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
+export const InterestBtnBig = ({
+  label,
+  selected,
+  isOnBoarding,
+}: InterestBtnProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const { addInterest, removeInterest } = useProfileStore();
   function toggleInterest() {
@@ -27,13 +32,19 @@ export const InterestBtnBig = ({ label, selected }: InterestBtnProps) => {
       className={clsx(
         "flex border-[3.5px] px-[13px] py-[0.5px] items-center rounded-[20px]",
         {
-          "border-[#8045FF]": isSelected,
+          "border-[var(--color-point)]": isSelected && !isOnBoarding,
+          "border-[#8045FF]": isSelected && isOnBoarding,
           "border-[#999999]": !isSelected,
         }
       )}
     >
       {isSelected ? (
-        <FaCheck className="text-[#8045FF]" />
+        <FaCheck
+          className={clsx({
+            "text-[var(--color-point)]": !isOnBoarding,
+            "text-[#8045FF]": isOnBoarding,
+          })}
+        />
       ) : (
         <FaPlus className="text-[#999999]" />
       )}

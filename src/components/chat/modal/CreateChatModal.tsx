@@ -15,7 +15,7 @@ const CreateChatModal = () => {
   const router = useRouter();
   return (
     <div
-      className="modal-content w-[375px] h-[215px]"
+      className="modal-content w-[360px] h-[215px]"
       onClick={(e) => e.stopPropagation()}
     >
       <p className="font-bold pt-[23px] pl-[18px] text-[18px] leading-[25px]">

@@ -10,6 +10,7 @@ import useProfileStore from "@/state/sign/useProfileStore";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import { IoChevronDown } from "react-icons/io5";
+import InterestModal from "@/components/onboarding/modal/InterestModal";
 
 type ProfileEditModalProps = {
   setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -112,55 +113,66 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   }
 
   return (
-    <div
-      className="modal-content px-[20px] w-[303px] pt-[20px]"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div>
-        <p className="font-semibold">대표 사진</p>
-        <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
-      </div>
-      <div className="flex flex-col mt-[34px]">
-        <div>
-          <ProfileInput
-            label="이름"
-            value={nickname}
-            onChange={onChangeNickname}
-            isValid={isNicknameValid}
+    <>
+      {isInterestDown ? (
+        <div onClick={(e) => e.stopPropagation()} className="modal">
+          <InterestModal
+            setIsInterestDown={setIsInterestDown}
+            isOnBoarding={false}
           />
-          <ProfileInput
-            label="아이디"
-            value={username}
-            onChange={onChangeusername}
-            isValid={isusernameValid}
-          />
-          <ProfileInput
-            label="한 줄 소개"
-            value={description}
-            onChange={onChangeDescription}
-            isValid={true}
-          />
-          <div className="w-full h-[65px] font-bold mt-[30px] border-b-1">
-            <p>관심사</p>
-            <div className="flex w-full">
-              <div className="w-[300px] flex items-center">
-                <InterestBtnList isScrollable={true} />
+        </div>
+      ) : (
+        <div
+          className="modal-content px-[20px] w-[303px] pt-[20px]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div>
+            <p className="font-semibold">대표 사진</p>
+            <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
+          </div>
+          <div className="flex flex-col mt-[34px]">
+            <div>
+              <ProfileInput
+                label="이름"
+                value={nickname}
+                onChange={onChangeNickname}
+                isValid={isNicknameValid}
+              />
+              <ProfileInput
+                label="아이디"
+                value={username}
+                onChange={onChangeusername}
+                isValid={isusernameValid}
+              />
+              <ProfileInput
+                label="한 줄 소개"
+                value={description}
+                onChange={onChangeDescription}
+                isValid={true}
+              />
+              <div className="w-full h-[65px] font-bold mt-[30px] border-b-1">
+                <p>관심사</p>
+                <div className="flex w-full">
+                  <div className="w-[300px] flex items-center flex-1 overflow-scroll">
+                    <InterestBtnList isScrollable={true} />
+                  </div>
+                  <button onClick={() => setIsInterestDown(!isInterestDown)}>
+                    <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
+                  </button>
+                </div>
               </div>
-              <button onClick={() => setIsInterestDown(!isInterestDown)}>
-                <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
-              </button>
+
+              <div className="flex justify-center">
+                {errMsg != "" && <ErrorMessage msg={errMsg} />}
+              </div>
+            </div>
+            <div className="flex justify-end mt-[41px] ml-[20px] mb-[13px]">
+              <SelectBtn label="완료" onClick={onSubmit} />
             </div>
           </div>
-
-          <div className="flex justify-center">
-            {errMsg != "" && <ErrorMessage msg={errMsg} />}
-          </div>
         </div>
-        <div className="flex justify-end mt-[41px] ml-[20px] mb-[13px]">
-          <SelectBtn label="완료" onClick={onSubmit} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

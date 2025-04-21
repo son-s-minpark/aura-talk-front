@@ -12,7 +12,7 @@ import { MdBlock } from "react-icons/md";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import ErrorMessage from "@/components/common/ErrorMessage";
-import { InterestBtnSml } from "@/components/onboarding/InterestBtn";
+import InterestBtn from "@/components/profile/InterestBtn";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
@@ -82,9 +82,9 @@ const Page = () => {
         </div>
         <div className="flex flex-col gap-[9px]">
           <p className="text-[var(--color-commonGray)]">관심사</p>
-          <div className="flex w-full gap-[5px]">
-            {userData?.interests?.map((interest: string, index: string) => (
-              <InterestBtnSml label={interest} key={index} />
+          <div className="flex w-full gap-[10px] flex-wrap">
+            {userData.interests?.map((interest: string, index: number) => (
+              <InterestBtn label={interest} key={index} />
             ))}
           </div>
         </div>
