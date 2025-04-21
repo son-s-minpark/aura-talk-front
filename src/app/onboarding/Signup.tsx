@@ -9,11 +9,11 @@ import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
-import useUserState from "@/state/user/useUserStore";
+import useUserStore from "@/state/user/useUserStore";
 
 const Signup = () => {
   const { setSignupData, signupData } = useSignupStore();
-  const { setUserData } = useUserState();
+  const { setUserData } = useUserStore();
   const { useSignupMutation } = useAuth();
   const [mail, setMail] = useState<string>(signupData.email);
   const [pw, setPw] = useState<string>(signupData.password);
@@ -94,6 +94,8 @@ const Signup = () => {
           const token = res.data.data.token;
           if (token) {
             localStorage.setItem("accessToken", token);
+
+            localStorage.setItem("userId", res.data.data.userId);
           } else {
             alert("토큰을 받지 못 했습니다.");
           }

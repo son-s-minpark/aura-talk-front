@@ -1,13 +1,13 @@
 import React from "react";
 import ToggleSwitch from "../../common/ToggleSwitch";
 import { FaRandom } from "react-icons/fa";
-import useUserState from "@/state/user/useUserStore";
-import { useAuth } from "@/hooks/useAuth";
+import useUserStore from "@/state/user/useUserStore";
+import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 
 const RandomModal = () => {
-  const { userData, setUserData } = useUserState();
-  const { useRandomChatToggleMutation } = useAuth();
+  const { userData, setUserData } = useUserStore();
+  const { useRandomChatToggleMutation } = useProfile();
 
   async function setRandomChatToggle(isRandom: boolean) {
     try {

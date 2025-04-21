@@ -12,5 +12,6 @@ export const apiRoute = {
   USER_LOGOUT: `${USER}/logout`,
   USER_DELETE_ACCOUNT: (id: number) => `${USER}/${id}`,
   USER_PROFILE: (id: number) => `${USER}/${id}/profile`,
+  USER_GET_PROFILE: (id: number) => `${USER}/${id}`,
   USER_RANDOM_CHAT_TOGGLE: (id: number) => `${USER}/${id}/chat-settings`,
 };

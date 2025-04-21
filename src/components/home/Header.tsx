@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import logo from "../../../public/images/logo-none.png";
+import logo from "../../../public/images/logo/logo-none.png";
 import { IoSearch, IoNotifications, IoPersonAdd } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 

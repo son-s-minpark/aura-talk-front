@@ -10,9 +10,8 @@
 @layer base {
   [data-theme="light"] {
     --color-background: oklch(100% 0 0);
-    --color-point: oklch(73.55% 0.1381 256.67);
+    --color-point: oklch(0.78 0.1144 256.49);
     --color-gray: oklch(57.27% 0 0);
-    /* -- */
   }
   [data-theme="dark"] {
     --color-background: oklch(28.5% 0 0);
@@ -22,14 +21,13 @@
 }
 
 .modal {
-  width: 100%;
-  height: 100%;
+  width: 375px;
+  height: 812px;
   z-index: 100;
   background-color: oklch(43.13% 0 0 / 80%);
   isolation: isolate;
   position: fixed;
   top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;

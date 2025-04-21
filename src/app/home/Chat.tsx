@@ -8,9 +8,7 @@ const ChatList = () => {
     <div>
       {isModalDown ? (
         <div className="modal" onClick={() => setIsModalDown(false)}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <CreateChatModal />
-          </div>
+          <CreateChatModal />
         </div>
       ) : null}
       <div className="relative h-[500px]">

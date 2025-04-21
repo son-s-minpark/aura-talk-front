@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import useUserState from "@/state/user/useUserStore";
+import useUserStore from "@/state/user/useUserStore";
 import useProfileStore from "@/state/sign/useProfileStore";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 const Signin = () => {
@@ -18,7 +18,7 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
-  const { setUserData } = useUserState();
+  const { setUserData } = useUserStore();
   const { setProfileData } = useProfileStore();
   const { setPage } = useSetPageStore();
   const router = useRouter();
@@ -77,13 +77,14 @@ const Signin = () => {
         console.error(data);
         if (data.success) {
           const token = data.data.token;
+          const userData = data.data.user;
           if (token) {
             localStorage.setItem("accessToken", token);
+            localStorage.setItem("userId", userData.id);
           } else {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
-          const userData = data.data.user;
           setUserData({
             userId: userData.id,
             createdAt: userData.createdAt,

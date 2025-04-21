@@ -1,0 +1,47 @@
+import { apiRoute } from "@/api/apiRoute";
+import axiosInstance from "@/api/axiosInstance";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { profileType, randomChatType } from "@/type/user/profileType";
+import useUserStore from "@/state/user/useUserStore";
+
+export const useProfile = () => {
+  const { userData } = useUserStore();
+
+  // 사용자 프로필 가져오기 요청
+  const useGetUserProfile = (id: number) => {
+    return useQuery({
+      queryKey: ["getProfile", id],
+      queryFn: async () => {
+        const res = await axiosInstance.get(apiRoute.USER_GET_PROFILE(id));
+        return res.data;
+      },
+      enabled: !!id,
+    });
+  };
+
+  // 프로필 수정/등록 요청
+  const useSetProfileMutation = useMutation({
+    mutationFn: async (profileData: profileType) => {
+      return axiosInstance.put(
+        apiRoute.USER_PROFILE(userData.userId),
+        profileData
+      );
+    },
+  });
+
+  // 랜덤채팅 설정 수정 요청
+  const useRandomChatToggleMutation = useMutation({
+    mutationFn: async (randomData: randomChatType) => {
+      return axiosInstance.put(
+        apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId),
+        randomData
+      );
+    },
+  });
+
+  return {
+    useGetUserProfile,
+    useSetProfileMutation,
+    useRandomChatToggleMutation,
+  };
+};

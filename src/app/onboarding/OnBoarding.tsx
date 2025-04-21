@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logoWhite from "../../../public/images/logo-white.png";
+import logoWhite from "../../../public/images/logo/logo-white.png";
 import SignBtn from "@/components/onboarding/SignBtn";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 

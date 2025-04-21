@@ -9,6 +9,8 @@ import DeleteAccountModal from "../../components/setting/modal/DeleteAccountModa
 import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
+import useProfileStore from "@/state/sign/useProfileStore";
+import { useRouter } from "next/navigation";
 
 type modalType =
   | "modeModal"
@@ -22,8 +24,10 @@ type modalType =
 const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
+  const { profileData } = useProfileStore();
+  const router = useRouter();
   return (
-    <div>
+    <>
       {modal == "none" ? null : (
         <div
           className="modal h-screen items-center justify-center"
@@ -39,9 +43,24 @@ const SettingList = () => {
           </div>
         </div>
       )}
-      <div className="w-full h-[102px] px-[22px] border-b-1 border-commonGray">
-        {/* 본인 프로필 */}
+
+      <div
+        className="w-full h-[102px] px-[21px] border-b-1 border-commonGray flex gap-[12px] items-center"
+        onClick={() => router.push(`/profile/self`)}
+      >
+        <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full"></div>
+        <div className="flex flex-col">
+          <p className="text-[20px] font-bold leading-[20px]">
+            {profileData.nickname}
+          </p>
+          {profileData.description && (
+            <p className="text-[12px] leading-[12px] text-[var(--color-gray)]">
+              {profileData.description}
+            </p>
+          )}
+        </div>
       </div>
+
       <div className="w-full px-[25px] mt-[25px] flex flex-col gap-[30px]">
         <div className="flex">
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
@@ -83,7 +102,7 @@ const SettingList = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

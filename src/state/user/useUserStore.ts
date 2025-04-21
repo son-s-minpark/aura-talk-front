@@ -6,7 +6,7 @@ type setProfileType = {
   setUserData: (newData: Partial<userType>) => void;
 };
 
-const useUserState = create<setProfileType>((set) => ({
+const useUserStore = create<setProfileType>((set) => ({
   userData: {
     userId: 0,
     status: "OFFLINE",
@@ -17,4 +17,4 @@ const useUserState = create<setProfileType>((set) => ({
     set((state) => ({ userData: { ...state.userData, ...newData } })),
 }));
 
-export default useUserState;
+export default useUserStore;
