@@ -13,6 +13,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import InterestBtn from "@/components/profile/InterestBtn";
+import Container from "@/components/common/Container";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
@@ -67,28 +68,31 @@ const Page = () => {
           <MdBlock className="w-[28px] h-[28px]" />
         </div>
       </div>
-      <div className="rounded-t-[20px] bg-[var(--color-background)] h-[502px] flex flex-col gap-[26px] pt-[41px] px-[24px]">
-        <div className="flex flex-col gap-[9px]">
-          <p className="text-[var(--color-commonGray)]">사용자 이름</p>
-          <p className="text-[18px] font-semibold">{userData?.nickname}</p>
-        </div>
-        <div className="flex flex-col gap-[9px]">
-          <p className="text-[var(--color-commonGray)]">한 줄 소개</p>
-          <p className="text-[18px] font-semibold">
-            {userData?.description
-              ? userData?.description
-              : "한 줄 소개가 없습니다."}
-          </p>
-        </div>
-        <div className="flex flex-col gap-[9px]">
-          <p className="text-[var(--color-commonGray)]">관심사</p>
-          <div className="flex w-full gap-[10px] flex-wrap">
-            {userData.interests?.map((interest: string, index: number) => (
-              <InterestBtn label={interest} key={index} />
-            ))}
+
+      <Container height={502}>
+        <div className="flex flex-col gap-[26px] pt-[41px] px-[24px]">
+          <div className="flex flex-col gap-[9px]">
+            <p className="text-[var(--color-commonGray)]">사용자 이름</p>
+            <p className="text-[18px] font-semibold">{userData?.nickname}</p>
+          </div>
+          <div className="flex flex-col gap-[9px]">
+            <p className="text-[var(--color-commonGray)]">한 줄 소개</p>
+            <p className="text-[18px] font-semibold">
+              {userData?.description
+                ? userData?.description
+                : "한 줄 소개가 없습니다."}
+            </p>
+          </div>
+          <div className="flex flex-col gap-[9px]">
+            <p className="text-[var(--color-commonGray)]">관심사</p>
+            <div className="flex w-full gap-[10px] flex-wrap">
+              {userData.interests?.map((interest: string, index: number) => (
+                <InterestBtn label={interest} key={index} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };
