@@ -1,5 +1,6 @@
 const API = "https://api.auratalk.kro.kr";
 const USER = `${API}/api/users`;
+const INTEREST = `${API}/api/interests`;
 
 export const apiRoute = {
   BASE: API,
@@ -14,4 +15,7 @@ export const apiRoute = {
   USER_PROFILE: (id: number) => `${USER}/${id}/profile`,
   USER_GET_PROFILE: (id: number) => `${USER}/${id}`,
   USER_RANDOM_CHAT_TOGGLE: (id: number) => `${USER}/${id}/chat-settings`,
+
+  // 관심사
+  INTEREST_TOTAL: INTEREST,
 };

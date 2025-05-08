@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import SelectBtn from "../../common/SelectBtn";
+import SelectBtn from "@/components/common/SelectBtn";
 import { MdPersonOff } from "react-icons/md";
 import { PwInput } from "@/components/common/ProfileInput";
 import { useAuth } from "@/hooks/useAuth";

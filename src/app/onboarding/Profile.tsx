@@ -109,16 +109,12 @@ const Profile = () => {
 
   return (
     <div className="w-full h-full text-white">
-      <div
-        className={clsx("w-full h-full", {
-          hidden: !isInterestDown,
-        })}
-      >
+      {isInterestDown && (
         <InterestModal
           setIsInterestDown={setIsInterestDown}
           isOnBoarding={true}
         />
-      </div>
+      )}
 
       <div
         className={clsx("flex flex-col items-center", {
@@ -164,7 +160,10 @@ const Profile = () => {
                 <div className="w-[300px] flex items-center">
                   <InterestBtnList isScrollable={true} />
                 </div>
-                <button onClick={() => setIsInterestDown(!isInterestDown)}>
+                <button
+                  type="button"
+                  onClick={() => setIsInterestDown(!isInterestDown)}
+                >
                   <IoChevronDown className="w-[20px] h-[20px] mb-[11px]" />
                 </button>
               </div>

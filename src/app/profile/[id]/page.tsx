@@ -25,7 +25,7 @@ const Page = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen text-white">
+      <div className="flex items-center justify-center h-screen">
         Loading...
       </div>
     );

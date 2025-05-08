@@ -1,6 +1,6 @@
 import React from "react";
 import { MdLogout } from "react-icons/md";
-import SelectBtn from "../../common/SelectBtn";
+import SelectBtn from "@/components/common/SelectBtn";
 import { useAuth } from "@/hooks/useAuth";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
