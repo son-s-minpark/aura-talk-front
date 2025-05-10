@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Back from "@/components/common/Back";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import ProfileEditModal from "@/components/profile/modal/ProfileEditModal";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
+import Image from "next/image";
 
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
@@ -21,7 +22,17 @@ const Page = () => {
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
           <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full">
-            {/* 사진 */}
+            {profileData.profileImg.thumbnailImgUrl ? (
+              <Image
+                src={profileData.profileImg.thumbnailImgUrl}
+                alt="Profile"
+                className="rounded-full object-cover"
+              />
+            ) : (
+              <div className="flex justify-center items-center w-full h-full text-center text-gray-400">
+                No Image
+              </div>
+            )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">
             <p className="text-[20px] font-bold">{profileData.nickname}</p>

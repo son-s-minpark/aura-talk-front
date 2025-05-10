@@ -6,7 +6,7 @@ import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import SelectBtn from "@/components/common/SelectBtn";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import { IoChevronDown } from "react-icons/io5";

@@ -1,6 +1,6 @@
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import InterestBtnList from "../InterestBtnList";
 import { InterestBtnBig } from "../InterestBtn";
 import SelectBtn from "@/components/common/SelectBtn";

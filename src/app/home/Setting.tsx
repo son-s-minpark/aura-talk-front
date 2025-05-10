@@ -9,7 +9,7 @@ import DeleteAccountModal from "../../components/setting/modal/DeleteAccountModa
 import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import { useRouter } from "next/navigation";
 
 type modalType =

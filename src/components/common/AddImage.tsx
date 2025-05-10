@@ -1,6 +1,9 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import useUserStore from "@/state/user/useUserStore";
+import useProfileStore from "@/state/user/useProfileStore";
 
 type AddImageProps = {
   imgSize: number;
@@ -9,38 +12,41 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const [img, setImg] = useState<File | null>(null);
-  const [prevImg, setPrevImg] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const { profileData } = useProfileStore();
+  const { userData } = useUserStore();
+  const { useProfileImageUploadMutation } = useImageUpload();
 
-  async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
+  const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files ? e.target.files[0] : null;
-    if (file) {
-      const prevUrl = URL.createObjectURL(file);
-      setPrevImg(prevUrl);
-      setImg(file);
+    if (!file) {
+      return;
+    } else {
+      useProfileImageUploadMutation.mutateAsync({
+        id: userData.userId,
+        file: file,
+      });
     }
-  }
+  };
 
   return (
     <div className="flex flex-col items-center">
       <div
-        className="mb-[15px]"
+        className="rounded-full border-1 text-commonGray mb-[15px] relative"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        {prevImg ? (
+        {profileData.profileImg.thumbnailImgUrl ? (
           <Image
-            src={prevImg}
-            alt="미리보기 이미지"
-            width={100}
-            height={100}
-            className="object-cover  rounded-full"
+            src={profileData.profileImg.thumbnailImgUrl}
+            alt="Profile"
+            width={imgSize}
+            height={imgSize}
+            className="rounded-full object-cover"
           />
         ) : (
-          <div
-            className="rounded-full border-1 text-commonGray"
-            style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
-          />
+          <div className="flex justify-center items-center w-full h-full text-center text-gray-400">
+            No Image
+          </div>
         )}
       </div>
       <button

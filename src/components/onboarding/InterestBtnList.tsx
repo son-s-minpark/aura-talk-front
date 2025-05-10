@@ -1,7 +1,7 @@
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 
 const InterestBtnList = ({ isScrollable }: { isScrollable: boolean }) => {
   const { profileData, removeInterest } = useProfileStore();

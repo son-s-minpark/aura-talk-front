@@ -4,7 +4,7 @@ import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import { IoChevronDown } from "react-icons/io5";
 import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
@@ -75,7 +75,7 @@ const Profile = () => {
       );
       return false;
     }
-    setErrMsg(""); // 에러 메시지 초기화
+    setErrMsg("");
     return true;
   }
 

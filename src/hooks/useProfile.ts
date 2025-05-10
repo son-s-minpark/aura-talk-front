@@ -39,9 +39,20 @@ export const useProfile = () => {
     },
   });
 
+  const useGetProfileImg = (id: number) => {
+    return useQuery({
+      queryKey: [`getProfileImg${id}`],
+      queryFn: async () => {
+        const res = axiosInstance.get(apiRoute.USER_IMAGE_PROFILE_GET(id));
+        return res;
+      },
+    });
+  };
+
   return {
     useGetUserProfile,
     useSetProfileMutation,
     useRandomChatToggleMutation,
+    useGetProfileImg,
   };
 };

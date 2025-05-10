@@ -9,8 +9,9 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/sign/useProfileStore";
+import useProfileStore from "@/state/user/useProfileStore";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -73,11 +74,11 @@ const Signin = () => {
           email: mail,
           password: pw,
         });
-        const data = res.data;
-        console.error(data);
-        if (data.success) {
-          const token = data.data.token;
-          const userData = data.data.user;
+
+        if (res.data.success) {
+          const token = res.data.data.token;
+          const userData = res.data.data.user;
+
           if (token) {
             localStorage.setItem("accessToken", token);
             localStorage.setItem("userId", userData.id);
@@ -85,6 +86,7 @@ const Signin = () => {
             alert("토큰을 받지 못 했습니다.");
             return;
           }
+
           setUserData({
             userId: userData.id,
             createdAt: userData.createdAt,
@@ -97,6 +99,7 @@ const Signin = () => {
             username: userData.username,
             interests: userData.interests,
           });
+
           if (
             userData.username == "임시 사용자명" &&
             userData.nickname == "임시 닉네임"
@@ -115,7 +118,16 @@ const Signin = () => {
         }
       } catch (error: unknown) {
         const err = error as AxiosError;
-        console.error(err);
+        const errorCode = (err.response?.data as { code?: number })?.code;
+
+        if (errorCode === 424) {
+          setErrMsg("아이디나 비밀번호가 일치하지 않습니다.");
+          setIsMailValid(false);
+          setIsPwValid(false);
+        } else {
+          setErrMsg("로그인 중 오류가 발생했습니다.");
+          console.error(err);
+        }
       }
     }
   }
