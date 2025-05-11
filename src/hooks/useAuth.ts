@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signType } from "@/type/sign/signType";
-import axiosInstance from "@/api/axiosInstance";
-import { apiRoute } from "@/api/apiRoute";
+import axiosInstance from "@/util/api/axiosInstance";
+import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
 import { pwType } from "@/type/sign/pwType";
 import useUserStore from "@/state/user/useUserStore";

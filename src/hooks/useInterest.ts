@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@/api/axiosInstance";
-import { apiRoute } from "@/api/apiRoute";
+import axiosInstance from "@/util/api/axiosInstance";
+import { apiRoute } from "@/util/api/apiRoute";
 
 export const useInterest = () => {
   // 관심사 목록 전체 조회

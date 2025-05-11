@@ -1,9 +1,9 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/user/useProfileStore";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 
 type AddImageProps = {
   imgSize: number;
@@ -12,21 +12,30 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const fileRef = useRef<HTMLInputElement | null>(null);
-  const { profileData } = useProfileStore();
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const { profileImgData } = useProfileImgStore();
   const { userData } = useUserStore();
-  const { useProfileImageUploadMutation } = useImageUpload();
+  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
+    useImageUpload();
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setPreviewUrl(profileImgData.thumbnailImgUrl || "");
+  }, [profileImgData]);
 
   const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files ? e.target.files[0] : null;
     if (!file) {
       return;
-    } else {
-      useProfileImageUploadMutation.mutateAsync({
-        id: userData.userId,
-        file: file,
-      });
     }
+
+    const fileUrl = URL.createObjectURL(file);
+    setPreviewUrl(fileUrl);
+
+    await useProfileImageUploadMutation.mutateAsync({
+      id: userData.userId,
+      file: file,
+    });
   };
 
   return (
@@ -35,28 +44,32 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
         className="rounded-full border-1 text-commonGray mb-[15px] relative"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        {profileData.profileImg.thumbnailImgUrl ? (
-          <Image
-            src={profileData.profileImg.thumbnailImgUrl}
-            alt="Profile"
-            width={imgSize}
-            height={imgSize}
-            className="rounded-full object-cover"
-          />
-        ) : (
-          <div className="flex justify-center items-center w-full h-full text-center text-gray-400">
-            No Image
-          </div>
-        )}
+        <Image
+          src={previewUrl}
+          alt="Profile"
+          width={imgSize}
+          height={imgSize}
+          className="rounded-full object-cover"
+        />
       </div>
-      <button
-        type="button"
-        onClick={() => fileRef.current?.click()}
-        className="flex justify-center items-center bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
-        style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
-      >
-        편집
-      </button>
+      <div className="flex gap-[15px]">
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="flex justify-center items-center bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
+          style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
+        >
+          편집
+        </button>
+        <button
+          type="button"
+          onClick={() => useDeleteProfileImageMutation}
+          className="flex justify-center items-center bg-[var(--color-errorRed)] text-white rounded-[20px] text-[14px]"
+          style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
+        >
+          삭제
+        </button>
+      </div>
       <input
         ref={fileRef}
         type="file"

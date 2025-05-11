@@ -6,10 +6,12 @@ import ProfileEditModal from "@/components/profile/modal/ProfileEditModal";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
 import Image from "next/image";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
   const { profileData } = useProfileStore();
+  const { profileImgData } = useProfileImgStore();
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
@@ -22,16 +24,14 @@ const Page = () => {
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
           <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full">
-            {profileData.profileImg.thumbnailImgUrl ? (
+            {profileImgData.thumbnailImgUrl && (
               <Image
-                src={profileData.profileImg.thumbnailImgUrl}
+                src={profileImgData.thumbnailImgUrl}
+                width={82}
+                height={82}
                 alt="Profile"
                 className="rounded-full object-cover"
               />
-            ) : (
-              <div className="flex justify-center items-center w-full h-full text-center text-gray-400">
-                No Image
-              </div>
             )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">

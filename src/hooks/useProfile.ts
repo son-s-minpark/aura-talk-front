@@ -1,5 +1,5 @@
-import { apiRoute } from "@/api/apiRoute";
-import axiosInstance from "@/api/axiosInstance";
+import { apiRoute } from "@/util/api/apiRoute";
+import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { profileType, randomChatType } from "@/type/user/profileType";
 import useUserStore from "@/state/user/useUserStore";
@@ -22,7 +22,7 @@ export const useProfile = () => {
   // 프로필 수정/등록 요청
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
-      return axiosInstance.put(
+      return await axiosInstance.put(
         apiRoute.USER_PROFILE(userData.userId),
         profileData
       );
@@ -39,6 +39,7 @@ export const useProfile = () => {
     },
   });
 
+  // 프로필 이미지 가져오기 요청
   const useGetProfileImg = (id: number) => {
     return useQuery({
       queryKey: [`getProfileImg${id}`],

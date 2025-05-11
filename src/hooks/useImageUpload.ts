@@ -1,6 +1,6 @@
-import { apiRoute } from "@/api/apiRoute";
-import axiosInstance from "@/api/axiosInstance";
-import useProfileStore from "@/state/user/useProfileStore";
+import { apiRoute } from "@/util/api/apiRoute";
+import axiosInstance from "@/util/api/axiosInstance";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -10,7 +10,9 @@ type ImageProps = {
 };
 
 export const useImageUpload = () => {
-  const { setProfileData } = useProfileStore();
+  const { setProfileImgData } = useProfileImgStore();
+
+  // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료 요청)
   const useProfileImageUploadMutation = useMutation({
     mutationFn: async ({ id, file }: ImageProps) => {
       console.error(`profile${id}`, file);
@@ -33,13 +35,11 @@ export const useImageUpload = () => {
                   .then((res) => {
                     const data = res.data.data;
                     console.error(data);
-                    setProfileData({
-                      profileImg: {
-                        s3Key: key,
-                        originalImgUrl: data.originalImageUrl,
-                        thumbnailImgUrl: data.thumbnailImageUrl,
-                        isDefaultImg: data.defaultProfileImage,
-                      },
+                    setProfileImgData({
+                      s3Key: key,
+                      originalImgUrl: data.originalImageUrl,
+                      thumbnailImgUrl: data.thumbnailImageUrl,
+                      isDefaultImg: data.defaultProfileImage,
                     });
                   });
               }
@@ -49,5 +49,18 @@ export const useImageUpload = () => {
     },
   });
 
-  return { useProfileImageUploadMutation };
+  // 기본 프로필 이미지 제거
+  const useDeleteProfileImageMutation = useMutation({
+    mutationFn: async () => {
+      await axiosInstance
+        .delete(apiRoute.USER_IMAGE_PROFILE_DELETE)
+        .then((res) => {
+          console.error(res);
+          return res;
+        })
+        .catch((err) => console.error(err));
+    },
+  });
+
+  return { useProfileImageUploadMutation, useDeleteProfileImageMutation };
 };
