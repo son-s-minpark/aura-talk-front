@@ -6,16 +6,12 @@ import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 
 const RandomModal = () => {
-  const { userData, setUserData } = useUserStore();
+  const { userData } = useUserStore();
   const { useRandomChatToggleMutation } = useProfile();
 
   async function setRandomChatToggle(isRandom: boolean) {
     try {
-      const res = await useRandomChatToggleMutation.mutateAsync({
-        randomChatEnabled: isRandom,
-      });
-      console.error(res);
-      setUserData({ randomChatEnabled: isRandom });
+      await useRandomChatToggleMutation.mutateAsync(isRandom);
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error(err);

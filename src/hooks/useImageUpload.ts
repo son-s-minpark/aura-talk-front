@@ -54,7 +54,7 @@ export const useImageUpload = () => {
     mutationFn: async () => {
       await axiosInstance
         .delete(apiRoute.USER_IMAGE_PROFILE_DELETE)
-        .then((res) => {
+        .then(async (res) => {
           console.error(res);
           return res;
         })
@@ -62,5 +62,8 @@ export const useImageUpload = () => {
     },
   });
 
-  return { useProfileImageUploadMutation, useDeleteProfileImageMutation };
+  return {
+    useProfileImageUploadMutation,
+    useDeleteProfileImageMutation,
+  };
 };

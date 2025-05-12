@@ -1,11 +1,13 @@
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { profileType, randomChatType } from "@/type/user/profileType";
+import { profileType } from "@/type/user/profileType";
 import useUserStore from "@/state/user/useUserStore";
+import useProfileStore from "@/state/user/useProfileStore";
 
 export const useProfile = () => {
-  const { userData } = useUserStore();
+  const { userData, setUserData } = useUserStore();
+  const { setProfileData } = useProfileStore();
 
   // 사용자 프로필 가져오기 요청
   const useGetUserProfile = (id: number) => {
@@ -22,20 +24,42 @@ export const useProfile = () => {
   // 프로필 수정/등록 요청
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
-      return await axiosInstance.put(
-        apiRoute.USER_PROFILE(userData.userId),
-        profileData
-      );
+      return await axiosInstance
+        .put(apiRoute.USER_PROFILE(userData.userId), profileData)
+        .then((res) => {
+          if (res.data.success) {
+            setProfileData({
+              nickname: profileData.nickname,
+              username: profileData.username,
+              description: profileData.description,
+            });
+            return true;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          return err;
+        });
     },
   });
 
   // 랜덤채팅 설정 수정 요청
   const useRandomChatToggleMutation = useMutation({
-    mutationFn: async (randomData: randomChatType) => {
-      return axiosInstance.put(
-        apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId),
-        randomData
-      );
+    mutationFn: async (randomData: boolean) => {
+      return await axiosInstance
+        .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId), {
+          randomChatEnabled: randomData,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setUserData({ randomChatEnabled: randomData });
+          }
+          return true;
+        })
+        .catch((err) => {
+          console.error(err);
+          return err;
+        });
     },
   });
 

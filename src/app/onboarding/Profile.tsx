@@ -13,11 +13,9 @@ import { useProfile } from "@/hooks/useProfile";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
-import { useImageUpload } from "@/hooks/useImageUpload";
-import useUserStore from "@/state/user/useUserStore";
 
 const Profile = () => {
-  const { setProfileData, profileData } = useProfileStore();
+  const { profileData } = useProfileStore();
   const [nickname, setnickname] = useState<string>(profileData.nickname);
   const [username, setusername] = useState<string>(profileData.username);
   const [description, setDescription] = useState<string>(
@@ -29,9 +27,6 @@ const Profile = () => {
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSetProfileMutation } = useProfile();
   const { setPage } = useSetPageStore();
-  const { userData } = useUserStore();
-
-  const { useProfileImageUploadMutation } = useImageUpload();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -84,24 +79,12 @@ const Profile = () => {
     return true;
   }
 
-  const urlToFile = async (url: string, fileName: string) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const file = new File([blob], fileName, { type: blob.type });
-    return file;
-  };
-
   async function onSubmit() {
     if (!isFull()) {
       // 빈 값이 있을 때 아무것도 하지 않음
       return;
     } else {
       if (isProfileValid()) {
-        setProfileData({
-          nickname: nickname,
-          username: username,
-          description: description,
-        });
         try {
           const res = await useSetProfileMutation.mutateAsync({
             nickname: nickname,
@@ -109,20 +92,9 @@ const Profile = () => {
             description: description,
             interests: profileData.interests,
           });
-          console.error(res);
-
-          // 기본 이미지 등록
-          const defaultImg = `/images/defaultImage/default${
-            Math.floor(Math.random() * 4) + 1
-          }.png`;
-          urlToFile(defaultImg, "default.png").then((file) => {
-            useProfileImageUploadMutation.mutateAsync({
-              id: userData.userId,
-              file: file,
-            });
-          });
-
-          setPage("profileImg");
+          if (res) {
+            setPage("profileImg");
+          }
         } catch (error: unknown) {
           const err = error as AxiosError;
           console.error(err);

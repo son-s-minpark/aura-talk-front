@@ -100,8 +100,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
             description: description,
             interests: profileData.interests,
           });
-          console.error(res);
-          if (res.data.success) {
+          if (res) {
             setIsModalDown(false);
           }
         } catch (error: unknown) {

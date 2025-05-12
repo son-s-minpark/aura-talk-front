@@ -11,7 +11,3 @@ export type profileImgType = {
   thumbnailImgUrl: string;
   isDefaultImg: boolean;
 };
-
-export type randomChatType = {
-  randomChatEnabled: boolean;
-};

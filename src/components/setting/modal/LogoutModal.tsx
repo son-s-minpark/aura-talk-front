@@ -14,10 +14,10 @@ const LogoutModal = () => {
   async function onLogout() {
     try {
       const res = await useLogoutMutation.mutateAsync();
-      console.error(res);
-      localStorage.clear();
-      setPage("onBoarding");
-      router.replace("/onboarding");
+      if (res.success) {
+        setPage("onBoarding");
+        router.replace("/onboarding");
+      }
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error(err);
