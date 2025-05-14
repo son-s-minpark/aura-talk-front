@@ -9,9 +9,8 @@ import DeleteAccountModal from "../../components/setting/modal/DeleteAccountModa
 import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import MyProfileImage from "@/components/common/MyProfileImage";
 import useProfileStore from "@/state/user/useProfileStore";
 
 type modalType =
@@ -26,7 +25,6 @@ type modalType =
 const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
-  const { profileImgData } = useProfileImgStore();
   const { profileData } = useProfileStore();
   const router = useRouter();
   return (
@@ -51,16 +49,8 @@ const SettingList = () => {
         className="w-full h-[102px] px-[21px] border-b-1 border-commonGray flex gap-[12px] items-center"
         onClick={() => router.push(`/profile/self`)}
       >
-        <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full">
-          {profileImgData.thumbnailImgUrl && (
-            <Image
-              src={profileImgData.thumbnailImgUrl}
-              alt="Profile"
-              className="rounded-full object-cover"
-              width={60}
-              height={60}
-            />
-          )}
+        <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
+          <MyProfileImage />
         </div>
         <div className="flex flex-col">
           <p className="text-[20px] font-bold leading-[20px]">

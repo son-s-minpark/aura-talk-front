@@ -92,15 +92,21 @@ const Signup = () => {
         }
       } catch (error: unknown) {
         const err = error as AxiosError;
+        const status = err.response?.status;
 
-        if (err.response?.status === 409) {
-          setErrMsg("이미 존재하는 이메일입니다.");
-          setIsMailValid(false);
-        } else if (err instanceof Error) {
-          alert(err.message);
-        } else {
-          alert("알 수 없는 오류가 발생했습니다.");
+        switch (status) {
+          case 401:
+            setErrMsg("아이디나 비밀번호가 다릅니다.");
+            break;
+          case 404:
+            setErrMsg("존재하지 않는 계정입니다.");
+            break;
+          default:
+            setErrMsg("알 수 없는 오류가 발생했습니다.");
+            break;
         }
+        setIsMailValid(false);
+        setIsPwValid(false);
       }
     }
   }

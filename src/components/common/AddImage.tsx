@@ -1,9 +1,7 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import React, { useRef } from "react";
 import { useImageUpload } from "@/hooks/useImageUpload";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import MyProfileImage from "./MyProfileImage";
 
 type AddImageProps = {
   imgSize: number;
@@ -12,16 +10,9 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const [previewUrl, setPreviewUrl] = useState<string>("");
-  const { profileImgData } = useProfileImgStore();
-  const { userData } = useUserStore();
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
   const fileRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setPreviewUrl(profileImgData.thumbnailImgUrl || "");
-  }, [profileImgData]);
 
   const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files ? e.target.files[0] : null;
@@ -29,11 +20,8 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
       return;
     }
 
-    const fileUrl = URL.createObjectURL(file);
-    setPreviewUrl(fileUrl);
-
     await useProfileImageUploadMutation.mutateAsync({
-      id: userData.userId,
+      fileName: file.name,
       file: file,
     });
   };
@@ -41,16 +29,10 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="rounded-full border-1 text-commonGray mb-[15px] relative"
+        className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        <Image
-          src={previewUrl}
-          alt="Profile"
-          width={imgSize}
-          height={imgSize}
-          className="rounded-full object-cover"
-        />
+        <MyProfileImage />
       </div>
       <div className="flex gap-[15px]">
         <button

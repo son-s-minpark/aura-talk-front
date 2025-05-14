@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 type ImageProps = {
-  id: number;
+  fileName: string;
   file: File;
 };
 
@@ -14,10 +14,9 @@ export const useImageUpload = () => {
 
   // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료 요청)
   const useProfileImageUploadMutation = useMutation({
-    mutationFn: async ({ id, file }: ImageProps) => {
-      console.error(`profile${id}`, file);
+    mutationFn: async ({ fileName, file }: ImageProps) => {
       await axiosInstance
-        .post(apiRoute.USER_IMAGE_PRESIGN, `profile${id}.png`)
+        .post(apiRoute.USER_IMAGE_PRESIGN, fileName)
         .then((res) => {
           const url = res.data.data.url;
           const key = res.data.data.s3Key;
@@ -34,7 +33,6 @@ export const useImageUpload = () => {
                   .post(apiRoute.USER_IMAGE_COMPLETE, key)
                   .then((res) => {
                     const data = res.data.data;
-                    console.error(data);
                     setProfileImgData({
                       s3Key: key,
                       originalImgUrl: data.originalImageUrl,

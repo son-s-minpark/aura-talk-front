@@ -10,7 +10,7 @@ export const useAuth = () => {
   const { userData, setUserData } = useUserStore();
   const { setProfileData } = useProfileStore();
 
-  // 회원가입 요청청
+  // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: async (signupData: signType) => {
       return axios

@@ -92,7 +92,7 @@ const Profile = () => {
             description: description,
             interests: profileData.interests,
           });
-          if (res) {
+          if (res.success) {
             setPage("profileImg");
           }
         } catch (error: unknown) {

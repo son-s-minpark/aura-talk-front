@@ -8,7 +8,6 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import useProfileStore from "@/state/user/useProfileStore";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 
 const Signin = () => {
@@ -18,7 +17,6 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
-  const { profileData } = useProfileStore();
   const { setPage } = useSetPageStore();
   const router = useRouter();
 
@@ -90,19 +88,19 @@ const Signin = () => {
         const err = error as AxiosError;
         const status = err.response?.status;
 
-        if (status === 401) {
-          setErrMsg("아이디나 비밀번호가 다릅니다.");
-          setIsMailValid(false);
-          setIsPwValid(false);
-        } else if (status) {
-          setErrMsg("존재하지 않는 계정입니다.");
-          setIsMailValid(false);
-          setIsPwValid(false);
-        } else if (err instanceof Error) {
-          alert(err.message);
-        } else {
-          alert("알 수 없는 오류가 발생했습니다.");
+        switch (status) {
+          case 401:
+            setErrMsg("아이디나 비밀번호가 다릅니다.");
+            break;
+          case 404:
+            setErrMsg("존재하지 않는 계정입니다.");
+            break;
+          default:
+            setErrMsg("알 수 없는 오류가 발생했습니다.");
+            break;
         }
+        setIsMailValid(false);
+        setIsPwValid(false);
       }
     }
   }

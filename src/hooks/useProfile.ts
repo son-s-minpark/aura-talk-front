@@ -27,18 +27,22 @@ export const useProfile = () => {
       return await axiosInstance
         .put(apiRoute.USER_PROFILE(userData.userId), profileData)
         .then((res) => {
-          if (res.data.success) {
+          const { data } = res;
+          if (data.success) {
             setProfileData({
               nickname: profileData.nickname,
               username: profileData.username,
               description: profileData.description,
             });
-            return true;
+            return { success: true };
+          } else {
+            throw Error("프로필 수정 오류");
           }
         })
+
         .catch((err) => {
-          console.error(err);
-          return err;
+          console.error("put Profile error:", err);
+          throw err;
         });
     },
   });
