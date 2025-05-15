@@ -1,7 +1,9 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useImageUpload } from "@/hooks/useImageUpload";
-import MyProfileImage from "./MyProfileImage";
+import Image from "next/image";
+// import MyProfileImage from "./MyProfileImage";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 
 type AddImageProps = {
   imgSize: number;
@@ -10,6 +12,10 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
+  const { profileImgData } = useProfileImgStore();
+  const [prevImg, setPrevImg] = useState<string>(
+    profileImgData.thumbnailImgUrl
+  );
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -19,6 +25,14 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
     if (!file) {
       return;
     }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (reader.result) {
+        setPrevImg(reader.result as string);
+      }
+    };
+
+    reader.readAsDataURL(file);
 
     await useProfileImageUploadMutation.mutateAsync({
       fileName: file.name,
@@ -32,7 +46,12 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
         className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        <MyProfileImage />
+        <Image
+          src={prevImg}
+          alt="Profile"
+          fill
+          className="rounded-full object-cover"
+        />
       </div>
       <div className="flex gap-[15px]">
         <button

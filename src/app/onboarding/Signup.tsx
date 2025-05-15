@@ -101,6 +101,9 @@ const Signup = () => {
           case 404:
             setErrMsg("존재하지 않는 계정입니다.");
             break;
+          case 409:
+            setErrMsg("이미 존재하는 메일 계정입니다.");
+            break;
           default:
             setErrMsg("알 수 없는 오류가 발생했습니다.");
             break;

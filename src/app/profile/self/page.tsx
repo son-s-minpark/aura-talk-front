@@ -5,9 +5,11 @@ import useProfileStore from "@/state/user/useProfileStore";
 import ProfileEditModal from "@/components/profile/modal/ProfileEditModal";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
-import MyProfileImage from "@/components/common/MyProfileImage";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
+import Image from "next/image";
 
 const Page = () => {
+  const { profileImgData } = useProfileImgStore();
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
   const { profileData } = useProfileStore();
 
@@ -22,7 +24,14 @@ const Page = () => {
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
           <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
-            <MyProfileImage />
+            {profileImgData.thumbnailImgUrl && (
+              <Image
+                src={profileImgData.thumbnailImgUrl}
+                alt="Profile"
+                fill
+                className="rounded-full object-cover"
+              />
+            )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">
             <p className="text-[20px] font-bold">{profileData.nickname}</p>

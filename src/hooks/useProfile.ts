@@ -4,10 +4,12 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { profileType } from "@/type/user/profileType";
 import useUserStore from "@/state/user/useUserStore";
 import useProfileStore from "@/state/user/useProfileStore";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 
 export const useProfile = () => {
   const { userData, setUserData } = useUserStore();
   const { setProfileData } = useProfileStore();
+  const { setProfileImgData } = useProfileImgStore();
 
   // 사용자 프로필 가져오기 요청
   const useGetUserProfile = (id: number) => {
@@ -68,13 +70,16 @@ export const useProfile = () => {
   });
 
   // 프로필 이미지 가져오기 요청
-  const useGetProfileImg = (id: number) => {
-    return useQuery({
-      queryKey: [`getProfileImg${id}`],
-      queryFn: async () => {
-        const res = axiosInstance.get(apiRoute.USER_IMAGE_PROFILE_GET(id));
-        return res;
-      },
+  const getProfileImg = async () => {
+    const res = await axiosInstance.get(
+      apiRoute.USER_IMAGE_PROFILE_GET(userData.userId)
+    );
+    const data = res.data.data;
+
+    setProfileImgData({
+      originalImgUrl: data.originalImageUrl,
+      thumbnailImgUrl: data.thumbnailImageUrl,
+      isDefaultImg: data.defaultProfileImage,
     });
   };
 
@@ -82,6 +87,6 @@ export const useProfile = () => {
     useGetUserProfile,
     useSetProfileMutation,
     useRandomChatToggleMutation,
-    useGetProfileImg,
+    getProfileImg,
   };
 };

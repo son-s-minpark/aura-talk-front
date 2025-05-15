@@ -30,6 +30,7 @@ export const useAuth = () => {
               localStorage.setItem("accessToken", token);
               localStorage.setItem("userId", userId);
               setUserData({ userId });
+
               return { success: true };
             } else {
               throw new Error("토큰을 받지 못 했습니다.");
@@ -163,7 +164,7 @@ export const useMailAuth = () => {
     },
   });
 
-  // 인증 요청 매일 다시 보내기기
+  // 인증 요청 매일 다시 보내기
   const useMailResendMutation = useMutation({
     mutationFn: async (mail: string) => {
       return await axios.post(apiRoute.USER_RESEND_EMAIL, {

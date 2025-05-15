@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
@@ -27,6 +27,11 @@ const Profile = () => {
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSetProfileMutation } = useProfile();
   const { setPage } = useSetPageStore();
+  const { getProfileImg } = useProfile();
+
+  useEffect(() => {
+    getProfileImg();
+  }, []);
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -96,8 +101,32 @@ const Profile = () => {
             setPage("profileImg");
           }
         } catch (error: unknown) {
-          const err = error as AxiosError;
-          console.error(err);
+          if (error instanceof AxiosError) {
+            const errData = error.response?.data;
+
+            if (errData && errData.code) {
+              switch (errData.code) {
+                case 422:
+                  setErrMsg("이미 존재하는 이름입니다.");
+                  setIsUsernameValid(false);
+                  break;
+                case 423:
+                  setErrMsg("이미 존재하는 닉네임입니다.");
+                  setIsNicknameValid(false);
+                  break;
+                default:
+                  setErrMsg(
+                    `알 수 없는 오류가 발생했습니다: ${errData.message}`
+                  );
+                  break;
+              }
+            } else {
+              setErrMsg("알 수 없는 오류가 발생했습니다.");
+            }
+          } else {
+            setErrMsg("예상치 못한 오류가 발생했습니다.");
+            console.error(error);
+          }
         }
       }
     }

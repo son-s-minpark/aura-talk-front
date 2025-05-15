@@ -15,35 +15,38 @@ export const useImageUpload = () => {
   // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료 요청)
   const useProfileImageUploadMutation = useMutation({
     mutationFn: async ({ fileName, file }: ImageProps) => {
-      await axiosInstance
-        .post(apiRoute.USER_IMAGE_PRESIGN, fileName)
-        .then((res) => {
-          const url = res.data.data.url;
-          const key = res.data.data.s3Key;
+      try {
+        const res = await axiosInstance.post(
+          apiRoute.USER_IMAGE_PRESIGN,
+          fileName
+        );
+        const url = res.data.data.url;
+        const key = res.data.data.s3Key;
 
-          axios
-            .put(url, file, {
-              headers: {
-                "Content-Type": file.type,
-              },
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                axiosInstance
-                  .post(apiRoute.USER_IMAGE_COMPLETE, key)
-                  .then((res) => {
-                    const data = res.data.data;
-                    setProfileImgData({
-                      s3Key: key,
-                      originalImgUrl: data.originalImageUrl,
-                      thumbnailImgUrl: data.thumbnailImageUrl,
-                      isDefaultImg: data.defaultProfileImage,
-                    });
-                  });
-              }
-            })
-            .catch((err) => console.error(err));
+        const uploadResponse = await axios.put(url, file, {
+          headers: {
+            "Content-Type": file.type,
+          },
         });
+
+        if (uploadResponse.status === 200) {
+          const completeRes = await axiosInstance.post(
+            apiRoute.USER_IMAGE_COMPLETE,
+            key
+          );
+          const data = completeRes.data.data;
+
+          setProfileImgData({
+            s3Key: key,
+            originalImgUrl: data.originalImageUrl,
+            thumbnailImgUrl: data.thumbnailImageUrl,
+            isDefaultImg: data.defaultProfileImage,
+          });
+          return data.thumbnailImageUrl;
+        }
+      } catch (err) {
+        console.error("Image upload failed:", err);
+      }
     },
   });
 
