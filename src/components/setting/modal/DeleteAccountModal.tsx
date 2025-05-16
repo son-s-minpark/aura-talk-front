@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import SelectBtn from "../../common/SelectBtn";
+import SelectBtn from "@/components/common/SelectBtn";
 import { MdPersonOff } from "react-icons/md";
 import { PwInput } from "@/components/common/ProfileInput";
 import { useAuth } from "@/hooks/useAuth";
 import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const DeleteAccountModal = () => {
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -37,15 +37,18 @@ const DeleteAccountModal = () => {
       if (validatePassword()) {
         setErrMsg("");
         try {
-          const res = await useDeleteAccoutMutation.mutateAsync({
-            password: pw,
-          });
-          console.error(res);
-          localStorage.clear();
-          router.replace("/onboarding");
+          const res = await useDeleteAccoutMutation.mutateAsync(pw);
+          if (res.success) {
+            localStorage.clear();
+            router.replace("/onboarding");
+          }
         } catch (error: unknown) {
           const err = error as AxiosError;
           console.error(err);
+          if (err.response?.status == 401) {
+            setIsValid(false);
+            setErrMsg("비밀번호가 일치하지 않습니다.");
+          }
         }
       }
     }

@@ -1,6 +1,9 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useImageUpload } from "@/hooks/useImageUpload";
 import Image from "next/image";
+// import MyProfileImage from "./MyProfileImage";
+import useProfileImgStore from "@/state/user/useProfileImgStore";
 
 type AddImageProps = {
   imgSize: number;
@@ -9,48 +12,65 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const [img, setImg] = useState<File | null>(null);
-  const [prevImg, setPrevImg] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement | null>(null);
+  const { profileImgData } = useProfileImgStore();
+  const [prevImg, setPrevImg] = useState<string>(
+    profileImgData.thumbnailImgUrl
+  );
+  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
+    useImageUpload();
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  async function addImage(e: React.ChangeEvent<HTMLInputElement>) {
+  const addImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files ? e.target.files[0] : null;
-    if (file) {
-      const prevUrl = URL.createObjectURL(file);
-      setPrevImg(prevUrl);
-      setImg(file);
+    if (!file) {
+      return;
     }
-  }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (reader.result) {
+        setPrevImg(reader.result as string);
+      }
+    };
+
+    reader.readAsDataURL(file);
+
+    await useProfileImageUploadMutation.mutateAsync({
+      fileName: file.name,
+      file: file,
+    });
+  };
 
   return (
     <div className="flex flex-col items-center">
       <div
-        className="mb-[15px]"
+        className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        {prevImg ? (
-          <Image
-            src={prevImg}
-            alt="미리보기 이미지"
-            width={100}
-            height={100}
-            className="object-cover  rounded-full"
-          />
-        ) : (
-          <div
-            className="rounded-full border-1 text-commonGray"
-            style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
-          />
-        )}
+        <Image
+          src={prevImg}
+          alt="Profile"
+          fill
+          className="rounded-full object-cover"
+        />
       </div>
-      <button
-        type="button"
-        onClick={() => fileRef.current?.click()}
-        className="flex justify-center items-center bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
-        style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
-      >
-        편집
-      </button>
+      <div className="flex gap-[15px]">
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="flex justify-center items-center bg-[#F3F6F6] text-commonGray rounded-[20px] text-[14px]"
+          style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
+        >
+          편집
+        </button>
+        <button
+          type="button"
+          onClick={() => useDeleteProfileImageMutation}
+          className="flex justify-center items-center bg-[var(--color-errorRed)] text-white rounded-[20px] text-[14px]"
+          style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
+        >
+          삭제
+        </button>
+      </div>
       <input
         ref={fileRef}
         type="file"

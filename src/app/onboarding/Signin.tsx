@@ -8,9 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/sign/useProfileStore";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -18,8 +17,6 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
-  const { setUserData } = useUserStore();
-  const { setProfileData } = useProfileStore();
   const { setPage } = useSetPageStore();
   const router = useRouter();
 
@@ -73,34 +70,8 @@ const Signin = () => {
           email: mail,
           password: pw,
         });
-        const data = res.data;
-        console.error(data);
-        if (data.success) {
-          const token = data.data.token;
-          const userData = data.data.user;
-          if (token) {
-            localStorage.setItem("accessToken", token);
-            localStorage.setItem("userId", userData.id);
-          } else {
-            alert("토큰을 받지 못 했습니다.");
-            return;
-          }
-          setUserData({
-            userId: userData.id,
-            createdAt: userData.createdAt,
-            randomChatEnabled: userData.randomChatEnabled,
-            status: userData.status,
-          });
-          setProfileData({
-            description: userData.description,
-            nickname: userData.nickname,
-            username: userData.username,
-            interests: userData.interests,
-          });
-          if (
-            userData.username == "임시 사용자명" &&
-            userData.nickname == "임시 닉네임"
-          ) {
+        if (res.success) {
+          if (res.profileSet) {
             const answer = confirm(
               "프로필이 설정되어 있지 않습니다. 설정하러 가시겠습니까?"
             );
@@ -115,7 +86,21 @@ const Signin = () => {
         }
       } catch (error: unknown) {
         const err = error as AxiosError;
-        console.error(err);
+        const status = err.response?.status;
+
+        switch (status) {
+          case 401:
+            setErrMsg("아이디나 비밀번호가 다릅니다.");
+            break;
+          case 404:
+            setErrMsg("존재하지 않는 계정입니다.");
+            break;
+          default:
+            setErrMsg("알 수 없는 오류가 발생했습니다.");
+            break;
+        }
+        setIsMailValid(false);
+        setIsPwValid(false);
       }
     }
   }

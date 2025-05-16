@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdKey } from "react-icons/io";
 import { PwInput } from "@/components/common/ProfileInput";
-import SelectBtn from "../../common/SelectBtn";
+import SelectBtn from "@/components/common/SelectBtn";
 import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 

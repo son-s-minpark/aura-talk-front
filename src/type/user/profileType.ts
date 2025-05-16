@@ -5,6 +5,9 @@ export type profileType = {
   interests: string[];
 };
 
-export type randomChatType = {
-  randomChatEnabled: boolean;
+export type profileImgType = {
+  s3Key?: string;
+  originalImgUrl: string;
+  thumbnailImgUrl: string;
+  isDefaultImg: boolean;
 };

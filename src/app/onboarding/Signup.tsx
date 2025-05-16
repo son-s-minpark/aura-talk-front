@@ -9,11 +9,9 @@ import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
-import useUserStore from "@/state/user/useUserStore";
 
 const Signup = () => {
   const { setSignupData, signupData } = useSignupStore();
-  const { setUserData } = useUserStore();
   const { useSignupMutation } = useAuth();
   const [mail, setMail] = useState<string>(signupData.email);
   const [pw, setPw] = useState<string>(signupData.password);
@@ -76,9 +74,7 @@ const Signup = () => {
     if (!isFull()) {
       return; // 빈 칸이 있으면 아무 작업도 하지 않음
     }
-
     if (isSignupValid()) {
-      // 모든 유효성 검사를 통과했을 때
       setSignupData({
         email: mail,
         password: pw,
@@ -89,25 +85,31 @@ const Signup = () => {
           email: mail,
           password: pw,
         });
-        console.error(res.data);
-        if (res.data.success) {
-          const token = res.data.data.token;
-          if (token) {
-            localStorage.setItem("accessToken", token);
-
-            localStorage.setItem("userId", res.data.data.userId);
-          } else {
-            alert("토큰을 받지 못 했습니다.");
-          }
-          setUserData({ userId: res.data.data.userId });
+        if (res.success) {
           setIsValidateModalDown(true);
+        } else {
+          console.error("sign up page Error", res);
         }
       } catch (error: unknown) {
         const err = error as AxiosError;
-        if (err.response?.status == 409) {
-          setErrMsg("이미 존재하는 이메일입니다.");
-          setIsMailValid(false);
+        const status = err.response?.status;
+
+        switch (status) {
+          case 401:
+            setErrMsg("아이디나 비밀번호가 다릅니다.");
+            break;
+          case 404:
+            setErrMsg("존재하지 않는 계정입니다.");
+            break;
+          case 409:
+            setErrMsg("이미 존재하는 메일 계정입니다.");
+            break;
+          default:
+            setErrMsg("알 수 없는 오류가 발생했습니다.");
+            break;
         }
+        setIsMailValid(false);
+        setIsPwValid(false);
       }
     }
   }

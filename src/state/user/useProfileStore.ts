@@ -14,6 +14,12 @@ const useProfileStore = create<setProfileType>((set) => ({
     username: "",
     description: "",
     interests: [],
+    profileImg: {
+      s3Key: "",
+      originalImgUrl: "",
+      thumbnailImgUrl: "",
+      isDefaultImg: true,
+    },
   },
   setProfileData: (newData) =>
     set((state) => ({ profileData: { ...state.profileData, ...newData } })),

@@ -1,14 +1,11 @@
-import useProfileStore from "@/state/sign/useProfileStore";
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";
+import useProfileStore from "@/state/user/useProfileStore";
 
-type InterestBtnProp = {
-  isScrollable: boolean;
-};
-
-const InterestBtnList = ({ isScrollable }: InterestBtnProp) => {
+const InterestBtnList = ({ isScrollable }: { isScrollable: boolean }) => {
   const { profileData, removeInterest } = useProfileStore();
+
   return (
     <div
       className={clsx("flex gap-[5px] items-center", {
