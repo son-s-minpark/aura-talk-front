@@ -6,6 +6,7 @@ import useProfileStore from "@/state/user/useProfileStore";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";
+import Introduction from "@/components/onboarding/Introduction";
 
 const ProfileImg = () => {
   const { profileData } = useProfileStore();
@@ -14,19 +15,14 @@ const ProfileImg = () => {
   return (
     <div className="w-full h-full overflow-scroll text-white">
       {termsModalDown && (
-        <div onClick={() => setTermsModalDown(false)} className="modal">
+        <div className="modal" onClick={() => setTermsModalDown(false)}>
           <TermsModal />
         </div>
       )}
+
       <Back backComponent={"profile"} />
       <div className="mt-[24px]">
-        <p className="text-[20px] font-bold text-white mt-[12px] text-center leading-[20px]">
-          프로필 확인
-        </p>
-        <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px]">
-          <p>마지막으로 확인할게요!</p>
-          <p>다 맞게 작성했나요?</p>
-        </div>
+        <Introduction page="profileImg" />
       </div>
       <div className="mt-[35px] mb-[15px]">
         <AddImage imgSize={100} btnHeight={24} btnWidth={54} />

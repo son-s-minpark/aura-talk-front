@@ -9,7 +9,7 @@ const ChatExit = () => {
   }
   return (
     <div className="modal-content w-[284px] h-[120px] pl-[22px] pt-[20px]">
-      <p className="font-semibold"> 채팅방 나가기 </p>
+      <h1> 채팅방 나가기 </h1>
       <div className="ml-[11px] mt-[10px]">
         <p className="text-[12px]"> 나가면 이전 대화 기록은 볼 수 없어져요.</p>
       </div>

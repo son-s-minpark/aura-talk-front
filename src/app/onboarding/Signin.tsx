@@ -9,6 +9,7 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+import Introduction from "@/components/onboarding/Introduction";
 
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
@@ -88,6 +89,7 @@ const Signin = () => {
         const err = error as AxiosError;
         const status = err.response?.status;
 
+        // 예외 처리
         switch (status) {
           case 401:
             setErrMsg("아이디나 비밀번호가 다릅니다.");
@@ -106,40 +108,33 @@ const Signin = () => {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full flex flex-col">
       <Back backComponent={"onBoarding"} />
-      <div className="flex flex-col items-center mt-[69px]">
-        <div className="text-center">
-          <p className="text-[20px] font-bold text-white leading-[20px]">
-            로그인하기
-          </p>
-          <div className="text-[#DBDBDB] text-[14px] mt-[19px] leading-[20px]">
-            <p>다시 만나서 반가워요!</p>
-            <p>친구들의 소식을 확인하러 가볼까요?</p>
+
+      <div className="flex-1 flex flex-col pt-[69px]">
+        <Introduction page="signin" />
+
+        <div className="flex-grow flex flex-col justify-between px-[24px] text-white pt-[70px]">
+          <div className="flex flex-col">
+            <ProfileInput
+              label="이메일"
+              value={mail}
+              onChange={onChageMail}
+              isValid={isMailValid}
+            />
+
+            <PwInput
+              label="비밀번호"
+              value={pw}
+              onChange={onChagePw}
+              isValid={isPwValid}
+            />
+
+            <div className="flex justify-center">
+              {errMsg != "" && <ErrorMessage msg={errMsg} />}
+            </div>
           </div>
-        </div>
 
-        <div className="mt-[40px] text-white">
-          <ProfileInput
-            label="이메일"
-            value={mail}
-            onChange={onChageMail}
-            isValid={isMailValid}
-          />
-
-          <PwInput
-            label="비밀번호"
-            value={pw}
-            onChange={onChagePw}
-            isValid={isPwValid}
-          />
-
-          <div className="flex justify-center">
-            {errMsg != "" && <ErrorMessage msg={errMsg} />}
-          </div>
-        </div>
-
-        <div className="mt-[277px]">
           <SignBtn value="로그인" isFull={isFull()} onClick={onSubmit} />
         </div>
       </div>

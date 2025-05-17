@@ -24,7 +24,7 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
       <div className="h-[70px] w-full border-b-1 border-commonGray flex justify-between px-[22px] py-[15px]">
         <div className="flex gap-[15px] items-center">
           <div className="w-[44px] h-[44px] rounded-full border-[var(--color-gray)] border-1"></div>
-          <p className="text-[18px] font-bold">채팅방 이름</p>
+          <h1>채팅방 이름</h1>
         </div>
       </div>
 

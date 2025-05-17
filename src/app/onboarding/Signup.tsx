@@ -9,6 +9,7 @@ import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
+import Introduction from "@/components/onboarding/Introduction";
 
 const Signup = () => {
   const { setSignupData, signupData } = useSignupStore();
@@ -94,6 +95,7 @@ const Signup = () => {
         const err = error as AxiosError;
         const status = err.response?.status;
 
+        // 예외 처리
         switch (status) {
           case 401:
             setErrMsg("아이디나 비밀번호가 다릅니다.");
@@ -115,56 +117,50 @@ const Signup = () => {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full flex flex-col">
       {isValidateModalDown && (
         <div className="modal" onClick={() => setIsValidateModalDown(false)}>
           <ValidateModal />
         </div>
       )}
       <Back backComponent={"onBoarding"} />
-      <div className="flex flex-col items-center mt-[69px]">
-        <p className="text-[20px] font-bold text-white leading-[20px]">
-          회원가입하기
-        </p>
-        <div className="text-[#DBDBDB] text-[14px] text-center mt-[19px] leading-[20px]">
-          <p>만나서 반가워요!</p>
-          <p>새로운 친구들을 만들러 가볼까요?</p>
-        </div>
-      </div>
-      <div className="flex flex-col mt-[37px] text-white items-center">
-        <div className="w-[327px]">
-          <ProfileInput
-            label="이메일"
-            value={mail}
-            onChange={onChangeMail}
-            isValid={isMailValid}
-          />
 
-          <>
+      <div className="flex-1 flex flex-col pt-[69px]">
+        <Introduction page="signup" />
+
+        <div className="flex-grow flex flex-col justify-between px-[24px] text-white pt-[37px]">
+          <div className="flex flex-col">
+            <ProfileInput
+              label="이메일"
+              value={mail}
+              onChange={onChangeMail}
+              isValid={isMailValid}
+            />
+
+            <>
+              <PwInput
+                label="비밀번호"
+                value={pw}
+                onChange={onChangePw}
+                isValid={isPwValid}
+              />
+              <p className="text-[10px] mt-[6px]">
+                * 비밀번호는 대소문자, 특수문자, 숫자를 포함해 6자 이상이어야
+                합니다
+              </p>
+            </>
+
             <PwInput
-              label="비밀번호"
-              value={pw}
-              onChange={onChangePw}
+              label="비밀번호 확인"
+              value={checkPw}
+              onChange={onChangeCheckPw}
               isValid={isPwValid}
             />
-            <p className="text-[10px] mt-[6px]">
-              * 비밀번호는 대소문자, 특수문자, 숫자를 포함해 6자 이상이어야
-              합니다
-            </p>
-          </>
 
-          <PwInput
-            label="비밀번호 확인"
-            value={checkPw}
-            onChange={onChangeCheckPw}
-            isValid={isPwValid}
-          />
-
-          <div className="flex justify-center">
-            {errMsg != "" && <ErrorMessage msg={errMsg} />}
+            <div className="flex justify-center">
+              {errMsg != "" && <ErrorMessage msg={errMsg} />}
+            </div>
           </div>
-        </div>
-        <div className="mt-[192px] flex items-center">
           <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
         </div>
       </div>

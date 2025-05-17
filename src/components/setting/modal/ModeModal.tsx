@@ -19,7 +19,7 @@ const ModeModal = () => {
         ) : (
           <IoMdMoon className="w-[30px] h-[30px] text-[#787878] dark:text-[var(--color-gray)]" />
         )}
-        <p className="text-[20px] font-bold ml-[14px]">모드 변경</p>
+        <h1 className="ml-[14px]">모드 변경</h1>
       </div>
       <div className="flex mt-[28px] w-full">
         {isThemeDark() ? (

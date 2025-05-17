@@ -58,7 +58,7 @@ const DeleteAccountModal = () => {
     <div className="w-[281px] py-[28px] px-[22px] modal-content">
       <div className="flex">
         <MdPersonOff className="w-[30px] h-[30px] text-[#787878] dark:text-lightGray" />
-        <p className="text-[20px] font-bold ml-[14px]">회원탈퇴</p>
+        <h1 className="ml-[14px]">회원탈퇴</h1>
       </div>
       <div className="flex flex-col mt-[16px] w-full">
         <p className="text-[12px]"> 탈퇴하면 이전 기록에 접근할 수 없어요.</p>

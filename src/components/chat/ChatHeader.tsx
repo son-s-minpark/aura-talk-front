@@ -14,7 +14,7 @@ type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
 const ChatHeader = () => {
   const [modalDown, setModalDown] = useState<setModalType>("none");
   return (
-    <div>
+    <div className="bg-[var(--color-point)]">
       {modalDown !== "none" ? (
         <div
           className="modal flex justify-end items-start"

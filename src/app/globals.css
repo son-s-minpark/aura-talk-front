@@ -38,6 +38,11 @@
   border-radius: 12px;
 }
 
+.modal-content h1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

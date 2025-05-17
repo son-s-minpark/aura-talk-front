@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "../../../public/images/logo/logo-none.png";
 import { IoSearch, IoNotifications, IoPersonAdd } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
 const Header = () => {
+  // const [isAddFriendModalDown, setIsAddFriendModalDown] = useState<boolean>(false)
   const router = useRouter();
   return (
     <div className="h-[76px] w-full items-center flex justify-between">
