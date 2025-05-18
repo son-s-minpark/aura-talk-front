@@ -1,13 +1,12 @@
+import { pageType } from "@/type/sign/setPageType";
 import { create } from "zustand";
 
-type PageType = "onBoarding" | "signin" | "signup" | "profile" | "profileImg";
+type setPageProps = {
+  page: pageType;
+  setPage: (page: pageType) => void;
+};
 
-interface Store {
-  page: PageType;
-  setPage: (page: PageType) => void;
-}
-
-export const useSetPageStore = create<Store>((set) => ({
+export const useSetPageStore = create<setPageProps>((set) => ({
   page: "onBoarding",
   setPage: (page) => set({ page }),
 }));

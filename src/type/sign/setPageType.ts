@@ -3,5 +3,12 @@ export type setPageType = {
 };
 
 export type onBoardingType = {
-  page: "onBoarding" | "signin" | "signup" | "profile" | "profileImg";
+  page: pageType;
 };
+
+export type pageType =
+  | "onBoarding"
+  | "signin"
+  | "signup"
+  | "profile"
+  | "profileImg";
