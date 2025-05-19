@@ -5,6 +5,8 @@
 @theme {
   --color-commonGray: oklch(58.34% 0.0039 174.39);
   --color-errorRed: oklch(0.53 0.2055 27.98);
+  --color-rejectRed: oklch(0.6154 0.215 26.51);
+  --color-alertRed: oklch(0.6454 0.2026 24.25);
 }
 
 @layer base {

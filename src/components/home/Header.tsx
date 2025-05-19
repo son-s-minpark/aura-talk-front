@@ -5,6 +5,7 @@ import logo from "../../../public/images/logo/logo-none.png";
 import { IoSearch, IoNotifications, IoPersonAdd } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import AddFriendModal from "../friend/modal/AddFriendModal";
+import AlertCircle from "../common/AlertCircle";
 
 const Header = () => {
   const [isAddFriendModalDown, setIsAddFriendModalDown] =
@@ -29,7 +30,9 @@ const Header = () => {
           <IoSearch className="w-[24px] h-[24px]" />
         </button>
         <button>
-          <IoNotifications className="w-[24px] h-[24px]" />
+          <IoNotifications className="w-[24px] h-[24px]">
+            <AlertCircle />
+          </IoNotifications>
         </button>
       </div>
     </div>

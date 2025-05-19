@@ -2,13 +2,12 @@ import { useProfile } from "@/hooks/useProfile";
 import React from "react";
 import { AxiosError } from "axios";
 import ErrorMessage from "../common/ErrorMessage";
-import SelectBtn from "../common/SelectBtn";
 
 type addFriendProp = {
   id: number;
 };
 
-const AddFriend = ({ id }: addFriendProp) => {
+const ModalFriendComponent = ({ id }: addFriendProp) => {
   const { useGetUserProfile } = useProfile();
 
   const { data, isLoading, isError, error } = useGetUserProfile(id);
@@ -31,24 +30,19 @@ const AddFriend = ({ id }: addFriendProp) => {
     );
   }
 
-  function onSendFriendRequest() {
-    // 대충 친구 추가 요청
-  }
-
   return (
-    <div className="w-full h-[41px] flex justify-between items-center">
+    <div className="w-full h-[41px] flex justify-between items-center overflow-x-scroll">
       <div className="flex gap-[11px]">
-        <div className="w-[40px] h-[40px] rounded-full border-1 border-[var(--color-commonGray)]"></div>
+        <div className="w-[40px] h-[40px] rounded-full border-1 border-[var(--color-commonGray)]">
+          {/* 이미지 */}
+        </div>
         <div className="flex flex-col gap-[5px]">
           <p>{data.nickname}</p>
           <p>{data.username}</p>
         </div>
       </div>
-      <div>
-        <SelectBtn label="추가" onClick={() => onSendFriendRequest()} />
-      </div>
     </div>
   );
 };
 
-export default AddFriend;
+export default ModalFriendComponent;
