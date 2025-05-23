@@ -5,14 +5,13 @@ import CreateChatModal from "@/components/chat/modal/CreateChatModal";
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
   return (
-    <div>
-      {isModalDown ? (
+    <div className="pt-[46px] h-full">
+      {isModalDown && (
         <div className="modal" onClick={() => setIsModalDown(false)}>
           <CreateChatModal />
         </div>
-      ) : null}
-      <div className="relative h-[500px]">
-        <div></div>
+      )}
+      <div className="relative">
         <div className="absolute bottom-[15px] right-[21px]">
           <button
             className="w-[50px] h-[50px] bg-[var(--color-point)] rounded-full flex items-center justify-center"

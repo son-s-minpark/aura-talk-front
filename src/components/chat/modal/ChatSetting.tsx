@@ -28,11 +28,11 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
     <div className="model-content px-[21px] pt-[25px]">
       <div className="flex flex-col gap-[17px]">
         <div>
-          <p className="font-semibold">대표 사진</p>
+          <h1>대표 사진</h1>
           <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
         </div>
         <div>
-          <p className="font-semibold">채팅방 이름</p>
+          <h1>채팅방 이름</h1>
           <div>
             <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
               <input className="w-full h-full" ref={roomNameRef} type="text" />
@@ -40,7 +40,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
           </div>
         </div>
         <div>
-          <p className="font-semibold">친구 목록</p>
+          <h1>친구 목록</h1>
           <div className="flex gap-[11px] mt-[9px]">
             {data.map((friend, index) => (
               <ChatSetFriend friend={friend} key={index} />

@@ -126,7 +126,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div>
-            <p className="font-semibold">대표 사진</p>
+            <h1>대표 사진</h1>
             <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
           </div>
           <div className="flex flex-col mt-[34px]">

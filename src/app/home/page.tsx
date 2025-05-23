@@ -16,7 +16,7 @@ const Page = () => {
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
       <Header />
       <Container height={543}>
-        <div className="h-[543px] w-full pt-[46px]">
+        <div className="w-full h-[498px]">
           {list === "chat" && <Chat />}
           {list === "friend" && <FriendList />}
           {list === "setting" && <SettingList />}

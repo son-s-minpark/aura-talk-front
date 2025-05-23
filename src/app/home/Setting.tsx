@@ -32,9 +32,9 @@ const SettingList = () => {
 
   return (
     <>
-      {modal == "none" ? null : (
+      {modal != "none" && (
         <div
-          className="modal h-screen items-center justify-center"
+          className="modal h-screen items-center justify-center pt-[46px]"
           onClick={() => setModal("none")}
         >
           <div onClick={(e) => e.stopPropagation()}>

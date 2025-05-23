@@ -6,13 +6,13 @@ import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
 import useProfileStore from "@/state/user/useProfileStore";
 import { IoChevronDown } from "react-icons/io5";
-import clsx from "clsx";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { useProfile } from "@/hooks/useProfile";
 import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
+import Introduction from "@/components/onboarding/Introduction";
 
 const Profile = () => {
   const { profileData } = useProfileStore();
@@ -133,34 +133,23 @@ const Profile = () => {
   }
 
   return (
-    <div className="w-full h-full text-white">
+    <div className="w-full h-full flex flex-col">
       {isInterestDown && (
-        <InterestModal
-          setIsInterestDown={setIsInterestDown}
-          isOnBoarding={true}
-        />
+        <div className="modal">
+          <InterestModal
+            setIsInterestDown={setIsInterestDown}
+            isOnBoarding={true}
+          />
+        </div>
       )}
 
-      <div
-        className={clsx("flex flex-col items-center", {
-          hidden: isInterestDown,
-        })}
-      >
-        <Back backComponent={"signup"} />
-        <div className="mt-[69px]">
-          <div className="text-center">
-            <p className="text-[20px] font-bold text-white leading-[20px]">
-              프로필 입력
-            </p>
-            <div className="text-[#DBDBDB] text-[14px] leading-[20px] mt-[19px]">
-              <p>거의 다 끝났어요!</p>
-              <p>당신에 대해 더 알려줄래요?</p>
-            </div>
-          </div>
-        </div>
+      <Back backComponent={"signup"} />
 
-        <div className="flex flex-col mt-[35px] text-white">
-          <div>
+      <div className="flex-1 flex flex-col pt-[69px]">
+        <Introduction page="profile" />
+
+        <div className="flex-grow flex flex-col justify-between px-[24px] text-white pt-[35px]">
+          <div className="flex flex-col">
             <ProfileInput
               label="이름"
               value={nickname}
@@ -194,14 +183,12 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-[20px]">
               {errMsg != "" && <ErrorMessage msg={errMsg} />}
             </div>
           </div>
 
-          <div className="mt-[101px]">
-            <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
-          </div>
+          <SignBtn value="완료" isFull={isFull()} onClick={onSubmit} />
         </div>
       </div>
     </div>

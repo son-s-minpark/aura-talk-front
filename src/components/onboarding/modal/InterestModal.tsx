@@ -54,7 +54,11 @@ const InterestModal = ({
   const totalInterestList = data?.data.data as InterestGroup[];
 
   return (
-    <div className="w-full h-full flex flex-col items-center overflow-scroll">
+    <div
+      className={`w-full h-full flex flex-col items-center overflow-scroll ${
+        isOnBoarding ? "bg-black" : ""
+      }`}
+    >
       <div className="flex w-[327px] h-[50px] font-bold mt-[39px] border-b-1 items-end text-white">
         <div className="h-[38px] w-[300px] flex-none flex">
           <InterestBtnList isScrollable={true} />

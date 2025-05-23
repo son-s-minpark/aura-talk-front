@@ -23,7 +23,7 @@ const Page = () => {
       <Back />
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
-          <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
+          <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
             {profileImgData.thumbnailImgUrl && (
               <Image
                 src={profileImgData.thumbnailImgUrl}

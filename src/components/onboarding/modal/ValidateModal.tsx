@@ -18,14 +18,12 @@ const ValidateModal = () => {
   };
 
   async function onMailSubmit() {
-    const token = localStorage.getItem("accessToken") || "";
     if (!isSent) {
       try {
         setIsSent(true);
-        const data = await useMailValidateMutation.mutateAsync({
-          email: signupData.email,
-          token: token,
-        });
+        const data = await useMailValidateMutation.mutateAsync(
+          signupData.email
+        );
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
@@ -36,10 +34,7 @@ const ValidateModal = () => {
       }
     } else {
       try {
-        const data = await useMailResendMutation.mutateAsync({
-          email: signupData.email,
-          token: token,
-        });
+        const data = await useMailResendMutation.mutateAsync(signupData.email);
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
@@ -60,7 +55,7 @@ const ValidateModal = () => {
       onClick={(e) => e.stopPropagation()}
       className="bg-[#2A2A2A] rounded-[12px] text-white h-[226px] w-[303px] pt-[27px]"
     >
-      <p className="text-[20px] font-bold ml-[24px]">메일 인증</p>
+      <h1 className="ml-[24px]">메일 인증</h1>
       <div className="w-[265px] h-[52px] flex flex-col items-center justify-center mx-[17px] mt-[27px]">
         <div className="flex items-center mx-[8px] gap-[4px]">
           <div className="bg-[#4B4B4B] h-[28px] w-[189px] rounded-[10px] px-[10px] flex items-center">
