@@ -1,4 +1,4 @@
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+import { useSetPageStore } from "@/store/sign/usetSetPageStore";
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 

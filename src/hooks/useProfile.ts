@@ -2,9 +2,9 @@ import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { profileType } from "@/type/user/profileType";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/user/useProfileStore";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import useUserStore from "@/store/user/useUserStore";
+import useProfileStore from "@/store/user/useProfileStore";
+import useProfileImgStore from "@/store/user/useProfileImgStore";
 
 export const useProfile = () => {
   const { userData, setUserData } = useUserStore();

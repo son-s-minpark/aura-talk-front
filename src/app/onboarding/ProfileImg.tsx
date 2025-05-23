@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
-import useProfileStore from "@/state/user/useProfileStore";
+import useProfileStore from "@/store/user/useProfileStore";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";

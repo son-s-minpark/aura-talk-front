@@ -10,8 +10,8 @@ import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import useProfileStore from "@/state/user/useProfileStore";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import useProfileStore from "@/store/user/useProfileStore";
+import useProfileImgStore from "@/store/user/useProfileImgStore";
 import Image from "next/image";
 
 type modalType =

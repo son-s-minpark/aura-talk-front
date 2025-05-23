@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
-import useSignupStore from "@/state/sign/useSignupStore";
+import useSignupStore from "@/store/sign/useSignupStore";
 import { useAuth } from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";

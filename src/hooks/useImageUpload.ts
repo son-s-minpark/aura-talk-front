@@ -1,6 +1,6 @@
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import useProfileImgStore from "@/store/user/useProfileImgStore";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 

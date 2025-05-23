@@ -2,7 +2,7 @@
 import { FaCheck, FaPlus } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
-import useProfileStore from "@/state/user/useProfileStore";
+import useProfileStore from "@/store/user/useProfileStore";
 import { useState } from "react";
 
 type InterestBtnProps = {

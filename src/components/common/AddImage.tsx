@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import Image from "next/image";
 // import MyProfileImage from "./MyProfileImage";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import useProfileImgStore from "@/store/user/useProfileImgStore";
 
 type AddImageProps = {
   imgSize: number;

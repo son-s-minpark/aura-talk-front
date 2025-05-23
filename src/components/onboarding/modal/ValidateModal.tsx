@@ -1,8 +1,8 @@
 "use client";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+import { useSetPageStore } from "@/store/sign/usetSetPageStore";
 import React, { useState } from "react";
 import { useMailAuth } from "@/hooks/useAuth";
-import useSignupStore from "@/state/sign/useSignupStore";
+import useSignupStore from "@/store/sign/useSignupStore";
 
 const ValidateModal = () => {
   const { setPage } = useSetPageStore();

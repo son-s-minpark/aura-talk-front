@@ -1,7 +1,7 @@
 import React from "react";
 import ToggleSwitch from "../../common/ToggleSwitch";
 import { FaRandom } from "react-icons/fa";
-import useUserStore from "@/state/user/useUserStore";
+import useUserStore from "@/store/user/useUserStore";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 

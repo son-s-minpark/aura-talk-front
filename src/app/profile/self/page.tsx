@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Back from "@/components/common/Back";
-import useProfileStore from "@/state/user/useProfileStore";
+import useProfileStore from "@/store/user/useProfileStore";
 import ProfileEditModal from "@/components/profile/modal/ProfileEditModal";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import useProfileImgStore from "@/store/user/useProfileImgStore";
 import Image from "next/image";
 
 const Page = () => {

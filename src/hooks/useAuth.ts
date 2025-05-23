@@ -3,8 +3,8 @@ import { signType } from "@/type/sign/signType";
 import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/user/useProfileStore";
+import useUserStore from "@/store/user/useUserStore";
+import useProfileStore from "@/store/user/useProfileStore";
 
 export const useAuth = () => {
   const { userData, setUserData } = useUserStore();

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
+import { useSetPageStore } from "@/store/sign/usetSetPageStore";
 import OnBoarding from "./OnBoarding";
 import Signin from "./Signin";
 import Signup from "./Signup";
