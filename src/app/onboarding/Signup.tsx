@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { ProfileInput, PwInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import Back from "@/components/onboarding/Back";
-import useSignupStore from "@/store/sign/useSignupStore";
 import { useAuth } from "@/hooks/useAuth";
 import ValidateModal from "@/components/onboarding/modal/ValidateModal";
 import { validateMail, validatePw } from "@/util/validate/signValidate";
@@ -12,11 +11,10 @@ import { AxiosError } from "axios";
 import Introduction from "@/components/onboarding/Introduction";
 
 const Signup = () => {
-  const { setSignupData, signupData } = useSignupStore();
   const { useSignupMutation } = useAuth();
-  const [mail, setMail] = useState<string>(signupData.email);
-  const [pw, setPw] = useState<string>(signupData.password);
-  const [checkPw, setCheckPw] = useState<string>(signupData.password);
+  const [mail, setMail] = useState<string>("");
+  const [pw, setPw] = useState<string>("");
+  const [checkPw, setCheckPw] = useState<string>("");
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
@@ -76,11 +74,6 @@ const Signup = () => {
       return; // 빈 칸이 있으면 아무 작업도 하지 않음
     }
     if (isSignupValid()) {
-      setSignupData({
-        email: mail,
-        password: pw,
-      });
-
       try {
         const res = await useSignupMutation.mutateAsync({
           email: mail,
@@ -120,7 +113,7 @@ const Signup = () => {
     <div className="w-full h-full flex flex-col">
       {isValidateModalDown && (
         <div className="modal" onClick={() => setIsValidateModalDown(false)}>
-          <ValidateModal />
+          <ValidateModal email={mail} />
         </div>
       )}
       <Back backComponent={"onBoarding"} />

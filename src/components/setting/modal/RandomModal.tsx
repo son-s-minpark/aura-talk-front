@@ -1,12 +1,13 @@
 import React from "react";
 import ToggleSwitch from "../../common/ToggleSwitch";
 import { FaRandom } from "react-icons/fa";
-import useUserStore from "@/store/user/useUserStore";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const RandomModal = () => {
-  const { userData } = useUserStore();
+  const user = useSelector((state: RootState) => state.setUser);
   const { useRandomChatToggleMutation } = useProfile();
 
   async function setRandomChatToggle(isRandom: boolean) {
@@ -29,7 +30,7 @@ const RandomModal = () => {
         <ToggleSwitch
           handleOn={() => setRandomChatToggle(true)}
           handleOff={() => setRandomChatToggle(false)}
-          isOn={userData.randomChatEnabled}
+          isOn={user.randomChatEnabled}
         />
       </div>
     </div>

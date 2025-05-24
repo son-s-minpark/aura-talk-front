@@ -1,4 +1,4 @@
-import { FriendType } from "@/type/chat/friendType";
+import { FriendType } from "@/type/friend/chatFriendType";
 import React from "react";
 import { FaCrown } from "react-icons/fa";
 import { FaBan } from "react-icons/fa";

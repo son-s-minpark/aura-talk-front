@@ -10,9 +10,9 @@ import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import useProfileStore from "@/store/user/useProfileStore";
-import useProfileImgStore from "@/store/user/useProfileImgStore";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type modalType =
   | "modeModal"
@@ -26,9 +26,11 @@ type modalType =
 const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
-  const { profileData } = useProfileStore();
   const router = useRouter();
-  const { profileImgData } = useProfileImgStore();
+  const profile = useSelector((state: RootState) => state.setProfile);
+  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+
+  console.error(profile);
 
   return (
     <>
@@ -53,9 +55,9 @@ const SettingList = () => {
         onClick={() => router.push(`/profile/self`)}
       >
         <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
-          {profileImgData.thumbnailImgUrl && (
+          {profileImg.thumbnailImgUrl && (
             <Image
-              src={profileImgData.thumbnailImgUrl}
+              src={profileImg.thumbnailImgUrl}
               alt="Profile"
               fill
               className="rounded-full object-cover"
@@ -64,11 +66,11 @@ const SettingList = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-[20px] font-bold leading-[20px]">
-            {profileData.nickname}
+            {profile.nickname}
           </p>
-          {profileData.description && (
+          {profile.description && (
             <p className="text-[12px] leading-[12px] text-[var(--color-gray)]">
-              {profileData.description}
+              {profile.description}
             </p>
           )}
         </div>

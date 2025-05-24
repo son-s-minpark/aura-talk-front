@@ -2,10 +2,11 @@ import React from "react";
 import Image from "next/image";
 import logoWhite from "../../../public/images/logo/logo-white.png";
 import SignBtn from "@/components/onboarding/SignBtn";
-import { useSetPageStore } from "@/store/sign/usetSetPageStore";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
 
 const OnBoarding = () => {
-  const { setPage } = useSetPageStore();
+  const dispatch = useDispatch();
   return (
     <div className="w-full h-full pt-[25px] px-[24px] overflow-scroll">
       <div className="-ml-[16px]">
@@ -26,7 +27,7 @@ const OnBoarding = () => {
         <SignBtn
           value="로그인하기"
           isFull={true}
-          onClick={() => setPage("signin")}
+          onClick={() => dispatch(setPage("signin"))}
         />
       </div>
       <div className="flex items-center justify-center w-[315px] h-[14px]">
@@ -38,7 +39,7 @@ const OnBoarding = () => {
         <span className="text-[#B9C1BE] mr-[10px]"> 계정이 없으신가요? </span>
         <span
           className="text-white underline"
-          onClick={() => setPage("signup")}
+          onClick={() => dispatch(setPage("signup"))}
         >
           회원가입
         </span>

@@ -2,8 +2,9 @@
 import { FaCheck, FaPlus } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
-import useProfileStore from "@/store/user/useProfileStore";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addInterest, removeInterest } from "@/store/user/setProfile";
 
 type InterestBtnProps = {
   label: string;
@@ -17,12 +18,13 @@ export const InterestBtnBig = ({
   isOnBoarding,
 }: InterestBtnProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const { addInterest, removeInterest } = useProfileStore();
+  const dispatch = useDispatch();
+
   function toggleInterest() {
     if (isSelected) {
-      removeInterest(label);
+      dispatch(removeInterest(label));
     } else {
-      addInterest(label);
+      dispatch(addInterest(label));
     }
     setIsSelected(!isSelected);
   }

@@ -2,8 +2,8 @@
 import React, { useRef, useState } from "react";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import Image from "next/image";
-// import MyProfileImage from "./MyProfileImage";
-import useProfileImgStore from "@/store/user/useProfileImgStore";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type AddImageProps = {
   imgSize: number;
@@ -12,10 +12,8 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const { profileImgData } = useProfileImgStore();
-  const [prevImg, setPrevImg] = useState<string>(
-    profileImgData.thumbnailImgUrl
-  );
+  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+  const [prevImg, setPrevImg] = useState<string>(profileImg.thumbnailImgUrl);
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
   const fileRef = useRef<HTMLInputElement>(null);

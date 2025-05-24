@@ -4,18 +4,19 @@ import SelectBtn from "@/components/common/SelectBtn";
 import { useAuth } from "@/hooks/useAuth";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useSetPageStore } from "@/store/sign/usetSetPageStore";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
 
 const LogoutModal = () => {
   const { useLogoutMutation } = useAuth();
   const router = useRouter();
-  const { setPage } = useSetPageStore();
+  const dispatch = useDispatch();
 
   async function onLogout() {
     try {
       const res = await useLogoutMutation.mutateAsync();
       if (res.success) {
-        setPage("onBoarding");
+        dispatch(setPage("onBoarding"));
         router.replace("/onboarding");
       }
     } catch (error: unknown) {

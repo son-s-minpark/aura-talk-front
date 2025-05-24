@@ -6,7 +6,6 @@ export type profileType = {
 };
 
 export type profileImgType = {
-  s3Key?: string;
   originalImgUrl: string;
   thumbnailImgUrl: string;
   isDefaultImg: boolean;

@@ -6,23 +6,24 @@ import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import SelectBtn from "@/components/common/SelectBtn";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
-import useProfileStore from "@/store/user/useProfileStore";
 import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import { IoChevronDown } from "react-icons/io5";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setProfile } from "@/store/user/setProfile";
 
 type ProfileEditModalProps = {
   setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
-  const { setProfileData, profileData } = useProfileStore();
-  const [nickname, setnickname] = useState<string>(profileData.nickname);
-  const [username, setusername] = useState<string>(profileData.username);
-  const [description, setDescription] = useState<string>(
-    profileData.description
-  );
+  const profile = useSelector((state: RootState) => state.setProfile);
+  const dispatch = useDispatch();
+  const [nickname, setnickname] = useState<string>(profile.nickname);
+  const [username, setusername] = useState<string>(profile.username);
+  const [description, setDescription] = useState<string>(profile.description);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
@@ -42,9 +43,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   }
 
   function isFull() {
-    return (
-      nickname !== "" && username !== "" && profileData.interests.length !== 0
-    );
+    return nickname !== "" && username !== "" && profile.interests.length !== 0;
   }
 
   function validateNickname() {
@@ -88,17 +87,19 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
       return;
     } else {
       if (isProfileValid()) {
-        setProfileData({
-          nickname: nickname,
-          username: username,
-          description: description,
-        });
+        dispatch(
+          setProfile({
+            nickname: nickname,
+            username: username,
+            description: description,
+          })
+        );
         try {
           const res = await useSetProfileMutation.mutateAsync({
             nickname: nickname,
             username: username,
             description: description,
-            interests: profileData.interests,
+            interests: profile.interests,
           });
           if (res.success) {
             setIsModalDown(false);

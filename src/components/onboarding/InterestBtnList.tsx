@@ -1,10 +1,13 @@
 import React from "react";
 import { InterestBtnSml } from "./InterestBtn";
 import clsx from "clsx";
-import useProfileStore from "@/store/user/useProfileStore";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { removeInterest } from "@/store/user/setProfile";
 
 const InterestBtnList = ({ isScrollable }: { isScrollable: boolean }) => {
-  const { profileData, removeInterest } = useProfileStore();
+  const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.setProfile);
 
   return (
     <div
@@ -13,8 +16,8 @@ const InterestBtnList = ({ isScrollable }: { isScrollable: boolean }) => {
         "overflow-auto whitespace-normal": !isScrollable,
       })}
     >
-      {profileData.interests.map((label, index) => (
-        <div key={index} onClick={() => removeInterest(label)}>
+      {profile.interests.map((label, index) => (
+        <div key={index} onClick={() => dispatch(removeInterest(label))}>
           <InterestBtnSml label={label} />
         </div>
       ))}
