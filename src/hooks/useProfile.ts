@@ -78,6 +78,7 @@ export const useProfile = () => {
       apiRoute.USER_IMAGE_PROFILE_GET(user.userId)
     );
     const data = res.data.data;
+    console.error(data);
 
     dispatch(
       setProfileImg({

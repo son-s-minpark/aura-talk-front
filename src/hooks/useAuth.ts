@@ -31,7 +31,7 @@ export const useAuth = () => {
             if (token) {
               localStorage.setItem("accessToken", token);
               localStorage.setItem("userId", userId);
-              dispatch(setUser({ userId }));
+              dispatch(setUser({ userId: userId }));
 
               return { success: true };
             } else {
@@ -88,7 +88,6 @@ export const useAuth = () => {
                 interests: user.interests,
               })
             );
-            console.error(user);
 
             return {
               success: true,
