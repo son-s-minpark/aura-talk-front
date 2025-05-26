@@ -80,9 +80,11 @@ const Signin = () => {
             if (answer) {
               dispatch(setPage("profile"));
             } else {
+              dispatch(setPage("onboarding"));
               router.push("/home");
             }
           } else {
+            dispatch(setPage("onboarding"));
             router.push("/home");
           }
         }

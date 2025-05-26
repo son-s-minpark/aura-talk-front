@@ -24,13 +24,17 @@ const Page = () => {
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
           <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
-            {profileImg.thumbnailImgUrl && (
-              <Image
-                src={profileImg.thumbnailImgUrl}
-                alt="Profile"
-                fill
-                className="rounded-full object-cover"
-              />
+            {!isEditModalDown && (
+              <>
+                {profileImg.thumbnailImgUrl && (
+                  <Image
+                    src={profileImg.thumbnailImgUrl}
+                    alt="Profile"
+                    fill
+                    className="rounded-full object-cover"
+                  />
+                )}
+              </>
             )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">

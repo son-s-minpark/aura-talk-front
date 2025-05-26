@@ -62,7 +62,7 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
         </button>
         <button
           type="button"
-          onClick={() => useDeleteProfileImageMutation}
+          onClick={() => useDeleteProfileImageMutation.mutateAsync()}
           className="flex justify-center items-center bg-[var(--color-errorRed)] text-white rounded-[20px] text-[14px]"
           style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
         >

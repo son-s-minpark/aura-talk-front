@@ -47,7 +47,7 @@ export const useImageUpload = () => {
               isDefaultImg: data.defaultProfileImage,
             })
           );
-          return data.thumbnailImageUrl;
+          return { success: true };
         }
       } catch (err) {
         console.error("Image upload failed:", err);
