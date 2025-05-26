@@ -27,8 +27,8 @@ const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
   const router = useRouter();
-  const profile = useSelector((state: RootState) => state.setProfile);
-  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+  const profile = useSelector((state: RootState) => state.profile);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
   console.error(profileImg);
 
   return (

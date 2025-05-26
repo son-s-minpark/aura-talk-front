@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import { Provider } from "react-redux";
 import store from "@/store/store";
 import "./globals.css";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,9 +27,9 @@ export default function RootLayout({
         <ThemeProvider enableSystem={true} defaultTheme="system">
           <QueryClientProvider client={queryClient}>
             <Provider store={store}>
-              <body className="flex justify-center w-full h-[100vh]">
+              <PersistGate loading={null} persistor={persistStore(store)}>
                 <div className="w-[375px] h-[812px]">{children}</div>
-              </body>
+              </PersistGate>
             </Provider>
           </QueryClientProvider>
         </ThemeProvider>

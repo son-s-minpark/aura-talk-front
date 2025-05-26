@@ -10,8 +10,8 @@ import { RootState } from "@/store/store";
 
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
-  const profile = useSelector((state: RootState) => state.setProfile);
-  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+  const profile = useSelector((state: RootState) => state.profile);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">

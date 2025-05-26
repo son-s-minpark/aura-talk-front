@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const Page = () => {
-  const page = useSelector((state: RootState) => state.setPage.page);
+  const page = useSelector((state: RootState) => state.page.page);
 
   return (
     <div className="bg-[#1A1A1A] w-full h-full">

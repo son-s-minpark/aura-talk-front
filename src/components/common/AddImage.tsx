@@ -12,7 +12,7 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
   const [prevImg, setPrevImg] = useState<string>(profileImg.thumbnailImgUrl);
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();

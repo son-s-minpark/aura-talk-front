@@ -8,7 +8,7 @@ const initialState: profileImgType = {
 };
 
 export const setProfileImgSlice = createSlice({
-  name: "setProfileImg",
+  name: "profileImg",
   initialState,
   reducers: {
     setProfileImg: (state, action) => {

@@ -9,7 +9,7 @@ const initialState: profileType = {
 };
 
 export const setProfileSlice = createSlice({
-  name: "setProfile",
+  name: "profile",
   initialState,
   reducers: {
     setProfile: (state, action: PayloadAction<Partial<profileType>>) => {

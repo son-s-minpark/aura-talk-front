@@ -19,7 +19,7 @@ type ProfileEditModalProps = {
 };
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
-  const profile = useSelector((state: RootState) => state.setProfile);
+  const profile = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
   const [nickname, setnickname] = useState<string>(profile.nickname);
   const [username, setusername] = useState<string>(profile.username);

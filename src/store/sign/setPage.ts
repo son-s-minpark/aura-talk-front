@@ -10,7 +10,7 @@ const initialState: setPageType = {
 };
 
 export const setPageSlice = createSlice({
-  name: "setPage",
+  name: "page",
   initialState,
   reducers: {
     setPage: (state, action) => {

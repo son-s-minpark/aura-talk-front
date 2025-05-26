@@ -17,7 +17,7 @@ import { RootState } from "@/store/store";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.setProfile);
+  const profile = useSelector((state: RootState) => state.profile);
   const { useSetProfileMutation } = useProfile();
   const { getProfileImg } = useProfile();
   const [nickname, setnickname] = useState<string>(profile.nickname);

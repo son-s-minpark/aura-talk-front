@@ -10,7 +10,7 @@ import { setProfile } from "@/store/user/setProfile";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.setUser);
+  const user = useSelector((state: RootState) => state.user);
 
   // 회원가입 요청
   const useSignupMutation = useMutation({
@@ -30,7 +30,6 @@ export const useAuth = () => {
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              localStorage.setItem("userId", userId);
               dispatch(setUser({ userId: userId }));
 
               return { success: true };
@@ -66,7 +65,6 @@ export const useAuth = () => {
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              localStorage.setItem("userId", user.id);
             } else {
               alert("토큰을 받지 못 했습니다.");
               throw new Error(data);

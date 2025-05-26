@@ -14,7 +14,7 @@ type ListType = "chat" | "friend" | "setting";
 
 const Page = () => {
   const [list, setList] = useState<ListType>("chat");
-  const profileImg = useSelector((state: RootState) => state.setProfileImg);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
   const { getProfileImg } = useProfile();
 
   useEffect(() => {

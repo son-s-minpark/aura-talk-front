@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const RandomModal = () => {
-  const user = useSelector((state: RootState) => state.setUser);
+  const user = useSelector((state: RootState) => state.user);
   const { useRandomChatToggleMutation } = useProfile();
 
   async function setRandomChatToggle(isRandom: boolean) {

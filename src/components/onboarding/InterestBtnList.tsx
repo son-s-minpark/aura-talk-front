@@ -7,7 +7,7 @@ import { removeInterest } from "@/store/user/setProfile";
 
 const InterestBtnList = ({ isScrollable }: { isScrollable: boolean }) => {
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.setProfile);
+  const profile = useSelector((state: RootState) => state.profile);
 
   return (
     <div

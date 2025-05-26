@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const ProfileImg = () => {
-  const profile = useSelector((state: RootState) => state.setProfile);
+  const profile = useSelector((state: RootState) => state.profile);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
   return (

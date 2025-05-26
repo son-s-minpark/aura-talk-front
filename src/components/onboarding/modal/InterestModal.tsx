@@ -29,7 +29,7 @@ const InterestModal = ({
   setIsInterestDown,
   isOnBoarding,
 }: InterestModalProps) => {
-  const profile = useSelector((state: RootState) => state.setProfile);
+  const profile = useSelector((state: RootState) => state.profile);
   const { useGetTotalInterestList } = useInterest();
 
   const { data, isLoading, isError, error } = useGetTotalInterestList();

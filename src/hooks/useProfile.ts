@@ -10,7 +10,7 @@ import { setProfileImg } from "@/store/user/setProfileImg";
 
 export const useProfile = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.setUser);
+  const user = useSelector((state: RootState) => state.user);
 
   // 사용자 프로필 가져오기 요청
   const useGetUserProfile = (id: number) => {
