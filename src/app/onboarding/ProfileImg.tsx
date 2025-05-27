@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import Back from "@/components/onboarding/Back";
 import SignBtn from "@/components/onboarding/SignBtn";
-import useProfileStore from "@/state/user/useProfileStore";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import AddImage from "@/components/common/AddImage";
 import TermsModal from "@/components/onboarding/modal/TermsModal";
 import Introduction from "@/components/onboarding/Introduction";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const ProfileImg = () => {
-  const { profileData } = useProfileStore();
+  const profile = useSelector((state: RootState) => state.profile);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
 
   return (
@@ -33,13 +34,13 @@ const ProfileImg = () => {
             사용자 이름
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profileData.nickname}
+            {profile.nickname}
           </p>
         </div>
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profileData.username}
+            {profile.username}
           </p>
         </div>
         <div>
@@ -47,7 +48,7 @@ const ProfileImg = () => {
             한 줄 소개
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profileData.description}
+            {profile.description}
           </p>
         </div>
         <div>

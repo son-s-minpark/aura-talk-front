@@ -5,9 +5,15 @@ type SelectBtnProp = {
   label: string;
   onClick: () => void;
   isOnBoarding?: boolean;
+  isRejected?: boolean;
 };
 
-const SelectBtn = ({ label, onClick, isOnBoarding }: SelectBtnProp) => {
+const SelectBtn = ({
+  label,
+  onClick,
+  isOnBoarding,
+  isRejected,
+}: SelectBtnProp) => {
   return (
     <button
       className={clsx(
@@ -15,6 +21,7 @@ const SelectBtn = ({ label, onClick, isOnBoarding }: SelectBtnProp) => {
         {
           "bg-[#712EFB]": isOnBoarding,
           "bg-[var(--color-point)]": !isOnBoarding,
+          "bg-[var(--color-rejectRed)]": isRejected,
         }
       )}
       onClick={onClick}

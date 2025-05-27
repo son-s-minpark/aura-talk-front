@@ -4,30 +4,29 @@ import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import Back from "@/components/onboarding/Back";
-import useProfileStore from "@/state/user/useProfileStore";
 import { IoChevronDown } from "react-icons/io5";
 import { nicknameSchema, usernameSchema } from "@/schema/signSchema";
 import InterestBtnList from "@/components/onboarding/InterestBtnList";
 import { useProfile } from "@/hooks/useProfile";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import Introduction from "@/components/onboarding/Introduction";
+import { useDispatch, useSelector } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
+import { RootState } from "@/store/store";
 
 const Profile = () => {
-  const { profileData } = useProfileStore();
-  const [nickname, setnickname] = useState<string>(profileData.nickname);
-  const [username, setusername] = useState<string>(profileData.username);
-  const [description, setDescription] = useState<string>(
-    profileData.description
-  );
+  const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.profile);
+  const { useSetProfileMutation } = useProfile();
+  const { getProfileImg } = useProfile();
+  const [nickname, setnickname] = useState<string>(profile.nickname);
+  const [username, setusername] = useState<string>(profile.username);
+  const [description, setDescription] = useState<string>(profile.description);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-  const { useSetProfileMutation } = useProfile();
-  const { setPage } = useSetPageStore();
-  const { getProfileImg } = useProfile();
 
   useEffect(() => {
     getProfileImg();
@@ -45,9 +44,7 @@ const Profile = () => {
     setDescription(e.target.value);
   }
   function isFull() {
-    return (
-      nickname !== "" && username !== "" && profileData.interests.length !== 0
-    );
+    return nickname !== "" && username !== "" && profile.interests.length !== 0;
   }
   function validateNickname() {
     const result = nicknameSchema.shape.nickname.safeParse(nickname);
@@ -95,10 +92,10 @@ const Profile = () => {
             nickname: nickname,
             username: username,
             description: description,
-            interests: profileData.interests,
+            interests: profile.interests,
           });
           if (res.success) {
-            setPage("profileImg");
+            dispatch(setPage("profileImg"));
           }
         } catch (error: unknown) {
           if (error instanceof AxiosError) {

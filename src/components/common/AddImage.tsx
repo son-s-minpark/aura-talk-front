@@ -2,8 +2,8 @@
 import React, { useRef, useState } from "react";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import Image from "next/image";
-// import MyProfileImage from "./MyProfileImage";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type AddImageProps = {
   imgSize: number;
@@ -12,10 +12,8 @@ type AddImageProps = {
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
-  const { profileImgData } = useProfileImgStore();
-  const [prevImg, setPrevImg] = useState<string>(
-    profileImgData.thumbnailImgUrl
-  );
+  const profileImg = useSelector((state: RootState) => state.profileImg);
+  const [prevImg, setPrevImg] = useState<string>(profileImg.thumbnailImgUrl);
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -64,7 +62,7 @@ const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {
         </button>
         <button
           type="button"
-          onClick={() => useDeleteProfileImageMutation}
+          onClick={() => useDeleteProfileImageMutation.mutateAsync()}
           className="flex justify-center items-center bg-[var(--color-errorRed)] text-white rounded-[20px] text-[14px]"
           style={{ height: `${btnHeight}px`, width: `${btnWidth}px` }}
         >

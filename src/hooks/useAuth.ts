@@ -3,12 +3,14 @@ import { signType } from "@/type/sign/signType";
 import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/user/useProfileStore";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setUser } from "@/store/user/setUser";
+import { setProfile } from "@/store/user/setProfile";
 
 export const useAuth = () => {
-  const { userData, setUserData } = useUserStore();
-  const { setProfileData } = useProfileStore();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   // 회원가입 요청
   const useSignupMutation = useMutation({
@@ -28,8 +30,7 @@ export const useAuth = () => {
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              localStorage.setItem("userId", userId);
-              setUserData({ userId });
+              dispatch(setUser({ userId: userId }));
 
               return { success: true };
             } else {
@@ -60,35 +61,37 @@ export const useAuth = () => {
 
           if (data.success) {
             const token = data.data.token;
-            const userData = data.data.user;
+            const user = data.data.user;
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              localStorage.setItem("userId", userData.id);
             } else {
               alert("토큰을 받지 못 했습니다.");
               throw new Error(data);
             }
 
-            setUserData({
-              userId: userData.id,
-              createdAt: userData.createdAt,
-              randomChatEnabled: userData.randomChatEnabled,
-              status: userData.status,
-            });
-            setProfileData({
-              description: userData.description,
-              nickname: userData.nickname,
-              username: userData.username,
-              interests: userData.interests,
-            });
-            console.error(userData);
+            dispatch(
+              setUser({
+                userId: user.id,
+                createdAt: user.createdAt,
+                randomChatEnabled: user.randomChatEnabled,
+                status: user.status,
+              })
+            );
+            dispatch(
+              setProfile({
+                description: user.description,
+                nickname: user.nickname,
+                username: user.username,
+                interests: user.interests,
+              })
+            );
 
             return {
               success: true,
               profileSet:
-                userData.username == "임시 사용자명" &&
-                userData.nickname == "임시 닉네임",
+                user.username == "임시 사용자명" &&
+                user.nickname == "임시 닉네임",
             };
           } else {
             throw new Error("로그인 오류");
@@ -125,7 +128,7 @@ export const useAuth = () => {
   const useDeleteAccoutMutation = useMutation({
     mutationFn: async (pwData: string) => {
       return await axiosInstance
-        .delete(apiRoute.USER_DELETE_ACCOUNT(userData.userId), { data: pwData })
+        .delete(apiRoute.USER_DELETE_ACCOUNT(user.userId), { data: pwData })
         .then((res) => {
           console.error("signout ERror", res);
           const { data } = res;

@@ -1,12 +1,13 @@
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
-import useProfileStore from "@/state/user/useProfileStore";
 import InterestBtnList from "../InterestBtnList";
 import { InterestBtnBig } from "../InterestBtn";
 import SelectBtn from "@/components/common/SelectBtn";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { useInterest } from "@/hooks/useInterest";
 import { AxiosError } from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type InterestModalProps = {
   setIsInterestDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,7 +29,7 @@ const InterestModal = ({
   setIsInterestDown,
   isOnBoarding,
 }: InterestModalProps) => {
-  const { profileData } = useProfileStore();
+  const profile = useSelector((state: RootState) => state.profile);
   const { useGetTotalInterestList } = useInterest();
 
   const { data, isLoading, isError, error } = useGetTotalInterestList();
@@ -82,7 +83,7 @@ const InterestModal = ({
                 <div key={interest.id} className="mt-[15px] mr-[10px]">
                   <InterestBtnBig
                     label={interest.name}
-                    selected={profileData.interests.includes(interest.name)}
+                    selected={profile.interests.includes(interest.name)}
                     isOnBoarding={isOnBoarding}
                   />
                 </div>

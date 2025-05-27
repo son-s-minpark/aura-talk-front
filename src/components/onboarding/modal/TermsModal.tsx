@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
 
 type CheckType = "all" | "fir" | "sec" | "thr";
 
@@ -26,6 +28,7 @@ const TermsModal = () => {
   const [isSecChecked, setIsSecChecked] = useState<boolean>(false);
   const [isThrChecked, setIsThrChecked] = useState<boolean>(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   function handleIsAllChecked() {
     const newIsAllChecked = !isAllChecked;
@@ -55,6 +58,7 @@ const TermsModal = () => {
 
   function onSubmit() {
     if (isAllChecked) {
+      dispatch(setPage("onboarding"));
       router.push("/home");
     } else {
       // 모두 체크되지 않았다면 아무것도 하지 않음

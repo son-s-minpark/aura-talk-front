@@ -2,14 +2,15 @@ import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { profileType } from "@/type/user/profileType";
-import useUserStore from "@/state/user/useUserStore";
-import useProfileStore from "@/state/user/useProfileStore";
-import useProfileImgStore from "@/state/user/useProfileImgStore";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setProfile } from "@/store/user/setProfile";
+import { setUser } from "@/store/user/setUser";
+import { setProfileImg } from "@/store/user/setProfileImg";
 
 export const useProfile = () => {
-  const { userData, setUserData } = useUserStore();
-  const { setProfileData } = useProfileStore();
-  const { setProfileImgData } = useProfileImgStore();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   // 사용자 프로필 가져오기 요청
   const useGetUserProfile = (id: number) => {
@@ -27,15 +28,17 @@ export const useProfile = () => {
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
       return await axiosInstance
-        .put(apiRoute.USER_PROFILE(userData.userId), profileData)
+        .put(apiRoute.USER_PROFILE(user.userId), profileData)
         .then((res) => {
           const { data } = res;
           if (data.success) {
-            setProfileData({
-              nickname: profileData.nickname,
-              username: profileData.username,
-              description: profileData.description,
-            });
+            dispatch(
+              setProfile({
+                nickname: profileData.nickname,
+                username: profileData.username,
+                description: profileData.description,
+              })
+            );
             return { success: true };
           } else {
             throw Error("프로필 수정 오류");
@@ -53,12 +56,12 @@ export const useProfile = () => {
   const useRandomChatToggleMutation = useMutation({
     mutationFn: async (randomData: boolean) => {
       return await axiosInstance
-        .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(userData.userId), {
+        .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(user.userId), {
           randomChatEnabled: randomData,
         })
         .then((res) => {
           if (res.data.success) {
-            setUserData({ randomChatEnabled: randomData });
+            dispatch(setUser({ randomChatEnabled: randomData }));
           }
           return true;
         })
@@ -72,15 +75,18 @@ export const useProfile = () => {
   // 프로필 이미지 가져오기 요청
   const getProfileImg = async () => {
     const res = await axiosInstance.get(
-      apiRoute.USER_IMAGE_PROFILE_GET(userData.userId)
+      apiRoute.USER_IMAGE_PROFILE_GET(user.userId)
     );
     const data = res.data.data;
+    console.error(data);
 
-    setProfileImgData({
-      originalImgUrl: data.originalImageUrl,
-      thumbnailImgUrl: data.thumbnailImageUrl,
-      isDefaultImg: data.defaultProfileImage,
-    });
+    dispatch(
+      setProfileImg({
+        originalImgUrl: data.originalImageUrl,
+        thumbnailImgUrl: data.thumbnailImageUrl,
+        isDefaultImg: data.defaultProfileImage,
+      })
+    );
   };
 
   return {

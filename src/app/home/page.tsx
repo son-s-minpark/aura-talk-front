@@ -1,16 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Chat from "@/app/home/Chat";
 import FriendList from "@/app/home/Friend";
 import SettingList from "@/app/home/Setting";
 import Header from "@/components/home/Header";
 import Nav from "@/components/home/Nav";
 import Container from "@/components/common/Container";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useProfile } from "@/hooks/useProfile";
 
 type ListType = "chat" | "friend" | "setting";
 
 const Page = () => {
   const [list, setList] = useState<ListType>("chat");
+  const profileImg = useSelector((state: RootState) => state.profileImg);
+  const { getProfileImg } = useProfile();
+
+  useEffect(() => {
+    if (profileImg.thumbnailImgUrl == "") {
+      getProfileImg();
+    }
+  });
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">

@@ -1,44 +1,41 @@
 "use client";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import React, { useState } from "react";
 import { useMailAuth } from "@/hooks/useAuth";
-import useSignupStore from "@/state/sign/useSignupStore";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
 
-const ValidateModal = () => {
-  const { setPage } = useSetPageStore();
+const ValidateModal = ({ email }: { email: string }) => {
+  const dispatch = useDispatch();
   const [codeInput, setCodeInput] = useState<string>("");
   const [isSent, setIsSent] = useState<boolean>(false);
   const { useMailValidateMutation, useMailResendMutation } = useMailAuth();
-  const { signupData } = useSignupStore();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    setPage("profile");
+    dispatch(setPage("profile"));
   };
 
   async function onMailSubmit() {
     if (!isSent) {
       try {
         setIsSent(true);
-        const data = await useMailValidateMutation.mutateAsync(
-          signupData.email
-        );
+        const data = await useMailValidateMutation.mutateAsync(email);
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
-          setPage("profile");
+          dispatch(setPage("profile"));
         }
       } catch (err) {
         console.error(err);
       }
     } else {
       try {
-        const data = await useMailResendMutation.mutateAsync(signupData.email);
+        const data = await useMailResendMutation.mutateAsync(email);
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
-          setPage("profile");
+          dispatch(setPage("profile"));
         }
       } catch (err) {
         console.error(err);
@@ -59,7 +56,7 @@ const ValidateModal = () => {
       <div className="w-[265px] h-[52px] flex flex-col items-center justify-center mx-[17px] mt-[27px]">
         <div className="flex items-center mx-[8px] gap-[4px]">
           <div className="bg-[#4B4B4B] h-[28px] w-[189px] rounded-[10px] px-[10px] flex items-center">
-            <p>{signupData.email}</p>
+            <p>{email}</p>
           </div>
           <button
             className="flex items-center justify-center rounded-[10px] bg-[#8045FF] font-bold text-[14px] h-[25px] w-[57px]"

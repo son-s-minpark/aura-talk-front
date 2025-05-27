@@ -1,17 +1,15 @@
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
+import { pageType } from "@/type/sign/setPageType";
 
-type BackProps = {
-  backComponent: "onBoarding" | "signin" | "signup" | "profile";
-};
-
-const Back = ({ backComponent }: BackProps) => {
-  const { setPage } = useSetPageStore();
+const Back = ({ backComponent }: { backComponent: pageType }) => {
+  const dispatch = useDispatch();
   return (
     <div className="h-[76px] w-full flex items-center">
       <button
-        onClick={() => setPage(backComponent)}
+        onClick={() => dispatch(setPage(backComponent))}
         className="w-[30px] h-[30px]"
       >
         <IoArrowBackOutline className="text-white h-[30px] ml-[15px]" />

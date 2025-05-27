@@ -1,7 +1,6 @@
 import React from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
-import RejectBtn from "../common/RejectBtn";
 
 const data = [1, 2, 3, 4, 5];
 const WaitingList = () => {
@@ -14,7 +13,11 @@ const WaitingList = () => {
           <ModalFriendComponent id={friend} />
           <div className="flex gap-[6px] items-center">
             <SelectBtn label="수락" onClick={() => onAcceptWaiting()} />
-            <RejectBtn label="거절" onClick={() => onRejectWaiting()} />
+            <SelectBtn
+              isRejected={true}
+              label="거절"
+              onClick={() => onRejectWaiting()}
+            />
           </div>
         </div>
       ))}

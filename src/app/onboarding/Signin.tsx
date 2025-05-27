@@ -8,8 +8,9 @@ import { useAuth } from "@/hooks/useAuth";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import Introduction from "@/components/onboarding/Introduction";
+import { useDispatch } from "react-redux";
+import { setPage } from "@/store/sign/setPage";
 
 const Signin = () => {
   const [mail, setMail] = useState<string>("");
@@ -18,8 +19,8 @@ const Signin = () => {
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const { useSigninMutation } = useAuth();
-  const { setPage } = useSetPageStore();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   function onChageMail(e: React.ChangeEvent<HTMLInputElement>) {
     setMail(e.target.value);
@@ -77,11 +78,13 @@ const Signin = () => {
               "프로필이 설정되어 있지 않습니다. 설정하러 가시겠습니까?"
             );
             if (answer) {
-              setPage("profile");
+              dispatch(setPage("profile"));
             } else {
+              dispatch(setPage("onboarding"));
               router.push("/home");
             }
           } else {
+            dispatch(setPage("onboarding"));
             router.push("/home");
           }
         }

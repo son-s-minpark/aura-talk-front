@@ -4,18 +4,15 @@ import SelectBtn from "@/components/common/SelectBtn";
 import { useAuth } from "@/hooks/useAuth";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 
 const LogoutModal = () => {
   const { useLogoutMutation } = useAuth();
   const router = useRouter();
-  const { setPage } = useSetPageStore();
 
   async function onLogout() {
     try {
       const res = await useLogoutMutation.mutateAsync();
       if (res.success) {
-        setPage("onBoarding");
         router.replace("/onboarding");
       }
     } catch (error: unknown) {

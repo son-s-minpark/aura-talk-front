@@ -1,14 +1,15 @@
 "use client";
 import React from "react";
-import { useSetPageStore } from "@/state/sign/usetSetPageStore";
 import OnBoarding from "./OnBoarding";
 import Signin from "./Signin";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import ProfileImg from "./ProfileImg";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Page = () => {
-  const { page } = useSetPageStore();
+  const page = useSelector((state: RootState) => state.page.page);
 
   return (
     <div className="bg-[#1A1A1A] w-full h-full">
