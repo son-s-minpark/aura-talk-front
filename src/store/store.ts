@@ -1,27 +1,40 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storageSession from "redux-persist/lib/storage/session";
+import storage from "redux-persist/lib/storage";
 import setPageReducer from "./sign/setPage";
 import setProfileImgReducer from "./user/setProfileImg";
 import setProfileReducer from "./user/setProfile";
 import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
 
+const pagePersistConfig = {
+  key: "page",
+  storage: storage,
+};
+
+const profileImgPersistConfig = {
+  key: "profileImg",
+  storage: storage,
+};
+
+const profilePersistConfig = {
+  key: "profile",
+  storage: storage,
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: storage,
+};
+
 const reducers = combineReducers({
-  page: setPageReducer,
-  profileImg: setProfileImgReducer,
-  profile: setProfileReducer,
-  user: setUserReducer,
+  page: persistReducer(pagePersistConfig, setPageReducer),
+  profileImg: persistReducer(profileImgPersistConfig, setProfileImgReducer),
+  profile: persistReducer(profilePersistConfig, setProfileReducer),
+  user: persistReducer(userPersistConfig, setUserReducer),
 });
 
-const persistConfig = {
-  key: "root",
-  storage: storageSession,
-  whitelist: ["user"],
-};
-const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
