@@ -9,6 +9,7 @@ import Container from "@/components/common/Container";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useProfile } from "@/hooks/useProfile";
+import { connectWebsocket } from "@/util/socket/connectSocket";
 
 type ListType = "chat" | "friend" | "setting";
 
@@ -18,6 +19,7 @@ const Page = () => {
   const { getProfileImg } = useProfile();
 
   useEffect(() => {
+    connectWebsocket();
     if (profileImg.thumbnailImgUrl == "") {
       getProfileImg();
     }
