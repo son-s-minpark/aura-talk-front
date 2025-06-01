@@ -2,6 +2,7 @@ const API = "https://api.auratalk.kro.kr";
 const USER = `${API}/api/users`;
 const USER_IMAGE = `${USER}/me/profile-image`;
 const INTEREST = `${API}/api/interests`;
+const CHAT = `${API}/api/chatrooms`;
 
 export const apiRoute = {
   BASE: API,
@@ -27,4 +28,17 @@ export const apiRoute = {
   INTEREST_TOTAL: INTEREST,
   INTEREST_USERS: (category: string) => `${INTEREST}/${category}/users`,
   INTEREST_CATEGORY: (category: string) => `${INTEREST}/category/${category}`,
+
+  // 채팅
+  CHAT_CREATE: CHAT,
+  CHAT_GET_LIST: CHAT,
+  CHAT_NOTIFICATION: (id: number) => `${CHAT}/${id}/notification`,
+  CHAT_FRIEND_INVITE: (id: number) => `${CHAT}/${id}/invite`,
+  CHAT_FRIEND_INVITE_LINK: (id: number) => `${CHAT}/${id}/invite-link`,
+  CHAT_INVITE_LINK_REJECT: `${CHAT}/invite/reject`,
+  CHAT_INVITE_LINK_ACCEPT: `${CHAT}/invite/accept`,
+  CHAT_INVITATION_REJECT: (id: number) => `${CHAT}/invitations/${id}/reject`,
+  CHAT_INVITATION_ACCEPT: (id: number) => `${CHAT}/invitations/${id}/accept`,
+  CHAT_INVITATION_PENDING: `${CHAT}/invitations/pending`,
+  CHAT_EXIT: (id: number) => `${CHAT}/${id}`,
 };

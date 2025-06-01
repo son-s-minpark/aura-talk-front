@@ -15,7 +15,7 @@ export const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: async (signupData: signType) => {
-      return axios
+      return await axios
         .post(apiRoute.USER, signupData, {
           headers: {
             "Content-Type": "application/json",
@@ -107,20 +107,22 @@ export const useAuth = () => {
   // 로그아웃 요청
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
-      try {
-        const res = await axiosInstance.post(apiRoute.USER_LOGOUT);
-        const { data } = res;
+      return await axiosInstance
+        .post(apiRoute.USER_LOGOUT)
 
-        if (data.success) {
-          localStorage.clear();
-          return { success: true };
-        } else {
-          throw new Error("Logout failed");
-        }
-      } catch (err) {
-        console.error(err);
-        throw new Error("Logout error");
-      }
+        .then((res) => {
+          const { data } = res;
+          if (data.success) {
+            localStorage.clear();
+            return { success: true };
+          } else {
+            throw new Error("Logout failed");
+          }
+        })
+        .catch((err) => {
+          console.error("signup error:", err);
+          throw err;
+        });
     },
   });
 
