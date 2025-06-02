@@ -1,4 +1,9 @@
+import { chatUserType } from "./chatUserType";
+
 export type chatRoomType = {
   name: string;
-  userIds: number[];
+  id: number;
+  chatRoomImg: string;
+  owner: chatUserType;
+  users: chatUserType[];
 };

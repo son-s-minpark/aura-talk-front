@@ -5,6 +5,7 @@ import setProfileImgReducer from "./user/setProfileImg";
 import setProfileReducer from "./user/setProfile";
 import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
+import setChatListReducer from "./chat/setChatList";
 
 const pagePersistConfig = {
   key: "page",
@@ -26,11 +27,17 @@ const userPersistConfig = {
   storage: storage,
 };
 
+const chatListPersistConfig = {
+  key: "chatList",
+  storage: storage,
+};
+
 const reducers = combineReducers({
   page: persistReducer(pagePersistConfig, setPageReducer),
   profileImg: persistReducer(profileImgPersistConfig, setProfileImgReducer),
   profile: persistReducer(profilePersistConfig, setProfileReducer),
   user: persistReducer(userPersistConfig, setUserReducer),
+  chatList: persistReducer(chatListPersistConfig, setChatListReducer),
 });
 
 const store = configureStore({

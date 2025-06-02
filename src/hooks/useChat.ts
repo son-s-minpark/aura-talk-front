@@ -1,11 +1,17 @@
-import { chatRoomType } from "@/type/chat/chatRoomType";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useChat = () => {
-  const useCreateChat = useMutation({
-    mutationFn: async ({ name, userIds }: chatRoomType) => {
+  // 채팅방 생성 요청
+  const useCreateChatMutation = useMutation({
+    mutationFn: async ({
+      name,
+      userIds,
+    }: {
+      name: string;
+      userIds: number[];
+    }) => {
       return await axiosInstance
         .post(apiRoute.CHAT_CREATE, {
           name: name,
@@ -13,6 +19,12 @@ const useChat = () => {
         })
         .then((res) => {
           const { data } = res;
+          if (data.success) {
+            // 대충 방 목록에 해당 채팅방 하나 추가
+            return { success: true };
+          } else {
+            throw new Error("채팅방 생성 에러");
+          }
         })
         .catch((err) => {
           console.error("signup error:", err);
@@ -27,7 +39,7 @@ const useChat = () => {
     queryFn: async () => {},
   });
 
-  return { useCreateChat, useGetChatList };
+  return { useCreateChatMutation, useGetChatList };
 };
 
 export default useChat;

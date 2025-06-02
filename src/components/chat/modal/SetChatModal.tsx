@@ -1,30 +1,35 @@
 "use client";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
-import ChatSetFriend from "../ChatSetFriend";
+import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
+import useChat from "@/hooks/useChat";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { chatRoomType } from "@/type/chat/chatRoomType";
 
-const data = [
-  {
-    name: "팀원팀원팀원팀원팀원팀원팀",
-    isLeader: true,
-  },
-  {
-    name: "ㅎㅎ",
-    isLeader: false,
-  },
-];
-
-// 이게 뭐지?
 const SetChatModal = () => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { useCreateChatMutation } = useChat();
+  const user = useSelector((state: RootState) => state.user);
 
-  function onSubmit() {
+  async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
-    // 이름이랑 사진이랑 친구 목록 전송하기
-    router.push("/chat/1");
+    if (roomname != "") {
+      try {
+        const res = await useCreateChatMutation.mutateAsync({
+          name: roomname,
+          userIds: [user.userId],
+        });
+        if (res.success) {
+          router.push("/chat/1");
+        }
+      } catch {
+        console.error("error");
+      }
+    }
   }
   return (
     <div
@@ -49,9 +54,9 @@ const SetChatModal = () => {
           <div>
             <h1>친구 목록</h1>
             <div className="flex gap-[11px] mt-[9px]">
-              {data.map((friend, index) => (
-                <ChatSetFriend friend={friend} key={index} />
-              ))}
+              {/* {data.map((user, index) => (
+                <ChatSetUser user={user} key={index} />
+              ))} */}
             </div>
           </div>
         </div>

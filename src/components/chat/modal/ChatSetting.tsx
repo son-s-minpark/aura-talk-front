@@ -3,18 +3,7 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import React, { useRef } from "react";
-import ChatSetFriend from "../ChatSetFriend";
-
-const data = [
-  {
-    name: "팀원팀원팀원팀원팀원팀원팀",
-    isLeader: true,
-  },
-  {
-    name: "ㅎㅎ",
-    isLeader: false,
-  },
-];
+import ChatSetUser from "../ChatSetUser";
 
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
@@ -42,9 +31,9 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
         <div>
           <h1>친구 목록</h1>
           <div className="flex gap-[11px] mt-[9px]">
-            {data.map((friend, index) => (
-              <ChatSetFriend friend={friend} key={index} />
-            ))}
+            {/* {data.map((user, index) => (
+              <ChatSetUser user={user} key={index} />
+            ))} */}
           </div>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
