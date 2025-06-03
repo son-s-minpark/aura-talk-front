@@ -10,12 +10,14 @@ const initialState: chatRoomType[] = [
       id: 0,
       nickname: "",
       thumbnailImg: "",
+      isLeader: true,
     },
     users: [
       {
         id: 0,
         nickname: "",
         thumbnailImg: "",
+        isLeader: false,
       },
     ],
   },
@@ -37,5 +39,5 @@ export const setChatListSlice = createSlice({
   },
 });
 
-export const { setChatList } = setChatListSlice.actions;
+export const { setChatList, addChat, removeChat } = setChatListSlice.actions;
 export default setChatListSlice.reducer;

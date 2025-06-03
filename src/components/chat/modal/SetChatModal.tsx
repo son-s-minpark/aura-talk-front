@@ -7,7 +7,6 @@ import React, { useRef } from "react";
 import useChat from "@/hooks/useChat";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { chatRoomType } from "@/type/chat/chatRoomType";
 
 const SetChatModal = () => {
   const roomNameRef = useRef<HTMLInputElement>(null);

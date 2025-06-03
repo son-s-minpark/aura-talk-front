@@ -2,7 +2,7 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import React from "react";
 import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
-import ChatFriend from "../ChatRoomFriend";
+import ChatRoomUser from "../ChatRoomUser";
 
 const data = [
   {
@@ -34,7 +34,7 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
         </p>
         <div className="h-[130px] px-[7px] mt-[17px] overflow-scroll flex flex-col gap-[10px]">
           {data.map((friend, index) => (
-            <ChatFriend friend={friend} key={index} />
+            <ChatRoomUser friend={friend} key={index} />
           ))}
         </div>
         <button className="text-[var(--color-gray)] flex items-center gap-[14px]">

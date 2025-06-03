@@ -1,8 +1,11 @@
+import { addChat } from "@/store/chat/setChatList";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 
 const useChat = () => {
+  const dispatch = useDispatch();
   // 채팅방 생성 요청
   const useCreateChatMutation = useMutation({
     mutationFn: async ({
@@ -20,8 +23,9 @@ const useChat = () => {
         .then((res) => {
           const { data } = res;
           if (data.success) {
+            dispatch(addChat(data.data));
             // 대충 방 목록에 해당 채팅방 하나 추가
-            return { success: true };
+            return { success: true, roomId: data.data.id };
           } else {
             throw new Error("채팅방 생성 에러");
           }
