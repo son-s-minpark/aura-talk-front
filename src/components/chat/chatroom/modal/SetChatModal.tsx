@@ -4,14 +4,14 @@ import SelectBtn from "@/components/common/SelectBtn";
 import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
-import useChat from "@/hooks/useChat";
+import useChatRoom from "@/hooks/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const SetChatModal = () => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { useCreateChatMutation } = useChat();
+  const { useCreateChatMutation } = useChatRoom();
   const user = useSelector((state: RootState) => state.user);
 
   async function onSubmit() {

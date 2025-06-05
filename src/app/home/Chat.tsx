@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import CreateChatModal from "@/components/chat/modal/CreateChatModal";
-import useChat from "@/hooks/useChat";
+import CreateChatModal from "@/components/chat/chatroom/modal/CreateChatModal";
+import useChatRoom from "@/hooks/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
-  const { useGetChatList, useGetPendingList } = useChat();
+  const { useGetChatList, useGetPendingList } = useChatRoom();
   useGetChatList();
   useGetPendingList();
 

@@ -2,7 +2,7 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import React from "react";
 import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
-import ChatRoomUser from "../ChatRoomUser";
+import ChatRoomUser from "../../chatroom/ChatRoomUser";
 
 const data = [
   {

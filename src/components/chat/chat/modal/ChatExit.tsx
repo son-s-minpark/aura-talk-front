@@ -1,11 +1,20 @@
 import SelectBtn from "@/components/common/SelectBtn";
+import useChatRoom from "@/hooks/useChatRoom";
+import { RootState } from "@/store/store";
 import { redirect } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ChatExit = () => {
-  function onExit() {
-    // 대충 나가기 요청 코드
-    redirect("/home");
+  const currId = useSelector((state: RootState) => state.currChat.id);
+  const { useChatRoomExitMutation } = useChatRoom();
+  async function onExit() {
+    const res = await useChatRoomExitMutation.mutateAsync(currId);
+    if (res.success) {
+      redirect("/home");
+    } else {
+      console.error(res);
+    }
   }
   return (
     <div className="modal-content w-[284px] h-[120px] pl-[22px] pt-[20px]">

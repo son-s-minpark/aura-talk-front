@@ -6,6 +6,7 @@ import setProfileReducer from "./user/setProfile";
 import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
 import setChatListReducer from "./chat/setChatList";
+import setCurrChatReducer from "./chat/setCurrChat";
 
 const profileImgPersistConfig = {
   key: "profileImg",
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   profile: persistReducer(profilePersistConfig, setProfileReducer),
   user: persistReducer(userPersistConfig, setUserReducer),
   chatList: setChatListReducer,
+  currChat: setCurrChatReducer,
 });
 
 const store = configureStore({

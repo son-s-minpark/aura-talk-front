@@ -5,7 +5,7 @@ import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 
-const useChat = () => {
+const useChatRoom = () => {
   const dispatch = useDispatch();
 
   // 채팅방 생성 요청
@@ -85,7 +85,30 @@ const useChat = () => {
     });
   };
 
-  return { useCreateChatMutation, useGetChatList, useGetPendingList };
+  // 채팅방 나가기 요청
+  const useChatRoomExitMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await axiosInstance
+        .delete(apiRoute.CHATROOM_EXIT(id))
+        .then((res) => {
+          if (res.data.success) {
+            return { success: true };
+          } else {
+            throw new Error("채팅방 나가기 오류: ", res.data);
+          }
+        })
+        .catch((err) => {
+          throw new Error("채팅방 나가기 오류: ", err);
+        });
+    },
+  });
+
+  return {
+    useCreateChatMutation,
+    useGetChatList,
+    useGetPendingList,
+    useChatRoomExitMutation,
+  };
 };
 
-export default useChat;
+export default useChatRoom;

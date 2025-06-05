@@ -3,7 +3,7 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import React, { useRef } from "react";
-import ChatSetUser from "../ChatSetUser";
+import ChatSetUser from "../../chatroom/ChatSetUser";
 
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
