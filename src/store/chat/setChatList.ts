@@ -1,43 +1,52 @@
 import { chatRoomType } from "@/type/chat/chatRoomType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: chatRoomType[] = [
-  {
-    name: "",
-    id: 0,
-    chatRoomImg: "",
-    owner: {
-      id: 0,
-      nickname: "",
-      thumbnailImg: "",
-      isLeader: true,
-    },
-    users: [
-      {
-        id: 0,
-        nickname: "",
-        thumbnailImg: "",
-        isLeader: false,
-      },
-    ],
-  },
-];
+interface chatListType {
+  pendingList: chatRoomType[];
+  chattingList: chatRoomType[];
+}
+
+const initialState: chatListType = {
+  pendingList: [],
+  chattingList: [],
+};
 
 export const setChatListSlice = createSlice({
   name: "chatList",
   initialState,
   reducers: {
-    setChatList: (state, action: PayloadAction<Partial<chatRoomType>>) => {
-      Object.assign(state, action.payload);
+    setPendingList: (state, action: PayloadAction<chatRoomType[]>) => {
+      state.pendingList = action.payload;
     },
-    addChat: (state, action) => {
-      state.push(action.payload);
+    addPending: (state, action: PayloadAction<chatRoomType>) => {
+      state.pendingList.push(action.payload);
     },
-    removeChat: (state, action) => {
-      state = state.filter((chatId) => chatId !== action.payload);
+    removePending: (state, action: PayloadAction<number>) => {
+      state.pendingList = state.pendingList.filter(
+        (chat) => chat.id !== action.payload
+      );
+    },
+    setChattingList: (state, action: PayloadAction<chatRoomType[]>) => {
+      state.chattingList = action.payload;
+    },
+    addChattingChat: (state, action: PayloadAction<chatRoomType>) => {
+      state.chattingList.push(action.payload);
+    },
+    removeChattingChat: (state, action: PayloadAction<number>) => {
+      state.chattingList = state.chattingList.filter(
+        (chat) => chat.id !== action.payload
+      );
     },
   },
 });
 
-export const { setChatList, addChat, removeChat } = setChatListSlice.actions;
+export const {
+  setPendingList,
+  addPending,
+  removePending,
+  setChattingList,
+  addChattingChat,
+  removeChattingChat,
+} = setChatListSlice.actions;
+
 export default setChatListSlice.reducer;

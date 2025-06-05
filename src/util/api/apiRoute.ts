@@ -2,7 +2,8 @@ const API = "https://api.auratalk.kro.kr";
 const USER = `${API}/api/users`;
 const USER_IMAGE = `${USER}/me/profile-image`;
 const INTEREST = `${API}/api/interests`;
-const CHAT = `${API}/api/chatrooms`;
+const CHATROOM = `${API}/api/chatrooms`;
+const CHAT = `${API}/api/chats`;
 
 export const apiRoute = {
   BASE: API,
@@ -29,16 +30,19 @@ export const apiRoute = {
   INTEREST_USERS: (category: string) => `${INTEREST}/${category}/users`,
   INTEREST_CATEGORY: (category: string) => `${INTEREST}/category/${category}`,
 
+  // 채팅방
+  CHATROOM_CREATE: CHATROOM,
+  CHATROOM_GET_LIST: CHATROOM,
+  CHATROOM_NOTIFICATION: (id: number) => `${CHATROOM}/${id}/notification`,
+  CHATROOM_FRIEND_INVITE: (id: number) => `${CHATROOM}/${id}/invite`,
+  CHATROOM_FRIEND_INVITE_LINK: (id: number) => `${CHATROOM}/${id}/invite-link`,
+  CHATROOM_EXIT: (id: number) => `${CHATROOM}/${id}`,
+  CHATROOM_INVITE_LINK_REJECT: `${CHATROOM}/invite/reject`,
+  CHATROOM_INVITE_LINK_ACCEPT: `${CHATROOM}/invite/accept`,
+  CHATROOM_INVITATION_PENDING: `${CHATROOM}/invitations/pending`,
+
   // 채팅
-  CHAT_CREATE: CHAT,
-  CHAT_GET_LIST: CHAT,
-  CHAT_NOTIFICATION: (id: number) => `${CHAT}/${id}/notification`,
-  CHAT_FRIEND_INVITE: (id: number) => `${CHAT}/${id}/invite`,
-  CHAT_FRIEND_INVITE_LINK: (id: number) => `${CHAT}/${id}/invite-link`,
-  CHAT_INVITE_LINK_REJECT: `${CHAT}/invite/reject`,
-  CHAT_INVITE_LINK_ACCEPT: `${CHAT}/invite/accept`,
-  CHAT_INVITATION_REJECT: (id: number) => `${CHAT}/invitations/${id}/reject`,
-  CHAT_INVITATION_ACCEPT: (id: number) => `${CHAT}/invitations/${id}/accept`,
-  CHAT_INVITATION_PENDING: `${CHAT}/invitations/pending`,
-  CHAT_EXIT: (id: number) => `${CHAT}/${id}`,
+  CHAT_SEND: (roomId: number) => `${CHAT}/${roomId}`,
+  CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,
+  CHAT_DELETE: (roomId: number) => `${CHAT}/${roomId}`,
 };

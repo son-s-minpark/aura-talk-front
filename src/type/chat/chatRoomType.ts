@@ -7,3 +7,8 @@ export type chatRoomType = {
   owner: chatUserType;
   users: chatUserType[];
 };
+
+export type chatListType = {
+  pendingList: chatRoomType[] | [];
+  chattingList: chatRoomType[] | [];
+};

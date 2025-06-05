@@ -6,12 +6,6 @@ import setProfileReducer from "./user/setProfile";
 import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
 import setChatListReducer from "./chat/setChatList";
-import setPendingChatListReducer from "./chat/setPendingChatList";
-
-const pagePersistConfig = {
-  key: "page",
-  storage: storage,
-};
 
 const profileImgPersistConfig = {
   key: "profileImg",
@@ -28,26 +22,12 @@ const userPersistConfig = {
   storage: storage,
 };
 
-const chatListPersistConfig = {
-  key: "chatList",
-  storage: storage,
-};
-
-const pendingChatListPersistConfig = {
-  key: "pendingChatList",
-  storage: storage,
-};
-
 const reducers = combineReducers({
-  page: persistReducer(pagePersistConfig, setPageReducer),
+  page: setPageReducer,
   profileImg: persistReducer(profileImgPersistConfig, setProfileImgReducer),
   profile: persistReducer(profilePersistConfig, setProfileReducer),
   user: persistReducer(userPersistConfig, setUserReducer),
-  chatList: persistReducer(chatListPersistConfig, setChatListReducer),
-  pendingChatList: persistReducer(
-    pendingChatListPersistConfig,
-    setPendingChatListReducer
-  ),
+  chatList: setChatListReducer,
 });
 
 const store = configureStore({

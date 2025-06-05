@@ -1,8 +1,10 @@
 import { Client } from "@stomp/stompjs";
+// import SockJS from "sockjs-client";
 
 export const connectWebsocket = () => {
+  // const socket = new SockJS("https://demo.rabbitmq.com/ws");
   const client = new Client({
-    brokerURL: "",
+    brokerURL: "https://demo.rabbitmq.com/ws",
     connectHeaders: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
@@ -10,8 +12,8 @@ export const connectWebsocket = () => {
     heartbeatIncoming: 4000,
     heartbeatOutgoing: 4000,
 
-    onConnect: (connect) => {
-      console.error("connected", connect);
+    onConnect: (frame) => {
+      console.error("connected", frame);
     },
     onWebSocketClose: (close) => {
       console.error("socket Close", close);
