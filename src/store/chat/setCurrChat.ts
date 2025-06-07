@@ -12,6 +12,8 @@ const initialState: chatRoomType = {
     nickname: "",
   },
   users: [],
+  active: true,
+  lastMessage: new Date(),
 };
 
 export const setCurrChatSlice = createSlice({

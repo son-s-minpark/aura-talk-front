@@ -6,6 +6,8 @@ export type chatRoomType = {
   chatRoomImg: string;
   owner: chatUserType;
   users: chatUserType[];
+  active: boolean;
+  lastMessage: Date;
 };
 
 export type chatListType = {

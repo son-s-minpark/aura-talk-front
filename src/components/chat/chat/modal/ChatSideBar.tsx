@@ -2,7 +2,12 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import React from "react";
 import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
+import { IoNotifications, IoNotificationsOff } from "react-icons/io5";
+
 import ChatRoomUser from "../../chatroom/ChatRoomUser";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import useChatRoom from "@/hooks/useChatRoom";
 
 const data = [
   {
@@ -16,6 +21,9 @@ const data = [
 ];
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
+  const currChat = useSelector((state: RootState) => state.currChat);
+  const { useChatNotificationMutation } = useChatRoom();
+
   return (
     <div
       className="modal-content h-[358px] w-[271px] flex flex-col"
@@ -43,6 +51,20 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
         </button>
       </div>
       <div className="text-[var(--color-gray)] flex gap-[5px] items-center justify-end mt-[20px] mr-[22px]">
+        <button
+          onClick={() =>
+            useChatNotificationMutation.mutateAsync({
+              id: currChat.id,
+              isActive: currChat.active,
+            })
+          }
+        >
+          {currChat.active ? (
+            <IoNotifications className="w-[20px] h-[20px]" />
+          ) : (
+            <IoNotificationsOff className="w-[20px] h-[20px]" />
+          )}
+        </button>
         <IoSettings
           onClick={() => setModalDown("setting")}
           className="w-[20px] h-[20px]"

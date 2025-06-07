@@ -103,11 +103,32 @@ const useChatRoom = () => {
     },
   });
 
+  // 채팅방 알림 on/off 요청
+  const useChatNotificationMutation = useMutation({
+    mutationFn: async ({ id, isActive }: { id: number; isActive: boolean }) => {
+      return await axiosInstance
+        .put(apiRoute.CHATROOM_NOTIFICATION(id), {
+          enabled: isActive,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            return { success: true };
+          } else {
+            throw new Error("채팅방 알림 on/off 오류: ", res.data);
+          }
+        })
+        .catch((err) => {
+          throw new Error("채팅방 알림 on/off 오류: ", err);
+        });
+    },
+  });
+
   return {
     useCreateChatMutation,
     useGetChatList,
     useGetPendingList,
     useChatRoomExitMutation,
+    useChatNotificationMutation,
   };
 };
 
