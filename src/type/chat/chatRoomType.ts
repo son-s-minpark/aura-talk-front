@@ -1,13 +1,19 @@
 import { chatUserType } from "./chatUserType";
 
+type roomType = "ONE_TO_ONE" | "GROUP" | "RANDOM" | "UNDEFINED";
+
 export type chatRoomType = {
-  name: string;
   id: number;
+  name: string;
+  type: roomType;
   chatRoomImg: string;
   owner: chatUserType;
   users: chatUserType[];
   active: boolean;
-  lastMessage: Date;
+  createdAt?: Date;
+  lastMessageAt?: Date;
+  inviteCode?: string;
+  inviteCodeExpiredAt?: string;
 };
 
 export type chatListType = {

@@ -123,12 +123,30 @@ const useChatRoom = () => {
     },
   });
 
+  const useCreateInviteCodeMuatation = useMutation({
+    mutationFn: async ({ id }: { id: number }) => {
+      return await axiosInstance
+        .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
+        .then((res) => {
+          if (res.data.success) {
+            return { success: true };
+          } else {
+            throw new Error("초대 코드 생성 오류: ", res.data);
+          }
+        })
+        .catch((err) => {
+          throw new Error("초대 코드 생성 오류: ", err);
+        });
+    },
+  });
+
   return {
     useCreateChatMutation,
     useGetChatList,
     useGetPendingList,
     useChatRoomExitMutation,
     useChatNotificationMutation,
+    useCreateInviteCodeMuatation,
   };
 };
 

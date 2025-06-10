@@ -5,15 +5,15 @@ const initialState: chatRoomType = {
   id: 0,
   name: "",
   chatRoomImg: "",
+  type: "UNDEFINED",
   owner: {
     id: 0,
     thumbnailImg: "",
-    isLeader: true,
     nickname: "",
   },
   users: [],
   active: true,
-  lastMessage: new Date(),
+  lastMessageAt: new Date(),
 };
 
 export const setCurrChatSlice = createSlice({

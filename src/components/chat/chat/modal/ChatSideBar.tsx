@@ -9,17 +9,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import useChatRoom from "@/hooks/useChatRoom";
 
-const data = [
-  {
-    name: "팀원팀원팀원팀원팀원팀원팀",
-    isLeader: true,
-  },
-  {
-    name: "ㅎㅎ",
-    isLeader: false,
-  },
-];
-
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
   const { useChatNotificationMutation } = useChatRoom();
