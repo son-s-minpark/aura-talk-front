@@ -2,17 +2,21 @@ import React from "react";
 import { setModalDownType } from "@/type/chat/setModalDownType";
 import SelectBtn from "@/components/common/SelectBtn";
 import { IoIosCopy } from "react-icons/io";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const shareCode = "Code19$Code";
 
 const ChatShare = ({ setModalDown }: setModalDownType) => {
+  const currChat = useSelector((state: RootState) => state.currChat);
   async function copyCode() {
     try {
-      await navigator.clipboard.writeText(shareCode);
+      await navigator.clipboard.writeText(currChat.inviteCode);
     } catch {
       alert("복사 실패!");
     }
   }
+
   return (
     <div className="modal-content w-[303px] h-[146px] pt-[21px] pl-[22px]">
       <h1 className="mb-[15px]"> 공유 링크</h1>

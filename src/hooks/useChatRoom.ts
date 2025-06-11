@@ -25,7 +25,6 @@ const useChatRoom = () => {
           const { data } = res;
           if (data.success) {
             dispatch(addChat(data.data));
-            // 대충 방 목록에 해당 채팅방 하나 추가
             return { success: true, roomId: data.data.id };
           } else {
             throw new Error("채팅방 생성 에러");
@@ -39,16 +38,17 @@ const useChatRoom = () => {
   });
 
   // 참여 중인 채팅방 목록 가져오기 요청
-  const useGetChatList = () => {
-    return useQuery({
+  const useGetChatList = () =>
+    useQuery({
       queryKey: ["getChatlist"],
       queryFn: async () => {
         return axiosInstance
           .get(apiRoute.CHATROOM_GET_LIST)
           .then((res) => {
             const { data } = res;
+            console.error(data);
             if (data.success) {
-              dispatch(setChatList(data));
+              dispatch(setChatList(data.data));
               return data;
             } else {
               throw new Error("채팅방 가져오기 오류");
@@ -59,7 +59,6 @@ const useChatRoom = () => {
           });
       },
     });
-  };
 
   // 채팅방 나가기 요청
   const useChatRoomExitMutation = useMutation({
@@ -99,6 +98,7 @@ const useChatRoom = () => {
     },
   });
 
+  // 초대 코드 생성 요청
   const useCreateInviteCodeMuatation = useMutation({
     mutationFn: async ({ id }: { id: number }) => {
       return await axiosInstance

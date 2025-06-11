@@ -8,9 +8,12 @@ import { RootState } from "@/store/store";
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
   const { useGetChatList } = useChatRoom();
-  useGetChatList();
-
+  const { isLoading, data } = useGetChatList();
   const chattingList = useSelector((state: RootState) => state.chatList);
+
+  if (isLoading) {
+    return <p>Loading</p>;
+  }
 
   return (
     <div className="pt-[46px] h-full">

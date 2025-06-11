@@ -4,13 +4,20 @@ import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import React, { useRef } from "react";
 import ChatSetUser from "../../chatroom/ChatSetUser";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
+// 채팅방 정보 수정 모달
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
+  const currChat = useSelector((state: RootState) => state.currChat);
 
   function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
-    // 이름이랑 사진이랑 친구 목록 전송하기
+    if (roomname == "") {
+      return;
+    }
+    // 채팅방 정보 수정 요청
     setModalDown("none");
   }
   return (
@@ -31,9 +38,16 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
         <div>
           <h1>친구 목록</h1>
           <div className="flex gap-[11px] mt-[9px]">
-            {/* {data.map((user, index) => (
-              <ChatSetUser user={user} key={index} />
-            ))} */}
+            {currChat.users.map((friend, index) => (
+              <ChatSetUser
+                user={{
+                  id: friend.id,
+                  thumbnailImg: friend.thumbnailImg,
+                  nickname: friend.nickname,
+                }}
+                key={index}
+              />
+            ))}
           </div>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">

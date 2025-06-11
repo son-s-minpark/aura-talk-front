@@ -9,6 +9,8 @@ type AddImageProps = {
   imgSize: number;
   btnHeight: number;
   btnWidth: number;
+  img: string;
+  setImg: () => void;
 };
 
 const AddImage = ({ imgSize, btnHeight, btnWidth }: AddImageProps) => {

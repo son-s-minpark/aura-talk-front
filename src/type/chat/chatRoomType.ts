@@ -10,6 +10,6 @@ export type chatRoomType = {
   active: boolean;
   createdAt?: Date;
   lastMessageAt?: Date;
-  inviteCode?: string;
-  inviteCodeExpiredAt?: string;
+  inviteCode: string;
+  inviteCodeExpiredAt: string;
 };

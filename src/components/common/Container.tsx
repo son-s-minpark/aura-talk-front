@@ -8,7 +8,7 @@ interface ContainerProps {
 const Container = ({ height, children }: ContainerProps) => {
   return (
     <div
-      className="rounded-t-[20px] bg-[var(--color-background)] w-full"
+      className="rounded-t-[20px] bg-[var(--color-background)] w-full shadow-[20px]"
       style={{ height: `${height}px` }}
     >
       {children}
