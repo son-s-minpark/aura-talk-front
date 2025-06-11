@@ -7,16 +7,10 @@ import { RootState } from "@/store/store";
 
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
-  const { useGetChatList, useGetPendingList } = useChatRoom();
+  const { useGetChatList } = useChatRoom();
   useGetChatList();
-  useGetPendingList();
 
-  const chattingList = useSelector(
-    (state: RootState) => state.chatList.chattingList
-  );
-  const pendingList = useSelector(
-    (state: RootState) => state.chatList.pendingList
-  );
+  const chattingList = useSelector((state: RootState) => state.chatList);
 
   return (
     <div className="pt-[46px] h-full">
@@ -26,17 +20,12 @@ const ChatList = () => {
         </div>
       )}
       <div className="relative h-full">
-        {pendingList.length != 0 && (
-          <div className="w-full">
-            <p>수락 대기 중</p>
-            {pendingList.map((chat, index) => (
-              <p key={index}>{chat.name}</p>
-            ))}
-          </div>
-        )}
-        {chattingList.map((chat, index) => (
-          <p key={index}>{chat.name}</p>
-        ))}
+        <div className="h-full">
+          {chattingList.map((chat, index) => (
+            <p key={index}>{chat.name}</p>
+          ))}
+        </div>
+
         <div className="absolute bottom-[15px] right-[21px]">
           <button
             className="w-[50px] h-[50px] bg-[var(--color-point)] rounded-full flex items-center justify-center"

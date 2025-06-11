@@ -13,7 +13,7 @@ export const setUserSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<Partial<userType>>) => {
-      Object.assign(state, action.payload);
+      return { ...state, ...action.payload };
     },
   },
 });

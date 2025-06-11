@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: chatRoomType = {
   id: 0,
   name: "",
-  chatRoomImg: "",
+  roomImageUrl: "",
   type: "UNDEFINED",
   owner: {
     id: 0,
@@ -21,7 +21,7 @@ export const setCurrChatSlice = createSlice({
   initialState,
   reducers: {
     setCurrChat: (state, action: PayloadAction<Partial<chatRoomType>>) => {
-      Object.assign(state, action.payload);
+      return { ...state, ...action.payload };
     },
   },
 });

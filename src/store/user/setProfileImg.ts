@@ -12,7 +12,7 @@ export const setProfileImgSlice = createSlice({
   initialState,
   reducers: {
     setProfileImg: (state, action) => {
-      Object.assign(state, action.payload);
+      return { ...state, ...action.payload };
     },
   },
 });

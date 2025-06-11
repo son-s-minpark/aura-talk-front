@@ -13,7 +13,7 @@ export const setProfileSlice = createSlice({
   initialState,
   reducers: {
     setProfile: (state, action: PayloadAction<Partial<profileType>>) => {
-      Object.assign(state, action.payload);
+      return { ...state, ...action.payload };
     },
     addInterest: (state, action) => {
       state.interests.push(action.payload);

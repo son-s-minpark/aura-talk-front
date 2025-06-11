@@ -1,5 +1,4 @@
-import { addChattingChat, setChattingList } from "@/store/chat/setChatList";
-import { setPendingList } from "@/store/chat/setChatList";
+import { addChat, setChatList } from "@/store/chat/setChatList";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -25,7 +24,7 @@ const useChatRoom = () => {
         .then((res) => {
           const { data } = res;
           if (data.success) {
-            dispatch(addChattingChat(data.data));
+            dispatch(addChat(data.data));
             // 대충 방 목록에 해당 채팅방 하나 추가
             return { success: true, roomId: data.data.id };
           } else {
@@ -49,30 +48,7 @@ const useChatRoom = () => {
           .then((res) => {
             const { data } = res;
             if (data.success) {
-              dispatch(setChattingList(data));
-              return data;
-            } else {
-              throw new Error("채팅방 가져오기 오류");
-            }
-          })
-          .catch((err) => {
-            throw new Error("채팅방 가져오기 오류:", err);
-          });
-      },
-    });
-  };
-
-  // 대기 중인 초대 목록 가져오기 요청
-  const useGetPendingList = () => {
-    return useQuery({
-      queryKey: ["getPendingList"],
-      queryFn: async () => {
-        return axiosInstance
-          .get(apiRoute.CHATROOM_INVITATION_PENDING)
-          .then((res) => {
-            const { data } = res;
-            if (data.success) {
-              dispatch(setPendingList(data));
+              dispatch(setChatList(data));
               return data;
             } else {
               throw new Error("채팅방 가져오기 오류");
@@ -143,7 +119,6 @@ const useChatRoom = () => {
   return {
     useCreateChatMutation,
     useGetChatList,
-    useGetPendingList,
     useChatRoomExitMutation,
     useChatNotificationMutation,
     useCreateInviteCodeMuatation,

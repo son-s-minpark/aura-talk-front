@@ -36,9 +36,8 @@ export const apiRoute = {
   CHATROOM_NOTIFICATION: (id: number) => `${CHATROOM}/${id}/notification`,
   CHATROOM_FRIEND_INVITE: (id: number) => `${CHATROOM}/${id}/invite`,
   CHATROOM_CREATE_INVITE_LINK: (id: number) => `${CHATROOM}/${id}/invite-link`,
-  CHATROOM_JOIN: `${CHATROOM}/join`,
   CHATROOM_EXIT: (id: number) => `${CHATROOM}/${id}`,
-  CHATROOM_INVITATION_PENDING: `${CHATROOM}/invitations/pending`,
+  CHATROOM_JOIN: `${CHATROOM}/join`,
 
   // 채팅
   CHAT_SEND: (roomId: number) => `${CHAT}/${roomId}`,
