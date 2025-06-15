@@ -23,6 +23,7 @@ export const useAuth = () => {
         })
         .then((res) => {
           const data = res.data;
+          console.error(res);
 
           if (data.success) {
             const token = data.data.token;

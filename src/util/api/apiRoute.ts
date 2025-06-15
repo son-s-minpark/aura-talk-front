@@ -40,7 +40,6 @@ export const apiRoute = {
   CHATROOM_JOIN: `${CHATROOM}/join`,
 
   // 채팅
-  CHAT_SEND: (roomId: number) => `${CHAT}/${roomId}`,
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,
   CHAT_DELETE: (roomId: number) => `${CHAT}/${roomId}`,
 };

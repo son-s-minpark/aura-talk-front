@@ -67,6 +67,7 @@ const Signin = () => {
       return; // 이메일과 비밀번호가 모두 입력되지 않으면 아무 작업도 하지 않음
     }
     if (isSigninValid()) {
+      setErrMsg("");
       try {
         const res = await useSigninMutation.mutateAsync({
           email: mail,
