@@ -2,10 +2,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { Provider } from "react-redux";
-import store from "@/store/store";
+import store, { persistor } from "@/store/store";
 import "./globals.css";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +26,7 @@ export default function RootLayout({
         <ThemeProvider enableSystem={true} defaultTheme="system">
           <QueryClientProvider client={queryClient}>
             <Provider store={store}>
-              <PersistGate loading={null} persistor={persistStore(store)}>
+              <PersistGate loading={null} persistor={persistor}>
                 <div className="w-[375px] h-[812px]">{children}</div>
               </PersistGate>
             </Provider>

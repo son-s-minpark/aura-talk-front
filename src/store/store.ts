@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import setPageReducer from "./sign/setPage";
 import setProfileImgReducer from "./user/setProfileImg";
@@ -42,5 +43,6 @@ const store = configureStore({
 
 export default store;
 
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

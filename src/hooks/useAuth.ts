@@ -4,7 +4,7 @@ import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { persistor, RootState } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
 import { setProfile } from "@/store/user/setProfile";
 
@@ -22,7 +22,7 @@ export const useAuth = () => {
           },
         })
         .then((res) => {
-          const { data } = res;
+          const data = res.data;
 
           if (data.success) {
             const token = data.data.token;
@@ -113,7 +113,7 @@ export const useAuth = () => {
         .then((res) => {
           const { data } = res;
           if (data.success) {
-            localStorage.clear();
+            persistor.purge();
             return { success: true };
           } else {
             throw new Error("Logout failed");
@@ -135,6 +135,7 @@ export const useAuth = () => {
           console.error("signout ERror", res);
           const { data } = res;
           if (data.success) {
+            persistor.purge();
             return { success: true };
           } else {
             throw Error("회원탈퇴 에러");

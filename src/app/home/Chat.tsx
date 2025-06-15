@@ -8,7 +8,7 @@ import { RootState } from "@/store/store";
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
   const { useGetChatList } = useChatRoom();
-  const { isLoading, data } = useGetChatList();
+  const { isLoading } = useGetChatList();
   const chattingList = useSelector((state: RootState) => state.chatList);
 
   if (isLoading) {
