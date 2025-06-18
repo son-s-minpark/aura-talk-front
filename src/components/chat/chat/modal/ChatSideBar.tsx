@@ -11,7 +11,12 @@ import useChatRoom from "@/hooks/useChatRoom";
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
-  const { useChatNotificationMutation } = useChatRoom();
+  const { useChatNotificationMutation, useCreateInviteCodeMuatation } =
+    useChatRoom();
+
+  if (currChat.inviteCodeExpiredAt < new Date()) {
+    useCreateInviteCodeMuatation.mutateAsync({ id: currChat.id });
+  }
 
   return (
     <div
@@ -27,11 +32,12 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
 
       <div className="px-[19px] mt-[17px]">
         <p className="text-[15px] font-semibold text-[var(--color-gray)]">
-          멤버(3)
+          멤버({currChat.users.length + 1})
         </p>
         <div className="h-[130px] px-[7px] mt-[17px] overflow-scroll flex flex-col gap-[10px]">
-          {data.map((friend, index) => (
-            <ChatRoomUser friend={friend} key={index} />
+          <ChatRoomUser user={currChat.owner} isLeader={true} />
+          {currChat.users.map((friend, index) => (
+            <ChatRoomUser user={friend} isLeader={false} key={index} />
           ))}
         </div>
         <button className="text-[var(--color-gray)] flex items-center gap-[14px]">
