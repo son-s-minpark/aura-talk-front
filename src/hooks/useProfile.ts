@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setProfile } from "@/store/user/setProfile";
 import { setUser } from "@/store/user/setUser";
-import { setProfileImg } from "@/store/user/setProfileImg";
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -23,6 +22,26 @@ export const useProfile = () => {
       enabled: !!id,
     });
   };
+
+  // 내 프로필 가져오기 요청
+  const useGetMyProfile = useQuery({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      axiosInstance
+        .get(apiRoute.USER_MY_PROFILE)
+        .then((res) => {
+          if (res.data.success) {
+            const data = res.data.data;
+            dispatch(setProfile(data));
+          } else {
+            throw new Error("내 프로필 가져오기 오류");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
 
   // 프로필 수정/등록 요청
   const useSetProfileMutation = useMutation({
@@ -80,17 +99,12 @@ export const useProfile = () => {
     const data = res.data.data;
     console.error(data);
 
-    dispatch(
-      setProfileImg({
-        originalImgUrl: data.originalImageUrl,
-        thumbnailImgUrl: data.thumbnailImageUrl,
-        isDefaultImg: data.defaultProfileImage,
-      })
-    );
+    dispatch(setProfile({ profileImage: data }));
   };
 
   return {
     useGetUserProfile,
+    useGetMyProfile,
     useSetProfileMutation,
     useRandomChatToggleMutation,
     getProfileImg,

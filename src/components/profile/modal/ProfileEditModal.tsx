@@ -20,9 +20,9 @@ type ProfileEditModalProps = {
 };
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
-  const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
   const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const [nickname, setnickname] = useState<string>(profile.nickname);
   const [username, setusername] = useState<string>(profile.username);
   const [description, setDescription] = useState<string>(profile.description);
@@ -104,6 +104,12 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
             username: username,
             description: description,
             interests: profile.interests,
+            profileImage: {
+              userId: user.userId,
+              thumbnailImgUrl: profile.profileImage.thumbnailImgUrl,
+              originalImgUrl: profile.profileImage.originalImgUrl,
+              isDefaultImg: profile.profileImage.isDefaultImg,
+            },
           });
           if (res.success) {
             setIsModalDown(false);
@@ -136,7 +142,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
               imgSize={70}
               btnHeight={15}
               btnWidth={42}
-              img={profileImg.thumbnailImgUrl}
+              img={profile.profileImage.thumbnailImgUrl}
               setImg={useProfileImageUploadMutation.mutateAsync}
               deleteImg={useDeleteProfileImageMutation.mutateAsync}
             />

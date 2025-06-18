@@ -18,6 +18,7 @@ import { RootState } from "@/store/store";
 const Profile = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const { useSetProfileMutation } = useProfile();
   const [nickname, setnickname] = useState<string>(profile.nickname);
   const [username, setusername] = useState<string>(profile.username);
@@ -88,6 +89,12 @@ const Profile = () => {
             username: username,
             description: description,
             interests: profile.interests,
+            profileImage: {
+              userId: user.userId,
+              thumbnailImgUrl: profile.profileImage.thumbnailImgUrl,
+              originalImgUrl: profile.profileImage.originalImgUrl,
+              isDefaultImg: profile.profileImage.isDefaultImg,
+            },
           });
           if (res.success) {
             dispatch(setPage("profileImg"));

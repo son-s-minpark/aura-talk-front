@@ -28,7 +28,6 @@ const SettingList = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
 
   return (
     <>
@@ -53,9 +52,9 @@ const SettingList = () => {
         onClick={() => router.push(`/profile/self`)}
       >
         <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
-          {profileImg.thumbnailImgUrl && (
+          {profile.profileImage.thumbnailImgUrl && (
             <Image
-              src={profileImg.thumbnailImgUrl}
+              src={profile.profileImage.thumbnailImgUrl}
               alt="Profile"
               fill
               className="rounded-full object-cover"

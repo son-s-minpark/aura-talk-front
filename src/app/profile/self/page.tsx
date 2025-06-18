@@ -11,7 +11,6 @@ import { RootState } from "@/store/store";
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
   const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
@@ -26,9 +25,9 @@ const Page = () => {
           <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
             {!isEditModalDown && (
               <>
-                {profileImg.thumbnailImgUrl && (
+                {profile.profileImage.thumbnailImgUrl && (
                   <Image
-                    src={profileImg.thumbnailImgUrl}
+                    src={profile.profileImage.thumbnailImgUrl}
                     alt="Profile"
                     fill
                     className="rounded-full object-cover"

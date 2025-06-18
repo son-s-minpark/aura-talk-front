@@ -12,7 +12,6 @@ import { useImageUpload } from "@/hooks/useImageUpload";
 
 const ProfileImg = () => {
   const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
@@ -34,7 +33,7 @@ const ProfileImg = () => {
           imgSize={100}
           btnHeight={24}
           btnWidth={54}
-          img={profileImg.thumbnailImgUrl}
+          img={profile.profileImage.thumbnailImgUrl}
           setImg={useProfileImageUploadMutation.mutateAsync}
           deleteImg={useDeleteProfileImageMutation.mutateAsync}
         />

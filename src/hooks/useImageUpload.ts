@@ -2,8 +2,9 @@ import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
-import { setProfileImg } from "@/store/user/setProfileImg";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfile } from "@/store/user/setProfile";
+import { RootState } from "@/store/store";
 
 type ImageProps = {
   fileName: string;
@@ -12,6 +13,7 @@ type ImageProps = {
 
 export const useImageUpload = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료)
   const useProfileImageUploadMutation = useMutation({
@@ -41,10 +43,13 @@ export const useImageUpload = () => {
           const data = completeRes.data.data;
 
           dispatch(
-            setProfileImg({
-              originalImgUrl: data.originalImageUrl,
-              thumbnailImgUrl: data.thumbnailImageUrl,
-              isDefaultImg: data.defaultProfileImage,
+            setProfile({
+              profileImage: {
+                userId: user.userId,
+                originalImgUrl: data.originalImageUrl,
+                thumbnailImgUrl: data.thumbnailImageUrl,
+                isDefaultImg: data.defaultProfileImage,
+              },
             })
           );
           return { success: true };
@@ -62,11 +67,15 @@ export const useImageUpload = () => {
         .delete(apiRoute.USER_IMAGE_PROFILE_DELETE)
         .then((res) => {
           const data = res.data.data;
+
           dispatch(
-            setProfileImg({
-              originalImgUrl: data.originalImageUrl,
-              thumbnailImgUrl: data.thumbnailImageUrl,
-              isDefaultImg: data.defaultProfileImage,
+            setProfile({
+              profileImage: {
+                userId: user.userId,
+                originalImgUrl: data.originalImageUrl,
+                thumbnailImgUrl: data.thumbnailImageUrl,
+                isDefaultImg: data.defaultProfileImage,
+              },
             })
           );
           return { success: true };

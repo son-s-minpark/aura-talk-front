@@ -6,6 +6,12 @@ const initialState: profileType = {
   username: "",
   description: "",
   interests: [],
+  profileImage: {
+    userId: 0,
+    originalImgUrl: "",
+    thumbnailImgUrl: "",
+    isDefaultImg: true,
+  },
 };
 
 export const setProfileSlice = createSlice({
