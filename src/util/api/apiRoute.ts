@@ -4,6 +4,7 @@ const USER_IMAGE = `${USER}/me/profile-image`;
 const INTEREST = `${API}/api/interests`;
 const CHATROOM = `${API}/api/chatrooms`;
 const CHAT = `${API}/api/chats`;
+const FRIEND = `${API}/api/friends`;
 
 export const apiRoute = {
   BASE: API,
@@ -42,4 +43,17 @@ export const apiRoute = {
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,
   CHAT_DELETE: (roomId: number) => `${CHAT}/${roomId}`,
+
+  // 친구
+  FRIEND_GET: FRIEND,
+  FRIEND_DELETE: (id: number) => `${FRIEND}/${id}`,
+  FRIEND_REQUEST: (id: number) => `${FRIEND}/requests/${id}`,
+  FRIEND_REQUEST_ACCEPT: (id: number) => `${FRIEND}/requests/${id}/accept`,
+  FREIND_REQUEST_SENT_LIST: `${FRIEND}/requests/sent`,
+  FREIND_REQUEST_RECEIVED_LIST: `${FRIEND}/requests/received`,
+  FRIEND_REQUEST_SENT_CANCEL: (id: number) => `${FRIEND}/requests/${id}/cancel`,
+  FRIEND_REQUEST_REJECT: (id: number) => `${FRIEND}/requests/${id}/reject`,
+  FRIEND_BLOCK: (id: number) => `${FRIEND}/blocks/${id}`,
+  FRIEND_BLOCK_LIST: `${FRIEND}/blocks`,
+  FRIEND_BLOCK_CANCEL: (id: number) => `${FRIEND}/blocks/${id}`,
 };
