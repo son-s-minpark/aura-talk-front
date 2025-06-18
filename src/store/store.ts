@@ -7,6 +7,7 @@ import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
 import setChatListReducer from "./chat/setChatList";
 import setCurrChatReducer from "./chat/setCurrChat";
+import setFriendListReducer from "./friend/setFriendList";
 
 const profilePersistConfig = {
   key: "profile",
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   user: persistReducer(userPersistConfig, setUserReducer),
   chatList: setChatListReducer,
   currChat: setCurrChatReducer,
+  friendList: setFriendListReducer,
 });
 
 const store = configureStore({

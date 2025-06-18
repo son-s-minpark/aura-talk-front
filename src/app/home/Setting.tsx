@@ -28,6 +28,7 @@ const SettingList = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const profile = useSelector((state: RootState) => state.profile);
+  console.error(profile);
 
   return (
     <>

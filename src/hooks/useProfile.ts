@@ -24,30 +24,38 @@ export const useProfile = () => {
   };
 
   // 내 프로필 가져오기 요청
-  const useGetMyProfile = useQuery({
-    queryKey: ["myProfile"],
-    queryFn: async () => {
-      axiosInstance
-        .get(apiRoute.USER_MY_PROFILE)
-        .then((res) => {
-          if (res.data.success) {
-            const data = res.data.data;
-            dispatch(setProfile(data));
-          } else {
-            throw new Error("내 프로필 가져오기 오류");
-          }
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
-    },
-  });
+  const useGetMyProfile = () => {
+    return useQuery({
+      queryKey: ["myProfile"],
+      queryFn: async () => {
+        axiosInstance
+          .get(apiRoute.USER_MY_PROFILE)
+          .then((res) => {
+            if (res.data.success) {
+              const data = res.data.data;
+              dispatch(setProfile(data));
+              return data;
+            } else {
+              throw new Error("내 프로필 가져오기 오류");
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      },
+    });
+  };
 
   // 프로필 수정/등록 요청
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
       return await axiosInstance
-        .put(apiRoute.USER_PROFILE(user.userId), profileData)
+        .put(apiRoute.USER_PROFILE(user.userId), {
+          nickname: profileData.nickname,
+          username: profileData.username,
+          description: profileData.description,
+          interests: profileData.interests,
+        })
         .then((res) => {
           const { data } = res;
           if (data.success) {
@@ -56,6 +64,7 @@ export const useProfile = () => {
                 nickname: profileData.nickname,
                 username: profileData.username,
                 description: profileData.description,
+                interests: profileData.interests,
               })
             );
             return { success: true };

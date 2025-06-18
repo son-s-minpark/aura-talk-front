@@ -1,10 +1,22 @@
 import AlertCircle from "@/components/common/AlertCircle";
+import FriendComponent from "@/components/friend/FriendComponent";
 import OtherFriendsModal from "@/components/friend/modal/OtherFriendsModal";
+import { useFriend } from "@/hooks/useFriend";
+import { RootState } from "@/store/store";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const FriendList = () => {
   const [isOtherFriendModalDown, setIsOtherFriendModalDown] =
     useState<boolean>(false);
+  const { useGetFriendList } = useFriend();
+  const { isLoading } = useGetFriendList();
+  const friendList = useSelector((state: RootState) => state.friendList);
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <>
       {isOtherFriendModalDown && (
@@ -20,7 +32,11 @@ const FriendList = () => {
           친구 요청/대기/차단
           <AlertCircle />
         </p>
-        {/* 친구 목록 */}
+      </div>
+      <div className="flex flex-col gap-[30px]">
+        {friendList.map((friend, index) => (
+          <FriendComponent friend={friend} key={index} />
+        ))}
       </div>
     </>
   );
