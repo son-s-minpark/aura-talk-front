@@ -13,6 +13,7 @@ import InterestModal from "@/components/onboarding/modal/InterestModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setProfile } from "@/store/user/setProfile";
+import { useImageUpload } from "@/hooks/useImageUpload";
 
 type ProfileEditModalProps = {
   setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ type ProfileEditModalProps = {
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   const profile = useSelector((state: RootState) => state.profile);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
   const dispatch = useDispatch();
   const [nickname, setnickname] = useState<string>(profile.nickname);
   const [username, setusername] = useState<string>(profile.username);
@@ -29,6 +31,8 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
   const { useSetProfileMutation } = useProfile();
+  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
+    useImageUpload();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -128,7 +132,14 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
         >
           <div>
             <h1>대표 사진</h1>
-            <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
+            <AddImage
+              imgSize={70}
+              btnHeight={15}
+              btnWidth={42}
+              img={profileImg.thumbnailImgUrl}
+              setImg={useProfileImageUploadMutation.mutateAsync}
+              deleteImg={useDeleteProfileImageMutation.mutateAsync}
+            />
           </div>
           <div className="flex flex-col mt-[34px]">
             <div>

@@ -2,20 +2,22 @@ import { setModalDownType } from "@/type/chat/setModalDownType";
 import React from "react";
 import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
-import ChatFriend from "../ChatRoomFriend";
+import { IoNotifications, IoNotificationsOff } from "react-icons/io5";
 
-const data = [
-  {
-    name: "팀원팀원팀원팀원팀원팀원팀",
-    isLeader: true,
-  },
-  {
-    name: "ㅎㅎ",
-    isLeader: false,
-  },
-];
+import ChatRoomUser from "../../chatroom/ChatRoomUser";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import useChatRoom from "@/hooks/useChatRoom";
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
+  const currChat = useSelector((state: RootState) => state.currChat);
+  const { useChatNotificationMutation, useCreateInviteCodeMuatation } =
+    useChatRoom();
+
+  if (currChat.inviteCodeExpiredAt < new Date()) {
+    useCreateInviteCodeMuatation.mutateAsync({ id: currChat.id });
+  }
+
   return (
     <div
       className="modal-content h-[358px] w-[271px] flex flex-col"
@@ -30,11 +32,12 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
 
       <div className="px-[19px] mt-[17px]">
         <p className="text-[15px] font-semibold text-[var(--color-gray)]">
-          멤버(3)
+          멤버({currChat.users.length + 1})
         </p>
         <div className="h-[130px] px-[7px] mt-[17px] overflow-scroll flex flex-col gap-[10px]">
-          {data.map((friend, index) => (
-            <ChatFriend friend={friend} key={index} />
+          <ChatRoomUser user={currChat.owner} isLeader={true} />
+          {currChat.users.map((friend, index) => (
+            <ChatRoomUser user={friend} isLeader={false} key={index} />
           ))}
         </div>
         <button className="text-[var(--color-gray)] flex items-center gap-[14px]">
@@ -43,6 +46,20 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
         </button>
       </div>
       <div className="text-[var(--color-gray)] flex gap-[5px] items-center justify-end mt-[20px] mr-[22px]">
+        <button
+          onClick={() =>
+            useChatNotificationMutation.mutateAsync({
+              id: currChat.id,
+              isActive: currChat.active,
+            })
+          }
+        >
+          {currChat.active ? (
+            <IoNotifications className="w-[20px] h-[20px]" />
+          ) : (
+            <IoNotificationsOff className="w-[20px] h-[20px]" />
+          )}
+        </button>
         <IoSettings
           onClick={() => setModalDown("setting")}
           className="w-[20px] h-[20px]"

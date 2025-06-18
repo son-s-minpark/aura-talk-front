@@ -7,8 +7,6 @@ import ChatSetting from "./modal/ChatSetting";
 import ChatShare from "./modal/ChatShare";
 import ChatExit from "./modal/ChatExit";
 
-// type chatType = "friend" | "group";
-
 type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
 
 const ChatHeader = () => {

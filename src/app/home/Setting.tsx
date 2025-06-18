@@ -29,7 +29,6 @@ const SettingList = () => {
   const router = useRouter();
   const profile = useSelector((state: RootState) => state.profile);
   const profileImg = useSelector((state: RootState) => state.profileImg);
-  console.error(profileImg);
 
   return (
     <>

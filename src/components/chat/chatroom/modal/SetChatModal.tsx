@@ -1,30 +1,36 @@
 "use client";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
-import ChatSetFriend from "../ChatSetFriend";
+import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
+import useChatRoom from "@/hooks/useChatRoom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { friendType } from "@/type/friend/friendType";
 
-const data = [
-  {
-    name: "팀원팀원팀원팀원팀원팀원팀",
-    isLeader: true,
-  },
-  {
-    name: "ㅎㅎ",
-    isLeader: false,
-  },
-];
-
-// 이게 뭐지?
-const SetChatModal = () => {
+// 채팅방 생성 시 설정 모달
+const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { useCreateChatMutation } = useChatRoom();
+  const user = useSelector((state: RootState) => state.user);
 
-  function onSubmit() {
+  async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
-    // 이름이랑 사진이랑 친구 목록 전송하기
-    router.push("/chat/1");
+    if (roomname != "") {
+      try {
+        const res = await useCreateChatMutation.mutateAsync({
+          name: roomname,
+          userIds: [user.userId],
+        });
+        if (res.success) {
+          router.push("/chat/1");
+        }
+      } catch {
+        console.error("error");
+      }
+    }
   }
   return (
     <div
@@ -40,7 +46,7 @@ const SetChatModal = () => {
           <h1>채팅방 이름</h1>
           <div>
             <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
-              <input className="h-full w-full" />
+              <input className="h-full w-full" ref={roomNameRef} type="text" />
             </div>
           </div>
         </div>
@@ -49,8 +55,15 @@ const SetChatModal = () => {
           <div>
             <h1>친구 목록</h1>
             <div className="flex gap-[11px] mt-[9px]">
-              {data.map((friend, index) => (
-                <ChatSetFriend friend={friend} key={index} />
+              {friendList.map((friend, index) => (
+                <ChatSetUser
+                  user={{
+                    id: friend.id,
+                    thumbnailImg: friend.thumbnailImg,
+                    nickname: friend.nickname,
+                  }}
+                  key={index}
+                />
               ))}
             </div>
           </div>

@@ -74,6 +74,7 @@ const Signup = () => {
       return; // 빈 칸이 있으면 아무 작업도 하지 않음
     }
     if (isSignupValid()) {
+      setErrMsg("");
       try {
         const res = await useSignupMutation.mutateAsync({
           email: mail,

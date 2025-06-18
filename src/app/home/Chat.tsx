@@ -1,9 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import CreateChatModal from "@/components/chat/modal/CreateChatModal";
+import CreateChatModal from "@/components/chat/chatroom/modal/CreateChatModal";
+import useChatRoom from "@/hooks/useChatRoom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
+  const { useGetChatList } = useChatRoom();
+  const { isLoading } = useGetChatList();
+  const chattingList = useSelector((state: RootState) => state.chatList);
+
+  if (isLoading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <div className="pt-[46px] h-full">
       {isModalDown && (
@@ -11,7 +22,13 @@ const ChatList = () => {
           <CreateChatModal />
         </div>
       )}
-      <div className="relative">
+      <div className="relative h-full">
+        <div className="h-full">
+          {chattingList.map((chat, index) => (
+            <p key={index}>{chat.name}</p>
+          ))}
+        </div>
+
         <div className="absolute bottom-[15px] right-[21px]">
           <button
             className="w-[50px] h-[50px] bg-[var(--color-point)] rounded-full flex items-center justify-center"

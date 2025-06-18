@@ -1,7 +1,7 @@
 import React from "react";
-import ChatList from "@/components/chat/ChatList";
-import ChatHeader from "@/components/chat/ChatHeader";
-import ChatInput from "@/components/chat/ChatInput";
+import ChatList from "@/components/chat/chat/ChatList";
+import ChatHeader from "@/components/chat/chat/ChatHeader";
+import ChatInput from "@/components/chat/chat/ChatInput";
 
 const Page = () => {
   return (

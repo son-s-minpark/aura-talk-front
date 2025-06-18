@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ProfileInput } from "@/components/common/ProfileInput";
 import SignBtn from "@/components/onboarding/SignBtn";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
@@ -19,7 +19,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile);
   const { useSetProfileMutation } = useProfile();
-  const { getProfileImg } = useProfile();
   const [nickname, setnickname] = useState<string>(profile.nickname);
   const [username, setusername] = useState<string>(profile.username);
   const [description, setDescription] = useState<string>(profile.description);
@@ -27,10 +26,6 @@ const Profile = () => {
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-
-  useEffect(() => {
-    getProfileImg();
-  }, []);
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);

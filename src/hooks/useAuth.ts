@@ -4,7 +4,7 @@ import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { persistor, RootState } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
 import { setProfile } from "@/store/user/setProfile";
 
@@ -15,14 +15,15 @@ export const useAuth = () => {
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: async (signupData: signType) => {
-      return axios
+      return await axios
         .post(apiRoute.USER, signupData, {
           headers: {
             "Content-Type": "application/json",
           },
         })
         .then((res) => {
-          const { data } = res;
+          const data = res.data;
+          console.error(res);
 
           if (data.success) {
             const token = data.data.token;
@@ -107,20 +108,22 @@ export const useAuth = () => {
   // 로그아웃 요청
   const useLogoutMutation = useMutation({
     mutationFn: async () => {
-      try {
-        const res = await axiosInstance.post(apiRoute.USER_LOGOUT);
-        const { data } = res;
+      return await axiosInstance
+        .post(apiRoute.USER_LOGOUT)
 
-        if (data.success) {
-          localStorage.clear();
-          return { success: true };
-        } else {
-          throw new Error("Logout failed");
-        }
-      } catch (err) {
-        console.error(err);
-        throw new Error("Logout error");
-      }
+        .then((res) => {
+          const { data } = res;
+          if (data.success) {
+            persistor.purge();
+            return { success: true };
+          } else {
+            throw new Error("Logout failed");
+          }
+        })
+        .catch((err) => {
+          console.error("signup error:", err);
+          throw err;
+        });
     },
   });
 
@@ -133,6 +136,7 @@ export const useAuth = () => {
           console.error("signout ERror", res);
           const { data } = res;
           if (data.success) {
+            persistor.purge();
             return { success: true };
           } else {
             throw Error("회원탈퇴 에러");

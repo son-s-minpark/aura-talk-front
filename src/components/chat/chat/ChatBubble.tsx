@@ -1,11 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-
-type chatType = {
-  name: string;
-  text: string;
-  time: string;
-};
+import { chatType } from "@/type/chat/chatType";
 
 const ChatBubble = ({ chat }: { chat: chatType }) => {
   return (

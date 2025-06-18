@@ -1,27 +1,40 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storageSession from "redux-persist/lib/storage/session";
+import { persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import setPageReducer from "./sign/setPage";
 import setProfileImgReducer from "./user/setProfileImg";
 import setProfileReducer from "./user/setProfile";
 import setUserReducer from "./user/setUser";
 import persistReducer from "redux-persist/es/persistReducer";
+import setChatListReducer from "./chat/setChatList";
+import setCurrChatReducer from "./chat/setCurrChat";
+
+const profileImgPersistConfig = {
+  key: "profileImg",
+  storage: storage,
+};
+
+const profilePersistConfig = {
+  key: "profile",
+  storage: storage,
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: storage,
+};
 
 const reducers = combineReducers({
   page: setPageReducer,
-  profileImg: setProfileImgReducer,
-  profile: setProfileReducer,
-  user: setUserReducer,
+  profileImg: persistReducer(profileImgPersistConfig, setProfileImgReducer),
+  profile: persistReducer(profilePersistConfig, setProfileReducer),
+  user: persistReducer(userPersistConfig, setUserReducer),
+  chatList: setChatListReducer,
+  currChat: setCurrChatReducer,
 });
 
-const persistConfig = {
-  key: "root",
-  storage: storageSession,
-  whitelist: ["user"],
-};
-const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
@@ -30,5 +43,6 @@ const store = configureStore({
 
 export default store;
 
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

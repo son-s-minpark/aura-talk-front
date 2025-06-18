@@ -8,10 +8,14 @@ import TermsModal from "@/components/onboarding/modal/TermsModal";
 import Introduction from "@/components/onboarding/Introduction";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useImageUpload } from "@/hooks/useImageUpload";
 
 const ProfileImg = () => {
   const profile = useSelector((state: RootState) => state.profile);
+  const profileImg = useSelector((state: RootState) => state.profileImg);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
+  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
+    useImageUpload();
 
   return (
     <div className="w-full h-full overflow-scroll text-white">
@@ -26,7 +30,14 @@ const ProfileImg = () => {
         <Introduction page="profileImg" />
       </div>
       <div className="mt-[35px] mb-[15px]">
-        <AddImage imgSize={100} btnHeight={24} btnWidth={54} />
+        <AddImage
+          imgSize={100}
+          btnHeight={24}
+          btnWidth={54}
+          img={profileImg.thumbnailImgUrl}
+          setImg={useProfileImageUploadMutation.mutateAsync}
+          deleteImg={useDeleteProfileImageMutation.mutateAsync}
+        />
       </div>
       <div className="flex flex-col mt-[55px] ml-[37px] gap-[22px]">
         <div>
