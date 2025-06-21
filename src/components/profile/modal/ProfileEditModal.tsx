@@ -106,8 +106,8 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
             interests: profile.interests,
             profileImage: {
               userId: user.userId,
-              thumbnailImgUrl: profile.profileImage.thumbnailImgUrl,
-              originalImgUrl: profile.profileImage.originalImgUrl,
+              thumbnailImageUrl: profile.profileImage.thumbnailImageUrl,
+              originalImageUrl: profile.profileImage.originalImageUrl,
               isDefaultImg: profile.profileImage.isDefaultImg,
             },
           });
@@ -142,7 +142,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
               imgSize={70}
               btnHeight={15}
               btnWidth={42}
-              img={profile.profileImage.thumbnailImgUrl}
+              img={profile.profileImage.thumbnailImageUrl}
               setImg={useProfileImageUploadMutation.mutateAsync}
               deleteImg={useDeleteProfileImageMutation.mutateAsync}
             />

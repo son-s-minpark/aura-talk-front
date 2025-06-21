@@ -46,8 +46,8 @@ export const useImageUpload = () => {
             setProfile({
               profileImage: {
                 userId: user.userId,
-                originalImgUrl: data.originalImageUrl,
-                thumbnailImgUrl: data.thumbnailImageUrl,
+                originalImageUrl: data.originalImageUrl,
+                thumbnailImageUrl: data.thumbnailImageUrl,
                 isDefaultImg: data.defaultProfileImage,
               },
             })
@@ -72,8 +72,8 @@ export const useImageUpload = () => {
             setProfile({
               profileImage: {
                 userId: user.userId,
-                originalImgUrl: data.originalImageUrl,
-                thumbnailImgUrl: data.thumbnailImageUrl,
+                originalImageUrl: data.originalImageUrl,
+                thumbnailImageUrl: data.thumbnailImageUrl,
                 isDefaultImg: data.defaultProfileImage,
               },
             })

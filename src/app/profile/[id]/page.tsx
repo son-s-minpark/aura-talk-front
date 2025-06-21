@@ -14,12 +14,15 @@ import { AxiosError } from "axios";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
+import { useFriend } from "@/hooks/useFriend";
+import { friendType } from "@/type/friend/friendType";
+import Image from "next/image";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
+  const { isFriend, useFriendRequestMutation } = useFriend();
   const params = useParams();
-  const id = params.id;
-  const profileId = Number(id);
+  const profileId = Number(params.id);
 
   const { data, isLoading, isError, error } = useGetUserProfile(profileId);
 
@@ -41,8 +44,8 @@ const Page = () => {
     );
   }
 
-  const isFriend = false;
-  const userData = data?.data;
+  const userData: friendType = data?.data;
+  console.error(data);
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
@@ -50,20 +53,34 @@ const Page = () => {
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white ">
           <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full">
-            {/* 사진 */}
+            {userData.profileImage.thumbnailImageUrl && (
+              <>
+                <Image
+                  src={userData.profileImage.thumbnailImageUrl}
+                  alt="Profile"
+                  fill
+                  className="rounded-full object-cover"
+                />
+              </>
+            )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">
             <p className="text-[20px] font-bold">{userData?.nickname}</p>
             <p className="text-[12px]">{userData?.username}</p>
           </div>
         </div>
-        <div className="flex gap-[14px] mt-[9px]">
+        <div className="flex gap-[14px] mt-[9px] text-white">
           <IoChatbubbleEllipsesSharp className="w-[28px] h-[28px]" />
           <IoCall className="w-[28px] h-[28px]" />
-          {isFriend ? (
+          {isFriend(profileId) ? (
             <IoPersonRemoveSharp className="w-[28px] h-[28px]" />
           ) : (
-            <IoPersonAdd className="w-[28px] h-[28px]" />
+            <button
+              type="button"
+              onClick={() => useFriendRequestMutation.mutateAsync(userData)}
+            >
+              <IoPersonAdd className="w-[28px] h-[28px]" />
+            </button>
           )}
           <MdBlock className="w-[28px] h-[28px]" />
         </div>

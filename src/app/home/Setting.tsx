@@ -53,9 +53,9 @@ const SettingList = () => {
         onClick={() => router.push(`/profile/self`)}
       >
         <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
-          {profile.profileImage.thumbnailImgUrl && (
+          {profile.profileImage.thumbnailImageUrl && (
             <Image
-              src={profile.profileImage.thumbnailImgUrl}
+              src={profile.profileImage.thumbnailImageUrl}
               alt="Profile"
               fill
               className="rounded-full object-cover"

@@ -3,11 +3,7 @@ import React from "react";
 import { AxiosError } from "axios";
 import ErrorMessage from "../common/ErrorMessage";
 
-type addFriendProp = {
-  id: number;
-};
-
-const ModalFriendComponent = ({ id }: addFriendProp) => {
+const ModalFriendComponent = ({ id }: { id: number }) => {
   const { useGetUserProfile } = useProfile();
 
   const { data, isLoading, isError, error } = useGetUserProfile(id);

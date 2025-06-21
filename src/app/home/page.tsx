@@ -20,7 +20,7 @@ const Page = () => {
 
   useEffect(() => {
     connectWebsocket();
-    if (profile.profileImage.thumbnailImgUrl == "") {
+    if (profile.profileImage.thumbnailImageUrl == "") {
       getProfileImg();
     }
   });

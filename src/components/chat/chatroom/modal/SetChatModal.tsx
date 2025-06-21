@@ -59,7 +59,7 @@ const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
                 <ChatSetUser
                   user={{
                     id: friend.id,
-                    thumbnailImg: friend.thumbnailImg,
+                    thumbnailImg: friend.profileImage.thumbnailImageUrl,
                     nickname: friend.nickname,
                   }}
                   key={index}

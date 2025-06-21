@@ -33,7 +33,7 @@ const ProfileImg = () => {
           imgSize={100}
           btnHeight={24}
           btnWidth={54}
-          img={profile.profileImage.thumbnailImgUrl}
+          img={profile.profileImage.thumbnailImageUrl}
           setImg={useProfileImageUploadMutation.mutateAsync}
           deleteImg={useDeleteProfileImageMutation.mutateAsync}
         />

@@ -8,8 +8,8 @@ const initialState: profileType = {
   interests: [],
   profileImage: {
     userId: 0,
-    originalImgUrl: "",
-    thumbnailImgUrl: "",
+    originalImageUrl: "",
+    thumbnailImageUrl: "",
     isDefaultImg: true,
   },
 };

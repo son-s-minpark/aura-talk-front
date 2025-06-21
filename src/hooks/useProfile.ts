@@ -50,7 +50,7 @@ export const useProfile = () => {
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
       return await axiosInstance
-        .put(apiRoute.USER_PROFILE(user.userId), {
+        .put(apiRoute.USER_PROFILE, {
           nickname: profileData.nickname,
           username: profileData.username,
           description: profileData.description,

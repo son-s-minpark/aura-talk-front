@@ -25,9 +25,9 @@ const Page = () => {
           <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
             {!isEditModalDown && (
               <>
-                {profile.profileImage.thumbnailImgUrl && (
+                {profile.profileImage.thumbnailImageUrl && (
                   <Image
-                    src={profile.profileImage.thumbnailImgUrl}
+                    src={profile.profileImage.thumbnailImageUrl}
                     alt="Profile"
                     fill
                     className="rounded-full object-cover"

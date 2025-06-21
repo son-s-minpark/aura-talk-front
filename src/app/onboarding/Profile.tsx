@@ -91,8 +91,8 @@ const Profile = () => {
             interests: profile.interests,
             profileImage: {
               userId: user.userId,
-              thumbnailImgUrl: profile.profileImage.thumbnailImgUrl,
-              originalImgUrl: profile.profileImage.originalImgUrl,
+              thumbnailImageUrl: profile.profileImage.thumbnailImageUrl,
+              originalImageUrl: profile.profileImage.originalImageUrl,
               isDefaultImg: profile.profileImage.isDefaultImg,
             },
           });
