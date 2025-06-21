@@ -3,20 +3,19 @@ import { signType } from "@/type/sign/signType";
 import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { persistor, RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { persistor } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
 import { setProfile } from "@/store/user/setProfile";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
 
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: async (signupData: signType) => {
       return await axios
-        .post(apiRoute.USER, signupData, {
+        .post(apiRoute.USER_SIGNIN, signupData, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -131,7 +130,7 @@ export const useAuth = () => {
   const useDeleteAccoutMutation = useMutation({
     mutationFn: async (pwData: string) => {
       return await axiosInstance
-        .delete(apiRoute.USER_DELETE_ACCOUNT(user.userId), { data: pwData })
+        .delete(apiRoute.USER_DELETE_ACCOUNT, { data: pwData })
         .then((res) => {
           console.error("signout ERror", res);
           const { data } = res;

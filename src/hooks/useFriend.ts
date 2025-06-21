@@ -17,7 +17,7 @@ export const useFriend = () => {
       queryFn: async () => {
         try {
           await axiosInstance
-            .get(apiRoute.FRIEND_GET)
+            .get(apiRoute.FRIEND_GET_LIST)
             .then((res) => {
               if (res.data.success) {
                 const data = res.data.data;
