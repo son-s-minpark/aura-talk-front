@@ -1,16 +1,16 @@
 import React from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
+import { friendType } from "@/type/friend/friendType";
 
-const data = [1, 2, 3, 4, 5];
-const WaitingList = () => {
+const WaitingList = ({ waitingList }: { waitingList: friendType[] }) => {
   function onAcceptWaiting() {}
   function onRejectWaiting() {}
   return (
     <>
-      {data.map((friend) => (
-        <div className="flex justify-between" key={friend}>
-          <ModalFriendComponent id={friend} />
+      {waitingList.map((friend, index) => (
+        <div className="flex justify-between" key={index}>
+          <ModalFriendComponent friend={friend} />
           <div className="flex gap-[6px] items-center">
             <SelectBtn label="수락" onClick={() => onAcceptWaiting()} />
             <SelectBtn

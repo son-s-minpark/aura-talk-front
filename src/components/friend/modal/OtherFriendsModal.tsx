@@ -4,8 +4,9 @@ import WaitingList from "../WaitingList";
 import RequestingList from "../RequestingList";
 import BlockingList from "../BlockingList";
 import { otherFriendListType } from "@/type/friend/otherFriendListType";
+import { friendType } from "@/type/friend/friendType";
 
-const OtherFriendsModal = () => {
+const OtherFriendsModal = ({ waitingList }: { waitingList: friendType[] }) => {
   const [friendList, setFriendList] = useState<otherFriendListType>("waiting");
   return (
     <div
@@ -39,7 +40,7 @@ const OtherFriendsModal = () => {
         </h1>
       </div>
       <div className="flex flex-col gap-[20px] h-[251px] overflow-y-scroll">
-        {friendList === "waiting" && <WaitingList />}
+        {friendList === "waiting" && <WaitingList waitingList={waitingList} />}
         {friendList === "requesting" && <RequestingList />}
         {friendList === "blocking" && <BlockingList />}
       </div>

@@ -14,7 +14,7 @@ import { AxiosError } from "axios";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
-import { useFriend } from "@/hooks/useFriend";
+import { useFriend } from "@/hooks/friend/useFriend";
 import { friendType } from "@/type/friend/friendType";
 import Image from "next/image";
 

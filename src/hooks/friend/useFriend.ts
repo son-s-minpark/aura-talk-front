@@ -35,6 +35,7 @@ export const useFriend = () => {
     });
   };
 
+  // 친구 신청하기 요청
   const useFriendRequestMutation = useMutation({
     mutationFn: async (friend: friendType) => {
       await axiosInstance
@@ -52,6 +53,7 @@ export const useFriend = () => {
     },
   });
 
+  // 친구인지 확인
   const isFriend = (id: number) => {
     return friendList.find((item) => item.id === id);
   };
