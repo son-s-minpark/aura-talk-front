@@ -2,20 +2,19 @@ import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 
-export const useRequestedFriend = () => {
-  // 친구 신청 받은 목록 가져오기 요청
-  const useGetWaitingFriendList = () =>
+export const useBlockedFriends = () => {
+  const useGetBlockedFriendsList = () =>
     useQuery({
-      queryKey: ["getWaitingFriendList"],
+      queryKey: ["getBlockedFriendsList"],
       queryFn: async () => {
         return await axiosInstance
-          .get(apiRoute.FREIND_REQUEST_RECEIVED_LIST)
+          .get(apiRoute.FRIEND_BLOCK_LIST)
           .then((res) => {
             const data = res.data;
             if (data.success) {
               return data.data;
             } else {
-              throw new Error("받은 친구 요청 가져오기 에러");
+              throw new Error("차단된 친구 목록 가져오기 에러");
             }
           })
           .catch((err) => {
@@ -23,5 +22,6 @@ export const useRequestedFriend = () => {
           });
       },
     });
-  return { useGetWaitingFriendList };
+
+  return { useGetBlockedFriendsList };
 };

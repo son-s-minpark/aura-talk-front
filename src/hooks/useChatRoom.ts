@@ -42,7 +42,7 @@ const useChatRoom = () => {
     useQuery({
       queryKey: ["getChatlist"],
       queryFn: async () => {
-        return axiosInstance
+        return await axiosInstance
           .get(apiRoute.CHATROOM_GET_LIST)
           .then((res) => {
             const { data } = res;

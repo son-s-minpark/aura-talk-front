@@ -28,7 +28,7 @@ export const useProfile = () => {
     return useQuery({
       queryKey: ["myProfile"],
       queryFn: async () => {
-        axiosInstance
+        await axiosInstance
           .get(apiRoute.USER_MY_PROFILE)
           .then((res) => {
             if (res.data.success) {
@@ -50,7 +50,7 @@ export const useProfile = () => {
   const useSetProfileMutation = useMutation({
     mutationFn: async (profileData: profileType) => {
       return await axiosInstance
-        .put(apiRoute.USER_PROFILE, {
+        .put(apiRoute.USER_PUT_PROFILE, {
           nickname: profileData.nickname,
           username: profileData.username,
           description: profileData.description,

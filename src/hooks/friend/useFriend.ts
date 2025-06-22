@@ -11,29 +11,26 @@ export const useFriend = () => {
   const friendList = useSelector((state: RootState) => state.friendList);
 
   // 친구 목록 가져오기 요청
-  const useGetFriendList = () => {
-    return useQuery({
+  const useGetFriendList = () =>
+    useQuery({
       queryKey: ["getFriendList"],
       queryFn: async () => {
-        try {
-          await axiosInstance
-            .get(apiRoute.FRIEND_GET_LIST)
-            .then((res) => {
-              if (res.data.success) {
-                const data = res.data.data;
-                dispatch(setFriendList(data));
-                return data;
-              } else {
-                throw new Error("친구 목록 가져오기 오류");
-              }
-            })
-            .catch((err) => {
-              throw new Error(err);
-            });
-        } catch {}
+        return await axiosInstance
+          .get(apiRoute.FRIEND_GET_LIST)
+          .then((res) => {
+            if (res.data.success) {
+              const data = res.data.data;
+              dispatch(setFriendList(data));
+              return data;
+            } else {
+              throw new Error("친구 목록 가져오기 오류");
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
       },
     });
-  };
 
   // 친구 신청하기 요청
   const useFriendRequestMutation = useMutation({
