@@ -55,5 +55,29 @@ export const useFriend = () => {
     return friendList.find((item) => item.id === id);
   };
 
-  return { useGetFriendList, useFriendRequestMutation, isFriend };
+  // 받은 친구 신청 수락 요청
+  const useFriendAcceptMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .post(apiRoute.FRIEND_REQUEST_ACCEPT(id))
+        .then((res) => {
+          const data = res.data;
+          if (data.success) {
+            return data;
+          } else {
+            throw new Error("친구 수락 오류");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
+  return {
+    useGetFriendList,
+    useFriendRequestMutation,
+    isFriend,
+    useFriendAcceptMutation,
+  };
 };

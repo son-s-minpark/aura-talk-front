@@ -3,11 +3,18 @@ import React, { useState } from "react";
 import WaitingList from "../WaitingList";
 import RequestingList from "../RequestingList";
 import BlockingList from "../BlockingList";
-import { otherFriendListType } from "@/type/friend/otherFriendListType";
-import { friendType } from "@/type/friend/friendType";
+import {
+  otherFriendListType,
+  otherFriendType,
+} from "@/type/friend/otherFriendListType";
 
-const OtherFriendsModal = ({ waitingList }: { waitingList: friendType[] }) => {
+const OtherFriendsModal = ({
+  waitingList,
+}: {
+  waitingList: otherFriendType[];
+}) => {
   const [friendList, setFriendList] = useState<otherFriendListType>("waiting");
+  console.error(waitingList, typeof waitingList);
   return (
     <div
       className="modal-content w-[332px] h-[362px] px-[20px] pt-[29px]"
@@ -40,7 +47,7 @@ const OtherFriendsModal = ({ waitingList }: { waitingList: friendType[] }) => {
         </h1>
       </div>
       <div className="flex flex-col gap-[20px] h-[251px] overflow-y-scroll">
-        {friendList === "waiting" && <WaitingList waitingList={waitingList} />}
+        {friendList === "waiting" && <WaitingList list={waitingList} />}
         {friendList === "requesting" && <RequestingList />}
         {friendList === "blocking" && <BlockingList />}
       </div>

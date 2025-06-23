@@ -51,16 +51,18 @@ const Page = () => {
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
       <Back />
       <div className="flex flex-col items-center">
-        <div className="h-[139px] flex flex-col items-center text-white ">
-          <div className="w-[82px] h-[82px] border-1 border-[var(--color-background)] rounded-full">
-            {userData.profileImage.thumbnailImageUrl && (
+        <div className="h-[139px] flex flex-col items-center text-white">
+          <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
+            {userData && (
               <>
-                <Image
-                  src={userData.profileImage.thumbnailImageUrl}
-                  alt="Profile"
-                  fill
-                  className="rounded-full object-cover"
-                />
+                {userData.profileImage.thumbnailImageUrl && (
+                  <Image
+                    src={userData.profileImage.thumbnailImageUrl}
+                    alt="Profile"
+                    fill
+                    className="rounded-full object-cover"
+                  />
+                )}
               </>
             )}
           </div>
