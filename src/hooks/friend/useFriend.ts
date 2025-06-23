@@ -74,10 +74,30 @@ export const useFriend = () => {
     },
   });
 
+  // 받은 친구 신청 거절 요청
+  const useFriendRejectMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .post(apiRoute.FRIEND_REQUEST_REJECT(id))
+        .then((res) => {
+          const data = res.data;
+          if (data.success) {
+            return data;
+          } else {
+            throw new Error("친구 거절 오류");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
   return {
     useGetFriendList,
     useFriendRequestMutation,
     isFriend,
     useFriendAcceptMutation,
+    useFriendRejectMutation,
   };
 };

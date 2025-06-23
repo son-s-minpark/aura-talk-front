@@ -6,7 +6,7 @@ import { useFriend } from "@/hooks/friend/useFriend";
 
 const WaitingList = ({ list }: { list: otherFriendType[] }) => {
   const [waitingList, setWaitingList] = useState<otherFriendType[]>(list);
-  const { useFriendAcceptMutation } = useFriend();
+  const { useFriendAcceptMutation, useFriendRejectMutation } = useFriend();
 
   function onAcceptWaiting(userId: number) {
     useFriendAcceptMutation.mutateAsync(userId).then(() => {
@@ -14,7 +14,11 @@ const WaitingList = ({ list }: { list: otherFriendType[] }) => {
     });
   }
 
-  function onRejectWaiting() {}
+  function onRejectWaiting(userId: number) {
+    useFriendRejectMutation.mutateAsync(userId).then(() => {
+      setWaitingList(waitingList.filter((item) => item.friendUserId == userId));
+    });
+  }
 
   return (
     <>
@@ -29,7 +33,7 @@ const WaitingList = ({ list }: { list: otherFriendType[] }) => {
             <SelectBtn
               isRejected={true}
               label="거절"
-              onClick={() => onRejectWaiting()}
+              onClick={() => onRejectWaiting(friend.friendUserId)}
             />
           </div>
         </div>

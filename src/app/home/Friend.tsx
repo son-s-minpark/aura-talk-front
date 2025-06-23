@@ -15,7 +15,6 @@ const FriendList = () => {
   const { isLoading } = useGetFriendList();
   const { data: waitingList = [] } = useGetWaitingFriendList();
   const friendList = useSelector((state: RootState) => state.friendList);
-  const [list, setList] = useState(friendList);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -38,7 +37,7 @@ const FriendList = () => {
         </p>
       </div>
       <div className="flex flex-col gap-[30px]">
-        {list.map((friend, index) => (
+        {friendList.map((friend, index) => (
           <FriendComponent friend={friend} key={index} />
         ))}
       </div>
