@@ -93,11 +93,29 @@ export const useFriend = () => {
     },
   });
 
+  const useCancelFriendRequestMuration = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .delete(apiRoute.FRIEND_REQUEST_SENT_CANCEL(id))
+        .then((res) => {
+          if (res.data.success) {
+            return { success: true };
+          } else {
+            throw new Error("친구 신청 취소 오류");
+          }
+        })
+        .catch((err) => {
+          throw Error(err);
+        });
+    },
+  });
+
   return {
     useGetFriendList,
     useFriendRequestMutation,
     isFriend,
     useFriendAcceptMutation,
     useFriendRejectMutation,
+    useCancelFriendRequestMuration,
   };
 };
