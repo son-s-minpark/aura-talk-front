@@ -24,6 +24,7 @@ export const useRequestedFriend = () => {
       },
     });
 
+  // 요청 중인 친구 목록 가져오기 요청
   const useGetRequestingFriendList = () =>
     useQuery({
       queryKey: ["getRequestingFriendList"],

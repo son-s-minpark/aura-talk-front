@@ -20,7 +20,12 @@ import Image from "next/image";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
-  const { isFriend, useFriendRequestMutation } = useFriend();
+  const {
+    isFriend,
+    useFriendRequestMutation,
+    useBlockFriendMutation,
+    useCancelBlockFriendMutation,
+  } = useFriend();
   const params = useParams();
   const profileId = Number(params.id);
 
@@ -79,12 +84,24 @@ const Page = () => {
           ) : (
             <button
               type="button"
-              onClick={() => useFriendRequestMutation.mutateAsync(userData)}
+              onClick={() => useFriendRequestMutation.mutateAsync(userData.id)}
             >
               <IoPersonAdd className="w-[28px] h-[28px]" />
             </button>
           )}
-          <MdBlock className="w-[28px] h-[28px]" />
+          {data.friendStatus !== "BLOCKED" ? (
+            <MdBlock
+              className="w-[28px] h-[28px]"
+              onClick={() => useBlockFriendMutation.mutateAsync(userData.id)}
+            />
+          ) : (
+            <MdBlock
+              className="w-[28px] h-[28px]"
+              onClick={() =>
+                useCancelBlockFriendMutation.mutateAsync(userData.id)
+              }
+            />
+          )}
         </div>
       </div>
 

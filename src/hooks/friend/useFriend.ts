@@ -1,6 +1,5 @@
 import { setFriendList } from "@/store/friend/setFriendList";
 import { RootState } from "@/store/store";
-import { friendType } from "@/type/friend/friendType";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -34,9 +33,9 @@ export const useFriend = () => {
 
   // 친구 신청하기 요청
   const useFriendRequestMutation = useMutation({
-    mutationFn: async (friend: friendType) => {
+    mutationFn: async (id: number) => {
       await axiosInstance
-        .post(apiRoute.FRIEND_REQUEST(friend.id))
+        .post(apiRoute.FRIEND_REQUEST(id))
         .then((res) => {
           const data = res.data;
           if (data.success) {
@@ -111,6 +110,34 @@ export const useFriend = () => {
     },
   });
 
+  // 친구 차단하기 요청
+  const useBlockFriendMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .post(apiRoute.FRIEND_BLOCK(id))
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
+  // 친구 차단 취소 요청
+  const useCancelBlockFriendMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .delete(apiRoute.FRIEND_BLOCK(id))
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
   return {
     useGetFriendList,
     useFriendRequestMutation,
@@ -118,5 +145,7 @@ export const useFriend = () => {
     useFriendAcceptMutation,
     useFriendRejectMutation,
     useCancelFriendRequestMuration,
+    useBlockFriendMutation,
+    useCancelBlockFriendMutation,
   };
 };

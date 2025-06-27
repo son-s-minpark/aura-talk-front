@@ -3,6 +3,7 @@ import axiosInstance from "@/util/api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 
 export const useBlockedFriends = () => {
+  // 차단한 친구 목록 가져오기 요청
   const useGetBlockedFriendsList = () =>
     useQuery({
       queryKey: ["getBlockedFriendsList"],
