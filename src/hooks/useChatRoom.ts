@@ -66,14 +66,10 @@ const useChatRoom = () => {
       return await axiosInstance
         .delete(apiRoute.CHATROOM_EXIT(id))
         .then((res) => {
-          if (res.data.success) {
-            return { success: true };
-          } else {
-            throw new Error("채팅방 나가기 오류: ", res.data);
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error("채팅방 나가기 오류: ", err);
+          throw Error(err);
         });
     },
   });
@@ -86,14 +82,10 @@ const useChatRoom = () => {
           enabled: isActive,
         })
         .then((res) => {
-          if (res.data.success) {
-            return { success: true };
-          } else {
-            throw new Error("채팅방 알림 on/off 오류: ", res.data);
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error("채팅방 알림 on/off 오류: ", err);
+          throw Error(err);
         });
     },
   });
@@ -104,14 +96,10 @@ const useChatRoom = () => {
       return await axiosInstance
         .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
         .then((res) => {
-          if (res.data.success) {
-            return { success: true };
-          } else {
-            throw new Error("초대 코드 생성 오류: ", res.data);
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error("초대 코드 생성 오류: ", err);
+          throw Error(err);
         });
     },
   });

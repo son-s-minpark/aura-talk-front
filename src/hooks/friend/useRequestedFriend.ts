@@ -11,15 +11,10 @@ export const useRequestedFriend = () => {
         return await axiosInstance
           .get(apiRoute.FREIND_REQUEST_RECEIVED_LIST)
           .then((res) => {
-            const data = res.data;
-            if (data.success) {
-              return data.data;
-            } else {
-              throw new Error("받은 친구 요청 가져오기 에러");
-            }
+            return res.data.success;
           })
           .catch((err) => {
-            throw new Error(err);
+            throw Error(err);
           });
       },
     });
@@ -32,15 +27,10 @@ export const useRequestedFriend = () => {
         return await axiosInstance
           .get(apiRoute.FREIND_REQUEST_SENT_LIST)
           .then((res) => {
-            const data = res.data;
-            if (data.success) {
-              return data.data;
-            } else {
-              throw new Error("받은 친구 요청 가져오기 에러");
-            }
+            return res.data.success;
           })
           .catch((err) => {
-            throw new Error(err);
+            throw Error(err);
           });
       },
     });

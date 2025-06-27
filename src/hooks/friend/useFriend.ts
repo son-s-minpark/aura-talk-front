@@ -37,14 +37,10 @@ export const useFriend = () => {
       await axiosInstance
         .post(apiRoute.FRIEND_REQUEST(id))
         .then((res) => {
-          const data = res.data;
-          if (data.success) {
-          } else {
-            throw new Error("친구 신청 오류");
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error(err);
+          throw Error(err);
         });
     },
   });
@@ -60,15 +56,10 @@ export const useFriend = () => {
       await axiosInstance
         .post(apiRoute.FRIEND_REQUEST_ACCEPT(id))
         .then((res) => {
-          const data = res.data;
-          if (data.success) {
-            return data;
-          } else {
-            throw new Error("친구 수락 오류");
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error(err);
+          throw Error(err);
         });
     },
   });
@@ -79,15 +70,10 @@ export const useFriend = () => {
       await axiosInstance
         .post(apiRoute.FRIEND_REQUEST_REJECT(id))
         .then((res) => {
-          const data = res.data;
-          if (data.success) {
-            return data;
-          } else {
-            throw new Error("친구 거절 오류");
-          }
+          return res.data.success;
         })
         .catch((err) => {
-          throw new Error(err);
+          throw Error(err);
         });
     },
   });
@@ -98,11 +84,7 @@ export const useFriend = () => {
       await axiosInstance
         .delete(apiRoute.FRIEND_REQUEST_SENT_CANCEL(id))
         .then((res) => {
-          if (res.data.success) {
-            return { success: true };
-          } else {
-            throw new Error("친구 신청 취소 오류");
-          }
+          return res.data.success;
         })
         .catch((err) => {
           throw Error(err);
@@ -138,6 +120,19 @@ export const useFriend = () => {
     },
   });
 
+  const useDeleteFriendMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .delete(apiRoute.FRIEND_DELETE(id))
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
   return {
     useGetFriendList,
     useFriendRequestMutation,
@@ -147,5 +142,6 @@ export const useFriend = () => {
     useCancelFriendRequestMuration,
     useBlockFriendMutation,
     useCancelBlockFriendMutation,
+    useDeleteFriendMutation,
   };
 };
