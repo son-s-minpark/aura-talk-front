@@ -3,8 +3,8 @@ import axiosInstance from "@/util/api/axiosInstance";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "@/store/user/setProfile";
 import { RootState } from "@/store/store";
+import { setUser } from "@/store/user/setUser";
 
 type ImageProps = {
   fileName: string;
@@ -43,7 +43,7 @@ export const useImageUpload = () => {
           const data = completeRes.data.data;
 
           dispatch(
-            setProfile({
+            setUser({
               profileImage: {
                 userId: user.userId,
                 originalImageUrl: data.originalImageUrl,
@@ -69,7 +69,7 @@ export const useImageUpload = () => {
           const data = res.data.data;
 
           dispatch(
-            setProfile({
+            setUser({
               profileImage: {
                 userId: user.userId,
                 originalImageUrl: data.originalImageUrl,

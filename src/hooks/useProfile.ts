@@ -1,11 +1,18 @@
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { profileType } from "@/type/user/profileType";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { setProfile } from "@/store/user/setProfile";
 import { setUser } from "@/store/user/setUser";
+import { profileImageType } from "@/type/user/profileImageType";
+
+type profileType = {
+  nickname: string;
+  username: string;
+  description: string;
+  interests: string[];
+  profileImage: profileImageType;
+};
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -33,7 +40,7 @@ export const useProfile = () => {
           .then((res) => {
             if (res.data.success) {
               const data = res.data.data;
-              dispatch(setProfile(data));
+              dispatch(setUser(data));
               return data;
             } else {
               throw new Error("내 프로필 가져오기 오류");
@@ -60,7 +67,7 @@ export const useProfile = () => {
           const { data } = res;
           if (data.success) {
             dispatch(
-              setProfile({
+              setUser({
                 nickname: profileData.nickname,
                 username: profileData.username,
                 description: profileData.description,
@@ -108,7 +115,7 @@ export const useProfile = () => {
     const data = res.data.data;
     console.error(data);
 
-    dispatch(setProfile({ profileImage: data }));
+    dispatch(setUser({ profileImage: data }));
   };
 
   return {

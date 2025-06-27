@@ -11,7 +11,7 @@ import { RootState } from "@/store/store";
 import { useImageUpload } from "@/hooks/useImageUpload";
 
 const ProfileImg = () => {
-  const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
   const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
     useImageUpload();
@@ -33,7 +33,7 @@ const ProfileImg = () => {
           imgSize={100}
           btnHeight={24}
           btnWidth={54}
-          img={profile.profileImage.thumbnailImageUrl}
+          img={user.profileImage.thumbnailImageUrl}
           setImg={useProfileImageUploadMutation.mutateAsync}
           deleteImg={useDeleteProfileImageMutation.mutateAsync}
         />
@@ -44,13 +44,13 @@ const ProfileImg = () => {
             사용자 이름
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profile.nickname}
+            {user.nickname}
           </p>
         </div>
         <div>
           <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profile.username}
+            {user.username}
           </p>
         </div>
         <div>
@@ -58,7 +58,7 @@ const ProfileImg = () => {
             한 줄 소개
           </p>
           <p className="text-white text-[18px] font-semibold mt-[12px]">
-            {profile.description}
+            {user.description}
           </p>
         </div>
         <div>

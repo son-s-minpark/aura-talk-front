@@ -6,7 +6,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { persistor } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
-import { setProfile } from "@/store/user/setProfile";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -26,11 +25,10 @@ export const useAuth = () => {
 
           if (data.success) {
             const token = data.data.token;
-            const userId = data.data.userId;
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              dispatch(setUser({ userId: userId }));
+              dispatch(setUser(data.data));
 
               return { success: true };
             } else {
@@ -62,6 +60,7 @@ export const useAuth = () => {
           if (data.success) {
             const token = data.data.token;
             const user = data.data.user;
+            console.error(data);
 
             if (token) {
               localStorage.setItem("accessToken", token);
@@ -70,22 +69,7 @@ export const useAuth = () => {
               throw new Error(data);
             }
 
-            dispatch(
-              setUser({
-                userId: user.id,
-                createdAt: user.createdAt,
-                randomChatEnabled: user.randomChatEnabled,
-                status: user.status,
-              })
-            );
-            dispatch(
-              setProfile({
-                description: user.description,
-                nickname: user.nickname,
-                username: user.username,
-                interests: user.interests,
-              })
-            );
+            dispatch(setUser(data.data));
 
             return {
               success: true,

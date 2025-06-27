@@ -15,12 +15,12 @@ type ListType = "chat" | "friend" | "setting";
 
 const Page = () => {
   const [list, setList] = useState<ListType>("chat");
-  const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const { getProfileImg } = useProfile();
 
   useEffect(() => {
     connectWebsocket();
-    if (profile.profileImage.thumbnailImageUrl == "") {
+    if (user.profileImage.thumbnailImageUrl == "") {
       getProfileImg();
     }
   });

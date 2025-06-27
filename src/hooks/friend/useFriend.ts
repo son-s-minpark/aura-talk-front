@@ -93,6 +93,7 @@ export const useFriend = () => {
     },
   });
 
+  // 보낸 친구 신청 취소 요청
   const useCancelFriendRequestMuration = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
