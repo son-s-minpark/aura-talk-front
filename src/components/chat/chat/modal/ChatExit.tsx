@@ -10,7 +10,7 @@ const ChatExit = () => {
   const { useChatRoomExitMutation } = useChatRoom();
   async function onExit() {
     const res = await useChatRoomExitMutation.mutateAsync(currId);
-    if (res.success) {
+    if (res) {
       redirect("/home");
     } else {
       console.error(res);

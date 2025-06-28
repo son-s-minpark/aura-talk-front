@@ -12,7 +12,7 @@ const LogoutModal = () => {
   async function onLogout() {
     try {
       const res = await useLogoutMutation.mutateAsync();
-      if (res.success) {
+      if (res) {
         router.replace("/onboarding");
       }
     } catch (error: unknown) {

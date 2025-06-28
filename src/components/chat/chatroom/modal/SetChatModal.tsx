@@ -25,7 +25,7 @@ const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
           userIds: [user.userId],
         });
         if (res.success) {
-          router.push("/chat/1");
+          router.push(`/chat/${res.roomId}`);
         }
       } catch {
         console.error("error");

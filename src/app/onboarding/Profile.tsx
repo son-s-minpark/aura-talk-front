@@ -95,7 +95,7 @@ const Profile = () => {
               isDefaultImg: user.profileImage.isDefaultImg,
             },
           });
-          if (res.success) {
+          if (res) {
             dispatch(setPage("profileImg"));
           }
         } catch (error: unknown) {
