@@ -3,16 +3,11 @@ import React, { useState } from "react";
 import WaitingList from "../WaitingList";
 import RequestingList from "../RequestingList";
 import BlockingList from "../BlockingList";
-import {
-  otherFriendListType,
-  otherFriendType,
-} from "@/type/friend/otherFriendListType";
+import { friendType } from "@/type/friend/friendType";
 
-const OtherFriendsModal = ({
-  waitingList,
-}: {
-  waitingList: otherFriendType[];
-}) => {
+type otherFriendListType = "waiting" | "requesting" | "blocking";
+
+const OtherFriendsModal = ({ waitingList }: { waitingList: friendType[] }) => {
   const [friendList, setFriendList] = useState<otherFriendListType>("waiting");
   console.error(waitingList, typeof waitingList);
   return (

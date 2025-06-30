@@ -3,9 +3,9 @@ import React from "react";
 import { AxiosError } from "axios";
 import ErrorMessage from "../common/ErrorMessage";
 import Image from "next/image";
-import { otherFriendType } from "@/type/friend/otherFriendListType";
+import { friendType } from "@/type/friend/friendType";
 
-const ModalFriendComponent = ({ friend }: { friend: otherFriendType }) => {
+const ModalFriendComponent = ({ friend }: { friend: friendType }) => {
   const { useGetUserProfile } = useProfile();
 
   const { isLoading, isError, error } = useGetUserProfile(friend.friendUserId);

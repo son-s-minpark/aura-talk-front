@@ -11,7 +11,11 @@ export const useBlockedFriends = () => {
         return await axiosInstance
           .get(apiRoute.FRIEND_BLOCK_LIST)
           .then((res) => {
-            return res.data.success;
+            if (res.data.success) {
+              return res.data.data;
+            } else {
+              throw Error("차단한 친구 목록 가져오기 오류");
+            }
           })
           .catch((err) => {
             throw Error(err);

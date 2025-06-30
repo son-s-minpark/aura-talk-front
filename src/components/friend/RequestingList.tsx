@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
 import { useRequestedFriend } from "@/hooks/friend/useRequestedFriend";
-import { otherFriendType } from "@/type/friend/otherFriendListType";
+import { friendType } from "@/type/friend/friendType";
 import { useFriend } from "@/hooks/friend/useFriend";
 
 const RequestingList = () => {
   const { useCancelFriendRequestMuration } = useFriend();
   const { useGetRequestingFriendList } = useRequestedFriend();
   const { data, isLoading } = useGetRequestingFriendList();
-  const [requestList, setRequestList] = useState<otherFriendType[]>(data);
+  const [requestList, setRequestList] = useState<friendType[]>(data);
 
   async function onCancelFriendRequest(userId: number) {
     await useCancelFriendRequestMuration
@@ -27,7 +27,7 @@ const RequestingList = () => {
   }
   return (
     <>
-      {requestList.map((friend: otherFriendType) => (
+      {requestList.map((friend: friendType) => (
         <div className="flex justify-between" key={friend.friendUserId}>
           <ModalFriendComponent friend={friend} />
           <div className="flex gap-[6px] items-center">

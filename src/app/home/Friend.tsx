@@ -12,11 +12,13 @@ const FriendList = () => {
     useState<boolean>(false);
   const { useGetFriendList } = useFriend();
   const { useGetWaitingFriendList } = useRequestedFriend();
-  const { isLoading } = useGetFriendList();
-  const { data: waitingList = [] } = useGetWaitingFriendList();
+  const { isLoading: isFriendListLoading } = useGetFriendList();
+  const { data, isLoading: isWaitingListLoading } = useGetWaitingFriendList();
   const friendList = useSelector((state: RootState) => state.friendList);
 
-  if (isLoading) {
+  console.error(data);
+
+  if (isFriendListLoading || isWaitingListLoading) {
     return <div>Loading ...</div>;
   }
 
@@ -24,7 +26,7 @@ const FriendList = () => {
     <>
       {isOtherFriendModalDown && (
         <div className="modal" onClick={() => setIsOtherFriendModalDown(false)}>
-          <OtherFriendsModal waitingList={waitingList} />
+          <OtherFriendsModal waitingList={data} />
         </div>
       )}
       <div className="px-[38px] pt-[34px] flex flex-col">
@@ -33,7 +35,7 @@ const FriendList = () => {
           onClick={() => setIsOtherFriendModalDown(true)}
         >
           친구 요청/대기/차단
-          {waitingList.length !== 0 && <AlertCircle />}
+          {data.length !== 0 && <AlertCircle />}
         </p>
       </div>
       <div className="flex flex-col gap-[30px]">

@@ -36,5 +36,5 @@ export const setUserSlice = createSlice({
   },
 });
 
-export const { setUser } = setUserSlice.actions;
+export const { setUser, addInterest, removeInterest } = setUserSlice.actions;
 export default setUserSlice.reducer;

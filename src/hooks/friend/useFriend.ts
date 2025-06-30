@@ -19,6 +19,7 @@ export const useFriend = () => {
           .then((res) => {
             if (res.data.success) {
               const data = res.data.data;
+              console.error(data);
               dispatch(setFriendList(data));
               return data;
             } else {
@@ -47,14 +48,14 @@ export const useFriend = () => {
 
   // 친구인지 확인
   const isFriend = (id: number) => {
-    return friendList.find((item) => item.id === id);
+    return friendList.find((item) => item.friendUserId === id);
   };
 
   // 받은 친구 신청 수락 요청
   const useFriendAcceptMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
-        .post(apiRoute.FRIEND_REQUEST_ACCEPT(id))
+        .put(apiRoute.FRIEND_REQUEST_ACCEPT(id))
         .then((res) => {
           return res.data.success;
         })
@@ -68,9 +69,10 @@ export const useFriend = () => {
   const useFriendRejectMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
-        .post(apiRoute.FRIEND_REQUEST_REJECT(id))
+        .delete(apiRoute.FRIEND_REQUEST_REJECT(id))
         .then((res) => {
-          return res.data.success;
+          console.error(res);
+          return res.data.data;
         })
         .catch((err) => {
           throw Error(err);

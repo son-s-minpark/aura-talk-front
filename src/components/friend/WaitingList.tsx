@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
-import { otherFriendType } from "@/type/friend/otherFriendListType";
+import { friendType } from "@/type/friend/friendType";
 import { useFriend } from "@/hooks/friend/useFriend";
 
-const WaitingList = ({ list }: { list: otherFriendType[] }) => {
-  const [waitingList, setWaitingList] = useState<otherFriendType[]>(list);
+const WaitingList = ({ list }: { list: friendType[] }) => {
+  const [waitingList, setWaitingList] = useState<friendType[]>(list);
   const { useFriendAcceptMutation, useFriendRejectMutation } = useFriend();
 
   function onAcceptWaiting(userId: number) {

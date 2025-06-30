@@ -1,12 +1,8 @@
-import { profileImageType } from "../user/profileImageType";
-
 export type friendType = {
-  id: number;
+  description: string;
+  friendStatus: "REQUEST_RECEIVED" | "UNDEFINED";
+  friendUserId: number;
   nickname: string;
+  thumbnailImageUrl: string;
   username: string;
-  description?: string;
-  interests: string[];
-  friendStatus: "";
-  status: "ONLINE" | "OFFLINE";
-  profileImage: profileImageType;
 };

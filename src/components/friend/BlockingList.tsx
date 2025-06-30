@@ -16,7 +16,7 @@ const BlockingList = () => {
   return (
     <>
       {data.map((friend: friendType) => (
-        <div className="flex justify-between" key={friend.id}>
+        <div className="flex justify-between" key={friend.friendUserId}>
           <ModalFriendComponent friend={friend} />
           <div className="flex gap-[6px] items-center">
             <SelectBtn
