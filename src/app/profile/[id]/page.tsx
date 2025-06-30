@@ -15,8 +15,8 @@ import ErrorMessage from "@/components/common/ErrorMessage";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
 import { useFriend } from "@/hooks/friend/useFriend";
-import { friendType } from "@/type/friend/friendType";
 import Image from "next/image";
+import { friendUserType } from "@/type/user/friendUserType";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
@@ -49,7 +49,7 @@ const Page = () => {
     );
   }
 
-  const userData: friendType = data?.data;
+  const userData: friendUserType = data?.data;
   console.error(data);
 
   return (

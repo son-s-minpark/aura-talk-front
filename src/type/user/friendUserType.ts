@@ -1,8 +1,9 @@
 import { profileImageType } from "./profileImageType";
 
-export type userType = {
+export type friendUserType = {
   id: number;
   status: "ONLINE" | "OFFLINE";
+  friendStatus: "REQUEST_SENT" | "UNDEFINED";
   randomChatEnabled: boolean;
   createdAt: string;
   nickname: string;

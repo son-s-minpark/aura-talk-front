@@ -55,21 +55,19 @@ export const useAuth = () => {
           },
         })
         .then((res) => {
-          const { data } = res;
+          const data = res.data;
 
           if (data.success) {
             const token = data.data.token;
             const user = data.data.user;
-            console.error(data);
 
             if (token) {
               localStorage.setItem("accessToken", token);
+              dispatch(setUser(user));
             } else {
               alert("토큰을 받지 못 했습니다.");
               throw new Error(data);
             }
-
-            dispatch(setUser(data.data));
 
             return {
               success: true,

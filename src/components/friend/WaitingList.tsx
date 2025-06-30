@@ -10,14 +10,18 @@ const WaitingList = ({ list }: { list: friendType[] }) => {
 
   function onAcceptWaiting(userId: number) {
     useFriendAcceptMutation.mutateAsync(userId).then(() => {
-      setWaitingList(waitingList.filter((item) => item.friendUserId == userId));
+      deleteFriend(userId);
     });
   }
 
   function onRejectWaiting(userId: number) {
     useFriendRejectMutation.mutateAsync(userId).then(() => {
-      setWaitingList(waitingList.filter((item) => item.friendUserId == userId));
+      deleteFriend(userId);
     });
+  }
+
+  function deleteFriend(userId: number) {
+    setWaitingList(waitingList.filter((item) => item.friendUserId !== userId));
   }
 
   return (

@@ -22,7 +22,7 @@ const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
       try {
         const res = await useCreateChatMutation.mutateAsync({
           name: roomname,
-          userIds: [user.userId],
+          userIds: [user.id],
         });
         if (res.success) {
           router.push(`/chat/${res.roomId}`);
@@ -58,8 +58,8 @@ const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
               {friendList.map((friend, index) => (
                 <ChatSetUser
                   user={{
-                    id: friend.id,
-                    thumbnailImg: friend.profileImage.thumbnailImageUrl,
+                    id: friend.friendUserId,
+                    thumbnailImg: friend.thumbnailImageUrl,
                     nickname: friend.nickname,
                   }}
                   key={index}

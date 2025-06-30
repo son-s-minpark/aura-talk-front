@@ -104,7 +104,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
             description: description,
             interests: user.interests,
             profileImage: {
-              userId: user.userId,
+              userId: user.id,
               thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
               originalImageUrl: user.profileImage.originalImageUrl,
               isDefaultImg: user.profileImage.isDefaultImg,

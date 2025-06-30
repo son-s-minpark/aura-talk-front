@@ -38,10 +38,13 @@ const FriendList = () => {
           {data.length !== 0 && <AlertCircle />}
         </p>
       </div>
-      <div className="flex flex-col gap-[30px]">
-        {friendList.map((friend, index) => (
-          <FriendComponent friend={friend} key={index} />
-        ))}
+      <div className="px-[38px]">
+        <p className="font-semibold mb-[22px]">친구</p>
+        <div className="flex flex-col gap-[30px]">
+          {friendList.map((friend, index) => (
+            <FriendComponent friend={friend} key={index} />
+          ))}
+        </div>
       </div>
     </>
   );

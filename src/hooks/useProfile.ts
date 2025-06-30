@@ -91,7 +91,7 @@ export const useProfile = () => {
   const useRandomChatToggleMutation = useMutation({
     mutationFn: async (randomData: boolean) => {
       return await axiosInstance
-        .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(user.userId), {
+        .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(user.id), {
           randomChatEnabled: randomData,
         })
         .then((res) => {
@@ -110,7 +110,7 @@ export const useProfile = () => {
   // 프로필 이미지 가져오기 요청
   const getProfileImg = async () => {
     const res = await axiosInstance.get(
-      apiRoute.USER_IMAGE_PROFILE_GET(user.userId)
+      apiRoute.USER_IMAGE_PROFILE_GET(user.id)
     );
     const data = res.data.data;
     console.error(data);

@@ -45,7 +45,7 @@ export const useImageUpload = () => {
           dispatch(
             setUser({
               profileImage: {
-                userId: user.userId,
+                userId: user.id,
                 originalImageUrl: data.originalImageUrl,
                 thumbnailImageUrl: data.thumbnailImageUrl,
                 isDefaultImg: data.defaultProfileImage,
@@ -71,7 +71,7 @@ export const useImageUpload = () => {
           dispatch(
             setUser({
               profileImage: {
-                userId: user.userId,
+                userId: user.id,
                 originalImageUrl: data.originalImageUrl,
                 thumbnailImageUrl: data.thumbnailImageUrl,
                 isDefaultImg: data.defaultProfileImage,
