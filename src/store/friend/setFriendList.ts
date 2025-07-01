@@ -10,9 +10,18 @@ export const setFriendListSlice = createSlice({
     setFriendList: (_state, action: PayloadAction<friendType[]>) => {
       return action.payload;
     },
+    addFriend: (state, action: PayloadAction<friendType>) => {
+      state.push(action.payload);
+    },
+    removeFriend: (state, action: PayloadAction<friendType>) => {
+      state = state.filter(
+        (friend) => friend.friendUserId !== action.payload.friendUserId
+      );
+    },
   },
 });
 
-export const { setFriendList } = setFriendListSlice.actions;
+export const { setFriendList, addFriend, removeFriend } =
+  setFriendListSlice.actions;
 
 export default setFriendListSlice.reducer;

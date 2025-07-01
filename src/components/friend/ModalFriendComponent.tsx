@@ -1,35 +1,15 @@
-import { useProfile } from "@/hooks/useProfile";
 import React from "react";
-import { AxiosError } from "axios";
-import ErrorMessage from "../common/ErrorMessage";
 import Image from "next/image";
 import { friendType } from "@/type/friend/friendType";
+import { useRouter } from "next/navigation";
 
 const ModalFriendComponent = ({ friend }: { friend: friendType }) => {
-  const { useGetUserProfile } = useProfile();
-
-  const { isLoading, isError, error } = useGetUserProfile(friend.friendUserId);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
-    );
-  }
-
-  if (isError) {
-    const err = error as AxiosError;
-    return (
-      <>
-        <p>Error!</p>
-        <ErrorMessage msg={err.message} />
-      </>
-    );
-  }
-
+  const router = useRouter();
   return (
-    <div className="w-full h-[41px] flex justify-between items-center overflow-x-scroll">
+    <div
+      className="w-full h-[41px] flex justify-between items-center overflow-x-scroll"
+      onClick={() => router.push(`profile/${friend.friendUserId}`)}
+    >
       <div className="flex gap-[11px]">
         <div className="w-[40px] h-[40px] rounded-full border-1 border-[var(--color-commonGray)] relative overflow-hidden">
           <>

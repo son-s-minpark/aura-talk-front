@@ -15,7 +15,7 @@ const FriendComponent = ({ friend }: { friend: friendType }) => {
           />
         )}
       </div>
-      <div className="flex flex-col gap-[8px]">
+      <div className="flex flex-col">
         <p className="text-[18px] font-bold"> {friend.nickname} </p>
         <p className="text-[12px] text-[var(--color-commonGray)]">
           {friend.description}

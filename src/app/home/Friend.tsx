@@ -1,6 +1,7 @@
 import AlertCircle from "@/components/common/AlertCircle";
 import FriendComponent from "@/components/friend/FriendComponent";
 import OtherFriendsModal from "@/components/friend/modal/OtherFriendsModal";
+import { useBlockedFriends } from "@/hooks/friend/useBlockedFriend";
 import { useFriend } from "@/hooks/friend/useFriend";
 import { useRequestedFriend } from "@/hooks/friend/useRequestedFriend";
 import { RootState } from "@/store/store";
@@ -11,14 +12,24 @@ const FriendList = () => {
   const [isOtherFriendModalDown, setIsOtherFriendModalDown] =
     useState<boolean>(false);
   const { useGetFriendList } = useFriend();
-  const { useGetWaitingFriendList } = useRequestedFriend();
+  const { useGetWaitingFriendList, useGetRequestingFriendList } =
+    useRequestedFriend();
+  const { useGetBlockedFriendsList } = useBlockedFriends();
   const { isLoading: isFriendListLoading } = useGetFriendList();
-  const { data, isLoading: isWaitingListLoading } = useGetWaitingFriendList();
+  const { data: waitingList, isLoading: isWaitingListLoading } =
+    useGetWaitingFriendList();
+  const { data: requestingList, isLoading: isRequestingListLoading } =
+    useGetRequestingFriendList();
+  const { data: blockingList, isLoading: isBlockingListLoading } =
+    useGetBlockedFriendsList();
   const friendList = useSelector((state: RootState) => state.friendList);
 
-  console.error(data);
-
-  if (isFriendListLoading || isWaitingListLoading) {
+  if (
+    isFriendListLoading ||
+    isWaitingListLoading ||
+    isRequestingListLoading ||
+    isBlockingListLoading
+  ) {
     return <div>Loading ...</div>;
   }
 
@@ -26,7 +37,11 @@ const FriendList = () => {
     <>
       {isOtherFriendModalDown && (
         <div className="modal" onClick={() => setIsOtherFriendModalDown(false)}>
-          <OtherFriendsModal waitingList={data} />
+          <OtherFriendsModal
+            waitingList={waitingList}
+            requestingList={requestingList}
+            blockingList={blockingList}
+          />
         </div>
       )}
       <div className="px-[38px] pt-[34px] flex flex-col">
@@ -35,12 +50,12 @@ const FriendList = () => {
           onClick={() => setIsOtherFriendModalDown(true)}
         >
           친구 요청/대기/차단
-          {data.length !== 0 && <AlertCircle />}
+          {waitingList.length !== 0 && <AlertCircle />}
         </p>
       </div>
       <div className="px-[38px]">
         <p className="font-semibold mb-[22px]">친구</p>
-        <div className="flex flex-col gap-[30px]">
+        <div className="flex flex-col gap-[20px]">
           {friendList.map((friend, index) => (
             <FriendComponent friend={friend} key={index} />
           ))}

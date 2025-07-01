@@ -3,14 +3,18 @@ import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
 import { friendType } from "@/type/friend/friendType";
 import { useFriend } from "@/hooks/friend/useFriend";
+import { addFriend } from "@/store/friend/setFriendList";
+import { useDispatch } from "react-redux";
 
 const WaitingList = ({ list }: { list: friendType[] }) => {
   const [waitingList, setWaitingList] = useState<friendType[]>(list);
   const { useFriendAcceptMutation, useFriendRejectMutation } = useFriend();
+  const dispatch = useDispatch();
 
-  function onAcceptWaiting(userId: number) {
-    useFriendAcceptMutation.mutateAsync(userId).then(() => {
-      deleteFriend(userId);
+  function onAcceptWaiting(friend: friendType) {
+    useFriendAcceptMutation.mutateAsync(friend.friendUserId).then(() => {
+      deleteFriend(friend.friendUserId);
+      dispatch(addFriend(friend));
     });
   }
 
@@ -30,10 +34,7 @@ const WaitingList = ({ list }: { list: friendType[] }) => {
         <div className="flex justify-between" key={index}>
           <ModalFriendComponent friend={friend} />
           <div className="flex gap-[6px] items-center">
-            <SelectBtn
-              label="수락"
-              onClick={() => onAcceptWaiting(friend.friendUserId)}
-            />
+            <SelectBtn label="수락" onClick={() => onAcceptWaiting(friend)} />
             <SelectBtn
               isRejected={true}
               label="거절"

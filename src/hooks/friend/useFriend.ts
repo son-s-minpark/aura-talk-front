@@ -122,6 +122,7 @@ export const useFriend = () => {
     },
   });
 
+  // 친구 삭제하기 요청
   const useDeleteFriendMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
