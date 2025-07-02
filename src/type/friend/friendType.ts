@@ -1,6 +1,8 @@
+import { friendStatusType } from "./friendStatusType";
+
 export type friendType = {
   description: string;
-  friendStatus: "REQUEST_RECEIVED" | "UNDEFINED";
+  friendStatus: friendStatusType;
   friendUserId: number;
   nickname: string;
   thumbnailImageUrl: string;

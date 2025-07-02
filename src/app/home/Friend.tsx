@@ -5,6 +5,7 @@ import { useBlockedFriends } from "@/hooks/friend/useBlockedFriend";
 import { useFriend } from "@/hooks/friend/useFriend";
 import { useRequestedFriend } from "@/hooks/friend/useRequestedFriend";
 import { RootState } from "@/store/store";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -23,6 +24,7 @@ const FriendList = () => {
   const { data: blockingList, isLoading: isBlockingListLoading } =
     useGetBlockedFriendsList();
   const friendList = useSelector((state: RootState) => state.friendList);
+  const router = useRouter();
 
   if (
     isFriendListLoading ||
@@ -57,7 +59,12 @@ const FriendList = () => {
         <p className="font-semibold mb-[22px]">친구</p>
         <div className="flex flex-col gap-[20px]">
           {friendList.map((friend, index) => (
-            <FriendComponent friend={friend} key={index} />
+            <div
+              key={index}
+              onClick={() => router.push(`profile/${friend.friendUserId}`)}
+            >
+              <FriendComponent friend={friend} />
+            </div>
           ))}
         </div>
       </div>

@@ -33,7 +33,7 @@ export const useFriend = () => {
     });
 
   // 친구 신청하기 요청
-  const useFriendRequestMutation = useMutation({
+  const useRequestFriendMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .post(apiRoute.FRIEND_REQUEST(id))
@@ -52,7 +52,7 @@ export const useFriend = () => {
   };
 
   // 받은 친구 신청 수락 요청
-  const useFriendAcceptMutation = useMutation({
+  const useAcceptFriendMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .put(apiRoute.FRIEND_REQUEST_ACCEPT(id))
@@ -66,7 +66,7 @@ export const useFriend = () => {
   });
 
   // 받은 친구 신청 거절 요청
-  const useFriendRejectMutation = useMutation({
+  const useRejectFriendMutation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .delete(apiRoute.FRIEND_REQUEST_REJECT(id))
@@ -100,6 +100,7 @@ export const useFriend = () => {
       await axiosInstance
         .post(apiRoute.FRIEND_BLOCK(id))
         .then((res) => {
+          console.error(res);
           return res.data.success;
         })
         .catch((err) => {
@@ -138,10 +139,10 @@ export const useFriend = () => {
 
   return {
     useGetFriendList,
-    useFriendRequestMutation,
+    useRequestFriendMutation,
     isFriend,
-    useFriendAcceptMutation,
-    useFriendRejectMutation,
+    useAcceptFriendMutation,
+    useRejectFriendMutation,
     useCancelFriendRequestMuration,
     useBlockFriendMutation,
     useCancelBlockFriendMutation,

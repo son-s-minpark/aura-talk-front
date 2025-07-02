@@ -1,16 +1,10 @@
+import { friendStatusType } from "../friend/friendStatusType";
 import { profileImageType } from "./profileImageType";
 
 export type friendUserType = {
   id: number;
   status: "ONLINE" | "OFFLINE";
-  friendStatus:
-    | "REQUEST_SENT"
-    | "REQUEST_RECEIVED"
-    | "NONE"
-    | "BLOCKED"
-    | "BLOCKED_BY"
-    | "FREINDS"
-    | "UNDEFINED";
+  friendStatus: friendStatusType;
   randomChatEnabled: boolean;
   createdAt: string;
   nickname: string;

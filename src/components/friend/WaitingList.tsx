@@ -5,21 +5,23 @@ import { friendType } from "@/type/friend/friendType";
 import { useFriend } from "@/hooks/friend/useFriend";
 import { addFriend } from "@/store/friend/setFriendList";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const WaitingList = ({ list }: { list: friendType[] }) => {
   const [waitingList, setWaitingList] = useState<friendType[]>(list);
-  const { useFriendAcceptMutation, useFriendRejectMutation } = useFriend();
+  const { useAcceptFriendMutation, useRejectFriendMutation } = useFriend();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   function onAcceptWaiting(friend: friendType) {
-    useFriendAcceptMutation.mutateAsync(friend.friendUserId).then(() => {
+    useAcceptFriendMutation.mutateAsync(friend.friendUserId).then(() => {
       deleteFriend(friend.friendUserId);
       dispatch(addFriend(friend));
     });
   }
 
   function onRejectWaiting(userId: number) {
-    useFriendRejectMutation.mutateAsync(userId).then(() => {
+    useRejectFriendMutation.mutateAsync(userId).then(() => {
       deleteFriend(userId);
     });
   }
@@ -32,7 +34,9 @@ const WaitingList = ({ list }: { list: friendType[] }) => {
     <>
       {waitingList.map((friend, index) => (
         <div className="flex justify-between" key={index}>
-          <ModalFriendComponent friend={friend} />
+          <div onClick={() => router.push(`profile/${friend.friendUserId}`)}>
+            <ModalFriendComponent friend={friend} />
+          </div>
           <div className="flex gap-[6px] items-center">
             <SelectBtn label="수락" onClick={() => onAcceptWaiting(friend)} />
             <SelectBtn
