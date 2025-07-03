@@ -1,44 +1,24 @@
-import { useProfile } from "@/hooks/useProfile";
 import React from "react";
-import { AxiosError } from "axios";
-import ErrorMessage from "../common/ErrorMessage";
+import Image from "next/image";
+import { friendType } from "@/type/friend/friendType";
 
-type addFriendProp = {
-  id: number;
-};
-
-const ModalFriendComponent = ({ id }: addFriendProp) => {
-  const { useGetUserProfile } = useProfile();
-
-  const { data, isLoading, isError, error } = useGetUserProfile(id);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
-    );
-  }
-
-  if (isError) {
-    const err = error as AxiosError;
-    return (
-      <>
-        <p>Error!</p>
-        <ErrorMessage msg={err.message} />
-      </>
-    );
-  }
-
+const ModalFriendComponent = ({ friend }: { friend: friendType }) => {
   return (
     <div className="w-full h-[41px] flex justify-between items-center overflow-x-scroll">
       <div className="flex gap-[11px]">
-        <div className="w-[40px] h-[40px] rounded-full border-1 border-[var(--color-commonGray)]">
-          {/* 이미지 */}
+        <div className="w-[40px] h-[40px] rounded-full border-1 border-[var(--color-commonGray)] relative overflow-hidden">
+          <>
+            <Image
+              src={friend.thumbnailImageUrl}
+              alt="profile"
+              fill
+              className="rounded-full object-cover"
+            />
+          </>
         </div>
-        <div className="flex flex-col gap-[5px]">
-          <p>{data.nickname}</p>
-          <p>{data.username}</p>
+        <div className="flex flex-col gap-[3px]">
+          <p className="font-semibold">{friend.nickname}</p>
+          <p className="text-[10px] text-commonGray">@{friend.username}</p>
         </div>
       </div>
     </div>

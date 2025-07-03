@@ -6,11 +6,14 @@ import ChatSideBar from "./modal/ChatSideBar";
 import ChatSetting from "./modal/ChatSetting";
 import ChatShare from "./modal/ChatShare";
 import ChatExit from "./modal/ChatExit";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
 
 const ChatHeader = () => {
   const [modalDown, setModalDown] = useState<setModalType>("none");
+  const currChat = useSelector((state: RootState) => state.currChat);
   return (
     <div className="bg-[var(--color-point)]">
       {modalDown !== "none" ? (
@@ -37,7 +40,7 @@ const ChatHeader = () => {
           </button>
           <div className="flex gap-[12px] items-center">
             <div className="w-[44px] h-[44px] rounded-full"></div>
-            <p className="text-[20px] font-bold"> 채팅방 이름</p>
+            <p className="text-[20px] font-bold"> {currChat.name}</p>
           </div>
         </div>
         <button>

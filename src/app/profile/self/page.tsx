@@ -10,8 +10,7 @@ import { RootState } from "@/store/store";
 
 const Page = () => {
   const [isEditModalDown, setIsEditModalDown] = useState<boolean>(false);
-  const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <div className="w-full h-full bg-[var(--color-point)] flex flex-col justify-between">
@@ -26,9 +25,9 @@ const Page = () => {
           <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
             {!isEditModalDown && (
               <>
-                {profileImg.thumbnailImgUrl && (
+                {user.profileImage.thumbnailImageUrl && (
                   <Image
-                    src={profileImg.thumbnailImgUrl}
+                    src={user.profileImage.thumbnailImageUrl}
                     alt="Profile"
                     fill
                     className="rounded-full object-cover"
@@ -38,8 +37,8 @@ const Page = () => {
             )}
           </div>
           <div className="mt-[20px] flex flex-col items-center">
-            <p className="text-[20px] font-bold">{profile.nickname}</p>
-            <p className="text-[12px]">{profile.username}</p>
+            <p className="text-[20px] font-bold">{user.nickname}</p>
+            <p className="text-[12px]">{user.username}</p>
           </div>
         </div>
         <div>
@@ -56,20 +55,18 @@ const Page = () => {
           <div className="w-full flex flex-col gap-[26px] pt-[41px] px-[24px] overflow-y-scroll">
             <div className="flex flex-col gap-[9px]">
               <p className="text-[var(--color-commonGray)]">사용자 이름</p>
-              <p className="text-[18px] font-semibold">{profile.nickname}</p>
+              <p className="text-[18px] font-semibold">{user.nickname}</p>
             </div>
             <div className="flex flex-col gap-[9px]">
               <p className="text-[var(--color-commonGray)]">한 줄 소개</p>
               <p className="text-[18px] font-semibold">
-                {profile.description
-                  ? profile.description
-                  : "한 줄 소개가 없습니다."}
+                {user.description ? user.description : "한 줄 소개가 없습니다."}
               </p>
             </div>
             <div className="flex flex-col gap-[9px]">
               <p className="text-[var(--color-commonGray)]">관심사</p>
               <div className="flex w-full gap-[10px] flex-wrap">
-                {profile.interests?.map((interest: string, index: number) => (
+                {user.interests?.map((interest: string, index: number) => (
                   <InterestBtn label={interest} key={index} />
                 ))}
               </div>

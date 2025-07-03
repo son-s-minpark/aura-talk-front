@@ -2,10 +2,20 @@ import { userType } from "@/type/user/userType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: userType = {
-  userId: 0,
+  id: 0,
   status: "OFFLINE",
   randomChatEnabled: true,
   createdAt: "",
+  nickname: "",
+  username: "",
+  description: "",
+  interests: [],
+  profileImage: {
+    userId: 0,
+    originalImageUrl: "",
+    thumbnailImageUrl: "",
+    isDefaultImg: true,
+  },
 };
 
 export const setUserSlice = createSlice({
@@ -13,10 +23,18 @@ export const setUserSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<Partial<userType>>) => {
-      Object.assign(state, action.payload);
+      return { ...state, ...action.payload };
+    },
+    addInterest: (state, action) => {
+      state.interests.push(action.payload);
+    },
+    removeInterest: (state, action) => {
+      state.interests = state.interests.filter(
+        (interest) => interest !== action.payload
+      );
     },
   },
 });
 
-export const { setUser } = setUserSlice.actions;
+export const { setUser, addInterest, removeInterest } = setUserSlice.actions;
 export default setUserSlice.reducer;

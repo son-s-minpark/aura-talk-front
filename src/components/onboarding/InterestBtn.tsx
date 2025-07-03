@@ -4,7 +4,7 @@ import { IoIosClose } from "react-icons/io";
 import clsx from "clsx";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addInterest, removeInterest } from "@/store/user/setProfile";
+import { addInterest, removeInterest } from "@/store/user/setUser";
 
 type InterestBtnProps = {
   label: string;

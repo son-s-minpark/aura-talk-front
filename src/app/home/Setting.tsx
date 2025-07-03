@@ -27,8 +27,7 @@ const SettingList = () => {
   const [modal, setModal] = useState<modalType>("none");
   const { theme } = useTheme();
   const router = useRouter();
-  const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <>
@@ -53,9 +52,9 @@ const SettingList = () => {
         onClick={() => router.push(`/profile/self`)}
       >
         <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
-          {profileImg.thumbnailImgUrl && (
+          {user.profileImage.thumbnailImageUrl && (
             <Image
-              src={profileImg.thumbnailImgUrl}
+              src={user.profileImage.thumbnailImageUrl}
               alt="Profile"
               fill
               className="rounded-full object-cover"
@@ -64,11 +63,11 @@ const SettingList = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-[20px] font-bold leading-[20px]">
-            {profile.nickname}
+            {user.nickname}
           </p>
-          {profile.description && (
+          {user.description && (
             <p className="text-[12px] leading-[12px] text-[var(--color-gray)]">
-              {profile.description}
+              {user.description}
             </p>
           )}
         </div>

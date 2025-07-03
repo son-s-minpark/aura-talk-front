@@ -80,7 +80,7 @@ const Signup = () => {
           email: mail,
           password: pw,
         });
-        if (res.success) {
+        if (res) {
           setIsValidateModalDown(true);
         } else {
           console.error("sign up page Error", res);

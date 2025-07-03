@@ -17,11 +17,11 @@ import { RootState } from "@/store/store";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const { useSetProfileMutation } = useProfile();
-  const [nickname, setnickname] = useState<string>(profile.nickname);
-  const [username, setusername] = useState<string>(profile.username);
-  const [description, setDescription] = useState<string>(profile.description);
+  const [nickname, setnickname] = useState<string>(user.nickname);
+  const [username, setusername] = useState<string>(user.username);
+  const [description, setDescription] = useState<string>(user.description);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
@@ -39,7 +39,7 @@ const Profile = () => {
     setDescription(e.target.value);
   }
   function isFull() {
-    return nickname !== "" && username !== "" && profile.interests.length !== 0;
+    return nickname !== "" && username !== "" && user.interests.length !== 0;
   }
   function validateNickname() {
     const result = nicknameSchema.shape.nickname.safeParse(nickname);
@@ -87,9 +87,15 @@ const Profile = () => {
             nickname: nickname,
             username: username,
             description: description,
-            interests: profile.interests,
+            interests: user.interests,
+            profileImage: {
+              userId: user.id,
+              thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
+              originalImageUrl: user.profileImage.originalImageUrl,
+              isDefaultImg: user.profileImage.isDefaultImg,
+            },
           });
-          if (res.success) {
+          if (res) {
             dispatch(setPage("profileImg"));
           }
         } catch (error: unknown) {

@@ -73,7 +73,7 @@ const Signin = () => {
           email: mail,
           password: pw,
         });
-        if (res.success) {
+        if (res) {
           if (res.profileSet) {
             const answer = confirm(
               "프로필이 설정되어 있지 않습니다. 설정하러 가시겠습니까?"

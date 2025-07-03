@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import WaitingList from "../WaitingList";
 import RequestingList from "../RequestingList";
 import BlockingList from "../BlockingList";
-import { otherFriendListType } from "@/type/friend/otherFriendListType";
+
+type otherFriendListType = "waiting" | "requesting" | "blocking";
 
 const OtherFriendsModal = () => {
   const [friendList, setFriendList] = useState<otherFriendListType>("waiting");
+
   return (
     <div
       className="modal-content w-[332px] h-[362px] px-[20px] pt-[29px]"

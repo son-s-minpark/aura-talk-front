@@ -38,8 +38,7 @@ const DeleteAccountModal = () => {
         setErrMsg("");
         try {
           const res = await useDeleteAccoutMutation.mutateAsync(pw);
-          if (res.success) {
-            localStorage.clear();
+          if (res) {
             router.replace("/onboarding");
           }
         } catch (error: unknown) {

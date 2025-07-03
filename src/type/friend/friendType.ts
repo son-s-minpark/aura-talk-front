@@ -1,7 +1,10 @@
+import { friendStatusType } from "./friendStatusType";
+
 export type friendType = {
-  id: number;
+  description: string;
+  friendStatus: friendStatusType;
+  friendUserId: number;
   nickname: string;
+  thumbnailImageUrl: string;
   username: string;
-  description?: string;
-  thumbnailImg: string;
 };

@@ -29,7 +29,7 @@ const InterestModal = ({
   setIsInterestDown,
   isOnBoarding,
 }: InterestModalProps) => {
-  const profile = useSelector((state: RootState) => state.profile);
+  const user = useSelector((state: RootState) => state.user);
   const { useGetTotalInterestList } = useInterest();
 
   const { data, isLoading, isError, error } = useGetTotalInterestList();
@@ -83,7 +83,7 @@ const InterestModal = ({
                 <div key={interest.id} className="mt-[15px] mr-[10px]">
                   <InterestBtnBig
                     label={interest.name}
-                    selected={profile.interests.includes(interest.name)}
+                    selected={user.interests.includes(interest.name)}
                     isOnBoarding={isOnBoarding}
                   />
                 </div>

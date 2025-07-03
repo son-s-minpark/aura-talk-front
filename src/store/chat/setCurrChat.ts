@@ -14,6 +14,8 @@ const initialState: chatRoomType = {
   users: [],
   active: true,
   lastMessageAt: new Date(),
+  inviteCode: "",
+  inviteCodeExpiredAt: new Date(),
 };
 
 export const setCurrChatSlice = createSlice({

@@ -3,20 +3,18 @@ import { signType } from "@/type/sign/signType";
 import axiosInstance from "@/util/api/axiosInstance";
 import { apiRoute } from "@/util/api/apiRoute";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { persistor, RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { persistor } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
-import { setProfile } from "@/store/user/setProfile";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
 
   // 회원가입 요청
   const useSignupMutation = useMutation({
     mutationFn: async (signupData: signType) => {
       return await axios
-        .post(apiRoute.USER, signupData, {
+        .post(apiRoute.USER_SIGNIN, signupData, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -27,11 +25,10 @@ export const useAuth = () => {
 
           if (data.success) {
             const token = data.data.token;
-            const userId = data.data.userId;
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              dispatch(setUser({ userId: userId }));
+              dispatch(setUser(data.data));
 
               return { success: true };
             } else {
@@ -58,7 +55,7 @@ export const useAuth = () => {
           },
         })
         .then((res) => {
-          const { data } = res;
+          const data = res.data;
 
           if (data.success) {
             const token = data.data.token;
@@ -66,27 +63,11 @@ export const useAuth = () => {
 
             if (token) {
               localStorage.setItem("accessToken", token);
+              dispatch(setUser(user));
             } else {
               alert("토큰을 받지 못 했습니다.");
               throw new Error(data);
             }
-
-            dispatch(
-              setUser({
-                userId: user.id,
-                createdAt: user.createdAt,
-                randomChatEnabled: user.randomChatEnabled,
-                status: user.status,
-              })
-            );
-            dispatch(
-              setProfile({
-                description: user.description,
-                nickname: user.nickname,
-                username: user.username,
-                interests: user.interests,
-              })
-            );
 
             return {
               success: true,
@@ -131,7 +112,7 @@ export const useAuth = () => {
   const useDeleteAccoutMutation = useMutation({
     mutationFn: async (pwData: string) => {
       return await axiosInstance
-        .delete(apiRoute.USER_DELETE_ACCOUNT(user.userId), { data: pwData })
+        .delete(apiRoute.USER_DELETE_ACCOUNT, { data: pwData })
         .then((res) => {
           console.error("signout ERror", res);
           const { data } = res;

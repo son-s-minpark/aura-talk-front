@@ -12,20 +12,19 @@ import { IoChevronDown } from "react-icons/io5";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { setProfile } from "@/store/user/setProfile";
 import { useImageUpload } from "@/hooks/useImageUpload";
+import { setUser } from "@/store/user/setUser";
 
 type ProfileEditModalProps = {
   setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
-  const profile = useSelector((state: RootState) => state.profile);
-  const profileImg = useSelector((state: RootState) => state.profileImg);
   const dispatch = useDispatch();
-  const [nickname, setnickname] = useState<string>(profile.nickname);
-  const [username, setusername] = useState<string>(profile.username);
-  const [description, setDescription] = useState<string>(profile.description);
+  const user = useSelector((state: RootState) => state.user);
+  const [nickname, setnickname] = useState<string>(user.nickname);
+  const [username, setusername] = useState<string>(user.username);
+  const [description, setDescription] = useState<string>(user.description);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
@@ -47,7 +46,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   }
 
   function isFull() {
-    return nickname !== "" && username !== "" && profile.interests.length !== 0;
+    return nickname !== "" && username !== "" && user.interests.length !== 0;
   }
 
   function validateNickname() {
@@ -92,7 +91,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
     } else {
       if (isProfileValid()) {
         dispatch(
-          setProfile({
+          setUser({
             nickname: nickname,
             username: username,
             description: description,
@@ -103,7 +102,13 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
             nickname: nickname,
             username: username,
             description: description,
-            interests: profile.interests,
+            interests: user.interests,
+            profileImage: {
+              userId: user.id,
+              thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
+              originalImageUrl: user.profileImage.originalImageUrl,
+              isDefaultImg: user.profileImage.isDefaultImg,
+            },
           });
           if (res.success) {
             setIsModalDown(false);
@@ -136,7 +141,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
               imgSize={70}
               btnHeight={15}
               btnWidth={42}
-              img={profileImg.thumbnailImgUrl}
+              img={user.profileImage.thumbnailImageUrl}
               setImg={useProfileImageUploadMutation.mutateAsync}
               deleteImg={useDeleteProfileImageMutation.mutateAsync}
             />
