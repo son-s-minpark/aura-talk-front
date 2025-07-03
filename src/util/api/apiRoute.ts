@@ -34,12 +34,22 @@ export const apiRoute = {
 
   // 채팅방
   CHATROOM_CREATE: CHATROOM,
+  CHATROOM_CREATE_ONE_TO_ONE: `${CHATROOM}/one-to-one`,
   CHATROOM_GET_LIST: CHATROOM,
+  CHATROOM_GET_ROOM: (id: number) => `${CHATROOM}/${id}`,
+  CHATROOM_PUT_ROOM: (id: number) => `${CHATROOM}/${id}`,
+  CHATROOM_EXIT_ROOM: (id: number) => `${CHATROOM}/${id}`,
   CHATROOM_NOTIFICATION: (id: number) => `${CHATROOM}/${id}/notification`,
   CHATROOM_FRIEND_INVITE: (id: number) => `${CHATROOM}/${id}/invite`,
   CHATROOM_CREATE_INVITE_LINK: (id: number) => `${CHATROOM}/${id}/invite-link`,
-  CHATROOM_EXIT: (id: number) => `${CHATROOM}/${id}`,
+  CHATROOM_KICK_USER: (chatId: number, userId: number) =>
+    `${CHATROOM}/${chatId}/kick/${userId}`,
+
+  CHATROOM_UNBAN_USER: (chatId: number, userId: number) =>
+    `${CHATROOM}/${chatId}/unban/${userId}`,
+  CHATROOM_DELETE: (id: number) => `${CHATROOM}/${id}/delete`,
   CHATROOM_JOIN: `${CHATROOM}/join`,
+  CHATROOM_SEARCH: `${CHATROOM}/search`,
 
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,
