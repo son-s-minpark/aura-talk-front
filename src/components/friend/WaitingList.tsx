@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
 import { friendType } from "@/type/friend/friendType";
@@ -6,12 +6,27 @@ import { useFriend } from "@/hooks/friend/useFriend";
 import { addFriend } from "@/store/friend/setFriendList";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useFriendList } from "@/hooks/friend/useFriendList";
 
-const WaitingList = ({ list }: { list: friendType[] }) => {
-  const [waitingList, setWaitingList] = useState<friendType[]>(list);
+const WaitingList = () => {
+  const [waitingList, setWaitingList] = useState<friendType[]>([]);
   const { useAcceptFriendMutation, useRejectFriendMutation } = useFriend();
+  const { getWaitingFriendList } = useFriendList();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    async function fetchRequestingFriends() {
+      try {
+        const data = await getWaitingFriendList();
+        setWaitingList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchRequestingFriends();
+  }, []);
 
   function onAcceptWaiting(friend: friendType) {
     useAcceptFriendMutation.mutateAsync(friend.friendUserId).then(() => {

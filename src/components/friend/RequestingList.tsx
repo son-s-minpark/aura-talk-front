@@ -1,21 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModalFriendComponent from "./ModalFriendComponent";
 import SelectBtn from "../common/SelectBtn";
 import { friendType } from "@/type/friend/friendType";
 import { useFriend } from "@/hooks/friend/useFriend";
 import { useRouter } from "next/navigation";
+import { useFriendList } from "@/hooks/friend/useFriendList";
 
-const RequestingList = ({ list }: { list: friendType[] }) => {
+const RequestingList = () => {
+  const { getRequestingFriendList } = useFriendList();
   const { useCancelFriendRequestMuration } = useFriend();
-  const [requestList, setRequestList] = useState<friendType[]>(list);
+  const [requestList, setRequestList] = useState<friendType[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    async function fetchRequestingFriends() {
+      try {
+        const data = await getRequestingFriendList();
+        setRequestList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchRequestingFriends();
+  }, []);
 
   async function onCancelFriendRequest(userId: number) {
     await useCancelFriendRequestMuration
       .mutateAsync(userId)
       .then(() => {
-        setRequestList((prevList) =>
-          prevList.filter((item) => item.friendUserId !== userId)
+        setRequestList(
+          requestList.filter((item) => item.friendUserId !== userId)
         );
       })
       .catch((err) => console.error(err));
