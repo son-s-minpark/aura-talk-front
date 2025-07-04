@@ -4,6 +4,8 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdBlock } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
 import { useFriend } from "@/hooks/friend/useFriend";
+import useChatRoom from "@/hooks/useChatRoom";
+import { useRouter } from "next/navigation";
 
 const FriendButtonList = ({
   status,
@@ -23,8 +25,14 @@ const FriendButtonList = ({
     useCancelBlockFriendMutation,
     useDeleteFriendMutation,
   } = useFriend();
+  const { useCreateOnetoOneChatRoomMutation } = useChatRoom();
+  const router = useRouter();
 
-  function goOnetoOneChat() {}
+  function goOnetoOneChat() {
+    useCreateOnetoOneChatRoomMutation.mutateAsync(id).then((res) => {
+      router.push(`chat/${res}`);
+    });
+  }
 
   function addFriend() {
     if (status === "NONE") {

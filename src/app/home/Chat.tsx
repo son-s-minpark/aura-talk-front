@@ -4,6 +4,7 @@ import CreateChatModal from "@/components/chat/chatroom/modal/CreateChatModal";
 import useChatRoom from "@/hooks/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import ChatComponent from "@/components/chat/chatroom/ChatComponent";
 
 const ChatList = () => {
   const [isModalDown, setIsModalDown] = useState<boolean>(false);
@@ -22,11 +23,14 @@ const ChatList = () => {
           <CreateChatModal />
         </div>
       )}
-      <div className="relative h-full">
-        <div className="h-full">
-          {chattingList.map((chat, index) => (
-            <p key={index}>{chat.name}</p>
-          ))}
+      <div className="relative h-full px-[21px]">
+        <p className="font-semibold">채팅</p>
+        <div className="h-full mt-[9px]">
+          <div className="w-full flex flex-col gap-[22px]">
+            {chattingList.map((chatroom, index) => (
+              <ChatComponent chatroom={chatroom} key={index} />
+            ))}
+          </div>
         </div>
 
         <div className="absolute bottom-[15px] right-[21px]">

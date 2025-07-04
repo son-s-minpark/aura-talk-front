@@ -1,4 +1,5 @@
 import { addChat, setChatList } from "@/store/chat/setChatList";
+import { setCurrChat } from "@/store/chat/setCurrChat";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -7,8 +8,8 @@ import { useDispatch } from "react-redux";
 const useChatRoom = () => {
   const dispatch = useDispatch();
 
-  // 채팅방 생성 요청
-  const useCreateChatMutation = useMutation({
+  // 그룹 채팅방 생성 요청
+  const useCreateChatRoomMutation = useMutation({
     mutationFn: async ({
       name,
       userIds,
@@ -31,8 +32,28 @@ const useChatRoom = () => {
           }
         })
         .catch((err) => {
-          console.error("signup error:", err);
-          throw err;
+          throw new Error(err);
+        });
+    },
+  });
+
+  // 개인 채팅방 생성 요청
+  const useCreateOnetoOneChatRoomMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .post(apiRoute.CHATROOM_CREATE_ONE_TO_ONE, {
+          targetUserId: id,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            dispatch(setCurrChat(res.data.data));
+            return res.data.data.id;
+          } else {
+            throw new Error("개인 채팅 생성 에러");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
         });
     },
   });
@@ -64,7 +85,7 @@ const useChatRoom = () => {
   const useChatRoomExitMutation = useMutation({
     mutationFn: async (id: number) => {
       return await axiosInstance
-        .delete(apiRoute.CHATROOM_EXIT(id))
+        .delete(apiRoute.CHATROOM_EXIT_ROOM(id))
         .then((res) => {
           return res.data.success;
         })
@@ -105,11 +126,12 @@ const useChatRoom = () => {
   });
 
   return {
-    useCreateChatMutation,
+    useCreateChatRoomMutation,
     useGetChatList,
     useChatRoomExitMutation,
     useChatNotificationMutation,
     useCreateInviteCodeMuatation,
+    useCreateOnetoOneChatRoomMutation,
   };
 };
 
