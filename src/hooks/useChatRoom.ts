@@ -58,6 +58,13 @@ const useChatRoom = () => {
     },
   });
 
+  // 채팅방 수정 요청
+  const usePutChatRoomMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance.put(apiRoute.CHATROOM_PUT_ROOM(id));
+    },
+  });
+
   // 참여 중인 채팅방 목록 가져오기 요청
   const useGetChatList = () =>
     useQuery({
@@ -132,6 +139,7 @@ const useChatRoom = () => {
     useChatNotificationMutation,
     useCreateInviteCodeMuatation,
     useCreateOnetoOneChatRoomMutation,
+    usePutChatRoomMutation,
   };
 };
 

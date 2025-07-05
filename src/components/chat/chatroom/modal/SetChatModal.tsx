@@ -10,25 +10,43 @@ import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
 
 // 채팅방 생성 시 설정 모달
-const SetChatModal = ({ friendList }: { friendList: friendType[] }) => {
+const SetChatModal = ({
+  friendList,
+  chatType,
+}: {
+  friendList: friendType[];
+  chatType: string | null;
+}) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { useCreateChatMutation } = useChatRoom();
+  const { useCreateChatRoomMutation, useCreateOnetoOneChatRoomMutation } =
+    useChatRoom();
   const user = useSelector((state: RootState) => state.user);
 
   async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
     if (roomname != "") {
-      try {
-        const res = await useCreateChatMutation.mutateAsync({
-          name: roomname,
-          userIds: [user.id],
-        });
-        if (res.success) {
-          router.push(`/chat/${res.roomId}`);
+      if (chatType == "group") {
+        try {
+          const res = await useCreateChatRoomMutation.mutateAsync({
+            name: roomname,
+            userIds: [user.id],
+          });
+          if (res.success) {
+            router.push(`/chat/${res.roomId}`);
+          }
+        } catch {
+          console.error("error");
         }
-      } catch {
-        console.error("error");
+      } else if (chatType == "one") {
+        try {
+          const res = await useCreateOnetoOneChatRoomMutation.mutateAsync(
+            friendList[0].friendUserId
+          );
+          router.push(`chat/${res}`);
+        } catch (err) {
+          console.error(err);
+        }
       }
     }
   }

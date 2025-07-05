@@ -7,8 +7,8 @@ type AddImageProps = {
   btnHeight: number;
   btnWidth: number;
   img: string;
-  setImg: (params: { fileName: string; file: File }) => void;
-  deleteImg: () => void;
+  setImg?: (params: { fileName: string; file: File }) => void;
+  deleteImg?: () => void;
 };
 
 const AddImage = ({
@@ -37,10 +37,12 @@ const AddImage = ({
 
     reader.readAsDataURL(file);
 
-    setImg({
-      fileName: file.name,
-      file: file,
-    });
+    if (setImg) {
+      setImg({
+        fileName: file.name,
+        file: file,
+      });
+    }
   };
 
   return (

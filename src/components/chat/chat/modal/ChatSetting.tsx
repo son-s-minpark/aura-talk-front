@@ -17,7 +17,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
     if (roomname == "") {
       return;
     }
-    // 채팅방 정보 수정 요청
+
     setModalDown("none");
   }
   return (
@@ -25,7 +25,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
       <div className="flex flex-col gap-[17px]">
         <div>
           <h1>대표 사진</h1>
-          <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
+          <AddImage imgSize={70} btnHeight={15} btnWidth={42} img="" />
         </div>
         <div>
           <h1>채팅방 이름</h1>

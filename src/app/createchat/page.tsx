@@ -1,21 +1,26 @@
 "use client";
 import Search from "@/components/common/Search";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import SelectBtn from "@/components/common/SelectBtn";
 import SetChatModal from "@/components/chat/chatroom/modal/SetChatModal";
 import FriendComponent from "@/components/friend/FriendComponent";
 import { friendType } from "@/type/friend/friendType";
+import CheckBtn from "@/components/common/CheckBtn";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Page = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [selectedList, setSelectedList] = useState<friendType[]>([]);
   const [searchVal, setSearchVal] = useState<string>("");
-  const friendList: friendType[] = [];
+  const router = useRouter();
+  const searchParam = useSearchParams();
+  const chatType = useMemo(() => searchParam.get("type"), []);
+  const friendList = useSelector((state: RootState) => state.friendList);
 
   const Back = () => {
-    const router = useRouter();
     return (
       <div className="h-[76px] w-full flex items-center justify-between ">
         <button onClick={() => router.back()} className="w-[30px] h-[30px]">
@@ -25,20 +30,44 @@ const Page = () => {
       </div>
     );
   };
+
   function onChangVal(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchVal(e.target.value);
   }
 
-  function onFriendClick() {
-    // 이미 선택된 상태면 뺴고 아니면 추가하기기
-    setSelectedList([]);
+  function onFriendClick(friend: friendType) {
+    const isSelected = selectedList.some(
+      (item) => item.friendUserId === friend.friendUserId
+    );
+
+    if (chatType === "group") {
+      if (isSelected) {
+        setSelectedList(
+          selectedList.filter(
+            (item) => item.friendUserId !== friend.friendUserId
+          )
+        );
+      } else {
+        setSelectedList([...selectedList, friend]);
+      }
+    } else if (chatType === "one") {
+      if (!isSelected) {
+        setSelectedList([friend]);
+      } else {
+        setSelectedList(
+          selectedList.filter(
+            (item) => item.friendUserId !== friend.friendUserId
+          )
+        );
+      }
+    }
   }
 
   return (
     <div className="h-full w-full">
       {modal ? (
         <div className="modal" onClick={() => setModal(false)}>
-          <SetChatModal friendList={selectedList} />
+          <SetChatModal friendList={selectedList} chatType={chatType} />
         </div>
       ) : null}
       <Back />
@@ -49,7 +78,16 @@ const Page = () => {
         <div className="flex flex-col gap-[20px]">
           <p> 친구 </p>
           {friendList.map((friend, index) => (
-            <div key={index} onClick={onFriendClick}>
+            <div
+              key={index}
+              onClick={() => onFriendClick(friend)}
+              className="flex"
+            >
+              <CheckBtn
+                isChecked={selectedList.some(
+                  (item) => item.friendUserId === friend.friendUserId
+                )}
+              />
               <FriendComponent friend={friend} />
             </div>
           ))}
