@@ -1,12 +1,14 @@
 import { addChat, setChatList } from "@/store/chat/setChatList";
 import { setCurrChat } from "@/store/chat/setCurrChat";
+import { RootState } from "@/store/store";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useChatRoom = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   // 그룹 채팅방 생성 요청
   const useCreateChatRoomMutation = useMutation({
@@ -50,6 +52,24 @@ const useChatRoom = () => {
             return res.data.data.id;
           } else {
             throw new Error("개인 채팅 생성 에러");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
+  // 랜덤 채팅방 생성 요청
+  const useCreateRandomChatroomMutation = useMutation({
+    mutationFn: async () => {
+      await axiosInstance
+        .post(apiRoute.RANDOMCHAT_START, { interests: user.interests })
+        .then((res) => {
+          if (res.data.success) {
+            dispatch(setCurrChat(res.data.data));
+          } else {
+            throw new Error("랜덤 채팅 생성 오류");
           }
         })
         .catch((err) => {
@@ -140,6 +160,7 @@ const useChatRoom = () => {
     useCreateInviteCodeMuatation,
     useCreateOnetoOneChatRoomMutation,
     usePutChatRoomMutation,
+    useCreateRandomChatroomMutation,
   };
 };
 

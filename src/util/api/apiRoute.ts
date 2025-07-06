@@ -3,6 +3,7 @@ const USER = `${API}/api/users`;
 const USER_IMAGE = `${USER}/me/profile-image`;
 const INTEREST = `${API}/api/interests`;
 const CHATROOM = `${API}/api/chatrooms`;
+const RANDOMCHAT = `${API}/api/random-chat`;
 const CHAT = `${API}/api/chats`;
 const FRIEND = `${API}/api/friends`;
 
@@ -50,6 +51,9 @@ export const apiRoute = {
   CHATROOM_DELETE: (id: number) => `${CHATROOM}/${id}/delete`,
   CHATROOM_JOIN: `${CHATROOM}/join`,
   CHATROOM_SEARCH: `${CHATROOM}/search`,
+
+  // 랜덤채팅방
+  RANDOMCHAT_START: `${RANDOMCHAT}/start`,
 
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,

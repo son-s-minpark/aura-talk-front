@@ -7,12 +7,23 @@ import { IoPeople } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import useChatRoom from "@/hooks/useChatRoom";
 
 type selectedChatType = "friend" | "group" | "random";
 
 const CreateChatModal = () => {
   const [chatType, setChatType] = useState<selectedChatType>("friend");
+  const { useCreateRandomChatroomMutation } = useChatRoom();
   const router = useRouter();
+
+  function createChatRoom() {
+    if (chatType != "random") {
+      router.push(`/createchat?type=${chatType}`);
+    } else {
+      const res = useCreateRandomChatroomMutation.mutateAsync();
+      router.push(`chat/${res}`);
+    }
+  }
   return (
     <div
       className="modal-content w-[360px] h-[215px]"
@@ -54,10 +65,7 @@ const CreateChatModal = () => {
         </div>
       </div>
       <div className="flex justify-end mt-[20px] mr-[17px]">
-        <SelectBtn
-          label="완료"
-          onClick={() => router.push(`/createchat?type=${chatType}`)}
-        />
+        <SelectBtn label="완료" onClick={createChatRoom} />
       </div>
     </div>
   );
