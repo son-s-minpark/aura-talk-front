@@ -51,13 +51,18 @@ const AddImage = ({
         className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
         style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
       >
-        <Image
-          src={prevImg}
-          alt="Profile"
-          fill
-          className="rounded-full object-cover"
-        />
+        {prevImg ? (
+          <Image
+            src={prevImg}
+            alt="Profile"
+            fill
+            className="rounded-full object-cover"
+          />
+        ) : (
+          <div className="bg-[var(--color-commonGray)]" />
+        )}
       </div>
+
       <div className="flex gap-[15px]">
         <button
           type="button"

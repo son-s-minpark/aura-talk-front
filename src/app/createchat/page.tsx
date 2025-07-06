@@ -1,6 +1,6 @@
 "use client";
 import Search from "@/components/common/Search";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import SelectBtn from "@/components/common/SelectBtn";
@@ -10,6 +10,7 @@ import { friendType } from "@/type/friend/friendType";
 import CheckBtn from "@/components/common/CheckBtn";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useFriendList } from "@/hooks/friend/useFriendList";
 
 const Page = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -18,7 +19,12 @@ const Page = () => {
   const router = useRouter();
   const searchParam = useSearchParams();
   const chatType = useMemo(() => searchParam.get("type"), []);
+  const { getFriendList } = useFriendList();
   const friendList = useSelector((state: RootState) => state.friendList);
+
+  useEffect(() => {
+    getFriendList();
+  });
 
   const Back = () => {
     return (
@@ -54,11 +60,7 @@ const Page = () => {
       if (!isSelected) {
         setSelectedList([friend]);
       } else {
-        setSelectedList(
-          selectedList.filter(
-            (item) => item.friendUserId !== friend.friendUserId
-          )
-        );
+        setSelectedList([]);
       }
     }
   }
@@ -81,7 +83,7 @@ const Page = () => {
             <div
               key={index}
               onClick={() => onFriendClick(friend)}
-              className="flex"
+              className="flex items-center gap-[18px]"
             >
               <CheckBtn
                 isChecked={selectedList.some(

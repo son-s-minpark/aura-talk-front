@@ -3,7 +3,7 @@ import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useChatRoom from "@/hooks/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -17,6 +17,7 @@ const SetChatModal = ({
   friendList: friendType[];
   chatType: string | null;
 }) => {
+  const [img, setImg] = useState<string>("");
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { useCreateChatRoomMutation, useCreateOnetoOneChatRoomMutation } =
@@ -58,7 +59,13 @@ const SetChatModal = ({
       <div className="flex flex-col gap-[17px]">
         <div>
           <h1>대표 사진</h1>
-          <AddImage imgSize={70} btnHeight={15} btnWidth={42} />
+          <AddImage
+            imgSize={70}
+            btnHeight={15}
+            btnWidth={42}
+            img={img}
+            setImg={() => setImg}
+          />
         </div>
         <div>
           <h1>채팅방 이름</h1>
@@ -69,7 +76,6 @@ const SetChatModal = ({
           </div>
         </div>
         <div>
-          <h1>초대할 친구</h1>
           <div>
             <h1>친구 목록</h1>
             <div className="flex gap-[11px] mt-[9px]">

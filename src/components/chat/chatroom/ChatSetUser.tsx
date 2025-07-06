@@ -7,8 +7,8 @@ const ChatSetUser = ({ user }: { user: chatUserType }) => {
     <div className="flex items-center flex-col gap-[5px] w-[52px]">
       <div className="w-[52px] h-[52px] rounded-full border-1 border-[var(--color-gray)]">
         {user.thumbnailImg ? (
-          <div>
-            <Image src={user.thumbnailImg} alt="프로필 이미지" />
+          <div className="w-[52px] h-[52px] relative overflow-hidden rounded-full border-1 border-[var(--color-commonGray)]">
+            <Image src={user.thumbnailImg} alt="프로필 이미지" fill />
           </div>
         ) : (
           <div className="bg-[var(--color-commonGray)]"> </div>
