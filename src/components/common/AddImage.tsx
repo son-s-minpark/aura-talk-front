@@ -7,7 +7,7 @@ type AddImageProps = {
   btnHeight: number;
   btnWidth: number;
   img: string;
-  setImg?: (params: { fileName: string; file: File }) => void;
+  setImg: (params: { fileName: string; file: File }) => void;
   deleteImg?: () => void;
 };
 

@@ -3,12 +3,18 @@ import React from "react";
 import ChatList from "@/components/chat/chat/ChatList";
 import ChatHeader from "@/components/chat/chat/ChatHeader";
 import ChatInput from "@/components/chat/chat/ChatInput";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import useChatRoom from "@/hooks/useChatRoom";
+import { useParams } from "next/navigation";
 
 const Page = () => {
-  const currChat = useSelector((state: RootState) => state.currChat);
-  console.error(currChat);
+  const param = useParams();
+  const id = param.id;
+  const { useGetChatRoom } = useChatRoom();
+  const { isLoading } = useGetChatRoom(Number(id));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <ChatHeader />

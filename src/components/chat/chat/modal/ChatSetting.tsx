@@ -2,20 +2,29 @@
 import { setModalDownType } from "@/type/chat/setModalDownType";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import ChatSetUser from "../../chatroom/ChatSetUser";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import useChatRoom from "@/hooks/useChatRoom";
 
 // 채팅방 정보 수정 모달
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const currChat = useSelector((state: RootState) => state.currChat);
+  const [img, setImg] = useState<string>(currChat.roomImageUrl);
+  const { usePutChatRoomMutation } = useChatRoom();
 
   function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
     if (roomname == "") {
       return;
+    } else {
+      usePutChatRoomMutation.mutateAsync({
+        id: currChat.id,
+        name: roomname,
+        imageUrl: img,
+      });
     }
 
     setModalDown("none");
@@ -25,7 +34,13 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
       <div className="flex flex-col gap-[17px]">
         <div>
           <h1>대표 사진</h1>
-          <AddImage imgSize={70} btnHeight={15} btnWidth={42} img="" />
+          <AddImage
+            imgSize={70}
+            btnHeight={15}
+            btnWidth={42}
+            img={img}
+            setImg={() => setImg}
+          />
         </div>
         <div>
           <h1>채팅방 이름</h1>

@@ -48,7 +48,6 @@ const useChatRoom = () => {
         })
         .then((res) => {
           if (res.data.success) {
-            dispatch(setCurrChat(res.data.data));
             return res.data.data.id;
           } else {
             throw new Error("개인 채팅 생성 에러");
@@ -67,7 +66,7 @@ const useChatRoom = () => {
         .post(apiRoute.RANDOMCHAT_START, { interests: user.interests })
         .then((res) => {
           if (res.data.success) {
-            dispatch(setCurrChat(res.data.data));
+            return res.data.data.id;
           } else {
             throw new Error("랜덤 채팅 생성 오류");
           }
@@ -80,8 +79,30 @@ const useChatRoom = () => {
 
   // 채팅방 수정 요청
   const usePutChatRoomMutation = useMutation({
-    mutationFn: async (id: number) => {
-      await axiosInstance.put(apiRoute.CHATROOM_PUT_ROOM(id));
+    mutationFn: async ({
+      id,
+      name,
+      imageUrl,
+    }: {
+      id: number;
+      name: string;
+      imageUrl: string;
+    }) => {
+      await axiosInstance
+        .put(apiRoute.CHATROOM_PUT_ROOM(id), {
+          name: name,
+          roomImageUrl: imageUrl,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            dispatch(setCurrChat(res.data.data));
+          } else {
+            throw new Error("채팅방 정보 수정 오류");
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
   });
 
@@ -104,6 +125,27 @@ const useChatRoom = () => {
           })
           .catch((err) => {
             throw new Error("채팅방 가져오기 오류:", err);
+          });
+      },
+    });
+
+  // 채팅방 정보 가져오기
+  const useGetChatRoom = (id: number) =>
+    useQuery({
+      queryKey: ["getChatRoom", id],
+      queryFn: async () => {
+        return await axiosInstance
+          .get(apiRoute.CHATROOM_GET_ROOM(id))
+          .then((res) => {
+            if (res.data.success) {
+              dispatch(setCurrChat(res.data.data));
+              return res.data.data;
+            } else {
+              throw new Error("채팅방 정보 가져오기 오류");
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
           });
       },
     });
@@ -155,6 +197,7 @@ const useChatRoom = () => {
   return {
     useCreateChatRoomMutation,
     useGetChatList,
+    useGetChatRoom,
     useChatRoomExitMutation,
     useChatNotificationMutation,
     useCreateInviteCodeMuatation,

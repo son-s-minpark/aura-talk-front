@@ -67,11 +67,11 @@ const Page = () => {
 
   return (
     <div className="h-full w-full">
-      {modal ? (
+      {modal && (
         <div className="modal" onClick={() => setModal(false)}>
           <SetChatModal friendList={selectedList} chatType={chatType} />
         </div>
-      ) : null}
+      )}
       <Back />
       <div className="w-full h-[33px] flex items-center px-[24px]">
         <Search val={searchVal} onChange={onChangVal} />

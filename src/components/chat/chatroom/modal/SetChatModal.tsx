@@ -76,7 +76,7 @@ const SetChatModal = ({
           </div>
         </div>
         <div>
-          <div>
+          <>
             <h1>친구 목록</h1>
             <div className="flex gap-[11px] mt-[9px]">
               {friendList.map((friend, index) => (
@@ -90,7 +90,7 @@ const SetChatModal = ({
                 />
               ))}
             </div>
-          </div>
+          </>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="생성" onClick={onSubmit} />

@@ -14,6 +14,7 @@ type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
 const ChatHeader = () => {
   const [modalDown, setModalDown] = useState<setModalType>("none");
   const currChat = useSelector((state: RootState) => state.currChat);
+
   return (
     <div className="bg-[var(--color-point)]">
       {modalDown !== "none" ? (

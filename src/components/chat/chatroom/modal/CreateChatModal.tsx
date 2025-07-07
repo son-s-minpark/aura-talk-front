@@ -9,10 +9,10 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import useChatRoom from "@/hooks/useChatRoom";
 
-type selectedChatType = "friend" | "group" | "random";
+type selectedChatType = "one" | "group" | "random";
 
 const CreateChatModal = () => {
-  const [chatType, setChatType] = useState<selectedChatType>("friend");
+  const [chatType, setChatType] = useState<selectedChatType>("one");
   const { useCreateRandomChatroomMutation } = useChatRoom();
   const router = useRouter();
 
@@ -35,10 +35,10 @@ const CreateChatModal = () => {
       <div className="flex items-end justify-center gap-[15px] mt-[9px]">
         <div
           className={clsx("flex flex-col items-center", {
-            "text-[var(--color-point)]": chatType == "friend",
-            "text-[var(--color-gray)]": chatType != "friend",
+            "text-[var(--color-point)]": chatType == "one",
+            "text-[var(--color-gray)]": chatType != "one",
           })}
-          onClick={() => setChatType("friend")}
+          onClick={() => setChatType("one")}
         >
           <IoMdPerson className="w-[70px] h-[70px]" />
           <p className="text-[10px]">기존 친구와 대화하기</p>
