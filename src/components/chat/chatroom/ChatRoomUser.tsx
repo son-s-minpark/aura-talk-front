@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React from "react";
 import { FaCrown } from "react-icons/fa";
-import { FaBan } from "react-icons/fa";
 
 const ChatRoomUser = ({
   user,
@@ -27,13 +26,7 @@ const ChatRoomUser = ({
           )}
         </div>
         <p className="text-[14px] font-bold w-[140px]">{user.nickname}</p>
-        {isLeader ? (
-          <FaCrown className="text-[#FFE8A3] w-[20px] h-[18px]" />
-        ) : (
-          <button>
-            <FaBan className="w-[24px] h-[24px] text-[#EA3736]" />
-          </button>
-        )}
+        {isLeader && <FaCrown className="text-[#FFE8A3] w-[20px] h-[18px]" />}
       </div>
     </div>
   );

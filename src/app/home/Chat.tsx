@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import CreateChatModal from "@/components/chat/chatroom/modal/CreateChatModal";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ChatComponent from "@/components/chat/chatroom/ChatComponent";

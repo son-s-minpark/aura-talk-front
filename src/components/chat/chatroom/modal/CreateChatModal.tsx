@@ -7,7 +7,7 @@ import { IoPeople } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
 type selectedChatType = "one" | "group" | "random";
 

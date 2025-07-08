@@ -6,7 +6,7 @@ import React, { useRef, useState } from "react";
 import ChatSetUser from "../../chatroom/ChatSetUser";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
 // 채팅방 정보 수정 모달
 const ChatSetting = ({ setModalDown }: setModalDownType) => {

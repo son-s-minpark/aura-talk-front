@@ -3,7 +3,7 @@ import React from "react";
 import ChatList from "@/components/chat/chat/ChatList";
 import ChatHeader from "@/components/chat/chat/ChatHeader";
 import ChatInput from "@/components/chat/chat/ChatInput";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useParams } from "next/navigation";
 
 const Page = () => {

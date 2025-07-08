@@ -4,7 +4,7 @@ import SelectBtn from "@/components/common/SelectBtn";
 import { IoIosCopy } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
 const ChatShare = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);

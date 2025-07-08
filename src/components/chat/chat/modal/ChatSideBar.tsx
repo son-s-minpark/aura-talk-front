@@ -7,7 +7,7 @@ import { IoNotifications, IoNotificationsOff } from "react-icons/io5";
 import ChatRoomUser from "../../chatroom/ChatRoomUser";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
@@ -35,9 +35,12 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
           멤버({currChat.users.length + 1})
         </p>
         <div className="h-[130px] px-[7px] mt-[17px] overflow-scroll flex flex-col gap-[10px]">
-          <ChatRoomUser user={currChat.owner} isLeader={true} />
           {currChat.users.map((friend, index) => (
-            <ChatRoomUser user={friend} isLeader={false} key={index} />
+            <ChatRoomUser
+              user={friend}
+              isLeader={currChat.owner.id == friend.id}
+              key={index}
+            />
           ))}
         </div>
         <button className="text-[var(--color-gray)] flex items-center gap-[14px]">

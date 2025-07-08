@@ -4,7 +4,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdBlock } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
 import { useFriend } from "@/hooks/friend/useFriend";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useRouter } from "next/navigation";
 
 const FriendButtonList = ({

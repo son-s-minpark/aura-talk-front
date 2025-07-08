@@ -151,7 +151,7 @@ const useChatRoom = () => {
     });
 
   // 채팅방 나가기 요청
-  const useChatRoomExitMutation = useMutation({
+  const useExitChatRoomMutation = useMutation({
     mutationFn: async (id: number) => {
       return await axiosInstance
         .delete(apiRoute.CHATROOM_EXIT_ROOM(id))
@@ -194,16 +194,30 @@ const useChatRoom = () => {
     },
   });
 
+  const useDeleteChatRoomMuatation = useMutation({
+    mutationFn: async (id: number) => {
+      await axiosInstance
+        .delete(apiRoute.CHATROOM_DELETE(id))
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
   return {
     useCreateChatRoomMutation,
     useGetChatList,
     useGetChatRoom,
-    useChatRoomExitMutation,
+    useExitChatRoomMutation,
     useChatNotificationMutation,
     useCreateInviteCodeMuatation,
     useCreateOnetoOneChatRoomMutation,
     usePutChatRoomMutation,
     useCreateRandomChatroomMutation,
+    useDeleteChatRoomMuatation,
   };
 };
 

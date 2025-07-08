@@ -4,7 +4,7 @@ import SelectBtn from "@/components/common/SelectBtn";
 import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
