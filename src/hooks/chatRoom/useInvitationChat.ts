@@ -1,0 +1,66 @@
+import { apiRoute } from "@/util/api/apiRoute";
+import axiosInstance from "@/util/api/axiosInstance";
+import { useMutation } from "@tanstack/react-query";
+// import { useDispatch } from "react-redux";
+
+export const useInvitationChat = () => {
+  // const dispatch = useDispatch();
+
+  // 초대 코드 생성 요청
+  const useCreateInviteCodeMuatation = useMutation({
+    mutationFn: async ({ id }: { id: number }) => {
+      return await axiosInstance
+        .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw Error(err);
+        });
+    },
+  });
+
+  // 초대코드 친구에게 보내기 요청
+  const useSendInviteMutation = useMutation({
+    mutationFn: async ({
+      roomId,
+      userId,
+    }: {
+      roomId: number;
+      userId: number;
+    }) => {
+      return axiosInstance
+        .post(apiRoute.CHATROOM_FRIEND_INVITE(roomId), {
+          userId: userId,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            // 뭘해야 하지?
+          }
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
+  // 초대코드로 방 입장하기 요청
+  const useJoinChatRoom = useMutation({
+    mutationFn: async (code: string) => {
+      await axiosInstance
+        .post(apiRoute.CHATROOM_JOIN, { inviteCode: code })
+        .then((res) => {
+          return res.data.success;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
+  });
+
+  return {
+    useCreateInviteCodeMuatation,
+    useSendInviteMutation,
+    useJoinChatRoom,
+  };
+};

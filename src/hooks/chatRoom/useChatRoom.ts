@@ -180,20 +180,7 @@ const useChatRoom = () => {
     },
   });
 
-  // 초대 코드 생성 요청
-  const useCreateInviteCodeMuatation = useMutation({
-    mutationFn: async ({ id }: { id: number }) => {
-      return await axiosInstance
-        .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
-        .then((res) => {
-          return res.data.success;
-        })
-        .catch((err) => {
-          throw Error(err);
-        });
-    },
-  });
-
+  // 채팅방 삭제 요청
   const useDeleteChatRoomMuatation = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
@@ -213,7 +200,6 @@ const useChatRoom = () => {
     useGetChatRoom,
     useExitChatRoomMutation,
     useChatNotificationMutation,
-    useCreateInviteCodeMuatation,
     useCreateOnetoOneChatRoomMutation,
     usePutChatRoomMutation,
     useCreateRandomChatroomMutation,
