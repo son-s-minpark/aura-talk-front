@@ -20,8 +20,7 @@ const SetChatModal = ({
   const [img, setImg] = useState<string>("");
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { useCreateChatRoomMutation, useCreateOnetoOneChatRoomMutation } =
-    useChatRoom();
+  const { useCreateChatRoom, useCreateOnetoOneChatRoom } = useChatRoom();
   const user = useSelector((state: RootState) => state.user);
 
   async function onSubmit() {
@@ -29,7 +28,7 @@ const SetChatModal = ({
     if (roomname != "") {
       if (chatType == "group") {
         try {
-          const res = await useCreateChatRoomMutation.mutateAsync({
+          const res = await useCreateChatRoom.mutateAsync({
             name: roomname,
             userIds: [user.id],
           });
@@ -41,7 +40,7 @@ const SetChatModal = ({
         }
       } else if (chatType == "one") {
         try {
-          const res = await useCreateOnetoOneChatRoomMutation.mutateAsync(
+          const res = await useCreateOnetoOneChatRoom.mutateAsync(
             friendList[0].friendUserId
           );
           router.push(`chat/${res}`);

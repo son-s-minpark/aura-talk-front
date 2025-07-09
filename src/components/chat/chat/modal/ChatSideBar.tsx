@@ -8,14 +8,16 @@ import ChatRoomUser from "../../chatroom/ChatRoomUser";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
+import { useInvitationChat } from "@/hooks/chatRoom/useInvitationChat";
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
-  const { useChatNotificationMutation, useCreateInviteCodeMuatation } =
-    useChatRoom();
+  const user = useSelector((state: RootState) => state.user);
+  const { useChatNotification } = useChatRoom();
+  const { useCreateInviteCode } = useInvitationChat();
 
   if (currChat.inviteCodeExpiredAt < new Date()) {
-    useCreateInviteCodeMuatation.mutateAsync({ id: currChat.id });
+    useCreateInviteCode.mutateAsync({ id: currChat.id });
   }
 
   return (
@@ -51,7 +53,7 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
       <div className="text-[var(--color-gray)] flex gap-[5px] items-center justify-end mt-[20px] mr-[22px]">
         <button
           onClick={() =>
-            useChatNotificationMutation.mutateAsync({
+            useChatNotification.mutateAsync({
               id: currChat.id,
               isActive: currChat.active,
             })
@@ -63,10 +65,12 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
             <IoNotificationsOff className="w-[20px] h-[20px]" />
           )}
         </button>
-        <IoSettings
-          onClick={() => setModalDown("setting")}
-          className="w-[20px] h-[20px]"
-        />
+        {currChat.owner.id === user.id && (
+          <IoSettings
+            onClick={() => setModalDown("setting")}
+            className="w-[20px] h-[20px]"
+          />
+        )}
         <IoShareSocial
           className="w-[20px] h-[20px]"
           onClick={() => setModalDown("share")}

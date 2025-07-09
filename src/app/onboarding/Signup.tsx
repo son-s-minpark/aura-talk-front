@@ -11,7 +11,7 @@ import { AxiosError } from "axios";
 import Introduction from "@/components/onboarding/Introduction";
 
 const Signup = () => {
-  const { useSignupMutation } = useAuth();
+  const { useSignup } = useAuth();
   const [mail, setMail] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [checkPw, setCheckPw] = useState<string>("");
@@ -76,7 +76,7 @@ const Signup = () => {
     if (isSignupValid()) {
       setErrMsg("");
       try {
-        const res = await useSignupMutation.mutateAsync({
+        const res = await useSignup.mutateAsync({
           email: mail,
           password: pw,
         });

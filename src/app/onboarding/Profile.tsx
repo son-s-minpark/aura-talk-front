@@ -18,7 +18,7 @@ import { RootState } from "@/store/store";
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  const { useSetProfileMutation } = useProfile();
+  const { useSetProfile } = useProfile();
   const [nickname, setnickname] = useState<string>(user.nickname);
   const [username, setusername] = useState<string>(user.username);
   const [description, setDescription] = useState<string>(user.description);
@@ -83,7 +83,7 @@ const Profile = () => {
     } else {
       if (isProfileValid()) {
         try {
-          const res = await useSetProfileMutation.mutateAsync({
+          const res = await useSetProfile.mutateAsync({
             nickname: nickname,
             username: username,
             description: description,

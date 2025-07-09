@@ -18,7 +18,7 @@ const Signin = () => {
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isPwValid, setIsPwValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
-  const { useSigninMutation } = useAuth();
+  const { useSignin } = useAuth();
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ const Signin = () => {
     if (isSigninValid()) {
       setErrMsg("");
       try {
-        const res = await useSigninMutation.mutateAsync({
+        const res = await useSignin.mutateAsync({
           email: mail,
           password: pw,
         });

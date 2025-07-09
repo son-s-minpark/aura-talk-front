@@ -17,51 +17,51 @@ const FriendButtonList = ({
   setFriendStatus: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const {
-    useRequestFriendMutation,
-    useAcceptFriendMutation,
-    useRejectFriendMutation,
-    useCancelFriendRequestMuration,
-    useBlockFriendMutation,
-    useCancelBlockFriendMutation,
-    useDeleteFriendMutation,
+    useRequestFriend,
+    useAcceptFriend,
+    useRejectFriend,
+    useCancelFriendRequest,
+    useBlockFriend,
+    useCancelBlockFriend,
+    useDeleteFriend,
   } = useFriend();
-  const { useCreateOnetoOneChatRoomMutation } = useChatRoom();
+  const { useCreateOnetoOneChatRoom } = useChatRoom();
   const router = useRouter();
 
   function goOnetoOneChat() {
-    useCreateOnetoOneChatRoomMutation.mutateAsync(id).then((res) => {
+    useCreateOnetoOneChatRoom.mutateAsync(id).then((res) => {
       router.push(`chat/${res}`);
     });
   }
 
   function addFriend() {
     if (status === "NONE") {
-      useRequestFriendMutation.mutateAsync(id);
+      useRequestFriend.mutateAsync(id);
       setFriendStatus("REQUEST_SENT");
     } else if (status === "REQUEST_RECEIVED") {
-      useAcceptFriendMutation.mutateAsync(id);
+      useAcceptFriend.mutateAsync(id);
       setFriendStatus("FRIENDS");
     }
   }
 
   function removeFriend() {
     if (status === "REQUEST_RECEIVED") {
-      useRejectFriendMutation.mutateAsync(id);
+      useRejectFriend.mutateAsync(id);
     } else if (status === "REQUEST_SENT") {
-      useCancelFriendRequestMuration.mutateAsync(id);
+      useCancelFriendRequest.mutateAsync(id);
     } else if (status === "FRIENDS") {
-      useDeleteFriendMutation.mutateAsync(id);
+      useDeleteFriend.mutateAsync(id);
     }
     setFriendStatus("NONE");
   }
 
   function blockFriend() {
-    useBlockFriendMutation.mutateAsync(id);
+    useBlockFriend.mutateAsync(id);
     setFriendStatus("BLOCKED");
   }
 
   function unBlockFriend() {
-    useCancelBlockFriendMutation.mutateAsync(id);
+    useCancelBlockFriend.mutateAsync(id);
     setFriendStatus("NONE");
   }
 

@@ -1,5 +1,6 @@
 import SelectBtn from "@/components/common/SelectBtn";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
+import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
 import { RootState } from "@/store/store";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -8,16 +9,17 @@ import { useSelector } from "react-redux";
 const ChatExit = () => {
   const currChat = useSelector((state: RootState) => state.currChat);
   const user = useSelector((state: RootState) => state.user);
-  const { useExitChatRoomMutation, useDeleteChatRoomMuatation } = useChatRoom();
+  const { useExitChatRoom } = useChatRoom();
+  const { useDeleteChatRoom } = useChatRoomLeader();
   const isLeader = currChat.owner.id === user.id;
 
   async function onExit() {
     let res;
     if (isLeader) {
       if (currChat.users.length != 1)
-        res = await useDeleteChatRoomMuatation.mutateAsync(currChat.id);
+        res = await useDeleteChatRoom.mutateAsync(currChat.id);
     } else {
-      res = await useExitChatRoomMutation.mutateAsync(currChat.id);
+      res = await useExitChatRoom.mutateAsync(currChat.id);
     }
     if (res) {
       redirect("/home");

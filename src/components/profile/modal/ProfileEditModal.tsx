@@ -29,9 +29,8 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-  const { useSetProfileMutation } = useProfile();
-  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
-    useImageUpload();
+  const { useSetProfile } = useProfile();
+  const { useUploadProfileImage, useDeleteProfileImage } = useImageUpload();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -98,7 +97,7 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
           })
         );
         try {
-          const res = await useSetProfileMutation.mutateAsync({
+          const res = await useSetProfile.mutateAsync({
             nickname: nickname,
             username: username,
             description: description,
@@ -142,8 +141,8 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
               btnHeight={15}
               btnWidth={42}
               img={user.profileImage.thumbnailImageUrl}
-              setImg={useProfileImageUploadMutation.mutateAsync}
-              deleteImg={useDeleteProfileImageMutation.mutateAsync}
+              setImg={useUploadProfileImage.mutateAsync}
+              deleteImg={useDeleteProfileImage.mutateAsync}
             />
           </div>
           <div className="flex flex-col mt-[34px]">

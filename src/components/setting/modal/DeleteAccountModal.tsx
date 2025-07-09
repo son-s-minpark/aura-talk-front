@@ -13,7 +13,7 @@ const DeleteAccountModal = () => {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [pw, setPw] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
-  const { useDeleteAccoutMutation } = useAuth();
+  const { useDeleteAccout } = useAuth();
   const router = useRouter();
 
   function onChangePw(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,7 +37,7 @@ const DeleteAccountModal = () => {
       if (validatePassword()) {
         setErrMsg("");
         try {
-          const res = await useDeleteAccoutMutation.mutateAsync(pw);
+          const res = await useDeleteAccout.mutateAsync(pw);
           if (res) {
             router.replace("/onboarding");
           }

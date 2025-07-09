@@ -54,7 +54,7 @@ export const useProfile = () => {
   };
 
   // 프로필 수정/등록 요청
-  const useSetProfileMutation = useMutation({
+  const useSetProfile = useMutation({
     mutationFn: async (profileData: profileType) => {
       return await axiosInstance
         .put(apiRoute.USER_PUT_PROFILE, {
@@ -88,7 +88,7 @@ export const useProfile = () => {
   });
 
   // 랜덤채팅 설정 수정 요청
-  const useRandomChatToggleMutation = useMutation({
+  const useRandomChatToggle = useMutation({
     mutationFn: async (randomData: boolean) => {
       return await axiosInstance
         .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(user.id), {
@@ -121,8 +121,8 @@ export const useProfile = () => {
   return {
     useGetUserProfile,
     useGetMyProfile,
-    useSetProfileMutation,
-    useRandomChatToggleMutation,
+    useSetProfile,
+    useRandomChatToggle,
     getProfileImg,
   };
 };

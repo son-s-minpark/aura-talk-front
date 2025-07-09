@@ -6,12 +6,12 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 
 const LogoutModal = () => {
-  const { useLogoutMutation } = useAuth();
+  const { useLogout } = useAuth();
   const router = useRouter();
 
   async function onLogout() {
     try {
-      const res = await useLogoutMutation.mutateAsync();
+      const res = await useLogout.mutateAsync();
       if (res) {
         router.replace("/onboarding");
       }

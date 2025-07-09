@@ -13,14 +13,14 @@ type selectedChatType = "one" | "group" | "random";
 
 const CreateChatModal = () => {
   const [chatType, setChatType] = useState<selectedChatType>("one");
-  const { useCreateRandomChatroomMutation } = useChatRoom();
+  const { useCreateRandomChatroom } = useChatRoom();
   const router = useRouter();
 
   function createChatRoom() {
     if (chatType != "random") {
       router.push(`/createchat?type=${chatType}`);
     } else {
-      const res = useCreateRandomChatroomMutation.mutateAsync();
+      const res = useCreateRandomChatroom.mutateAsync();
       router.push(`chat/${res}`);
     }
   }

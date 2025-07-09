@@ -16,7 +16,7 @@ export const useImageUpload = () => {
   const user = useSelector((state: RootState) => state.user);
 
   // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료)
-  const useProfileImageUploadMutation = useMutation({
+  const useUploadProfileImage = useMutation({
     mutationFn: async ({ fileName, file }: ImageProps) => {
       // presigned url 받기 요청
       try {
@@ -61,7 +61,7 @@ export const useImageUpload = () => {
   });
 
   // 기본 프로필 이미지 제거
-  const useDeleteProfileImageMutation = useMutation({
+  const useDeleteProfileImage = useMutation({
     mutationFn: async () => {
       await axiosInstance
         .delete(apiRoute.USER_IMAGE_PROFILE_DELETE)
@@ -84,8 +84,13 @@ export const useImageUpload = () => {
     },
   });
 
+  const useUploadChatRoomImage = useMutation({
+    mutationFn: async ({ file, fileName }: ImageProps) => {},
+  });
+
   return {
-    useProfileImageUploadMutation,
-    useDeleteProfileImageMutation,
+    useUploadProfileImage,
+    useDeleteProfileImage,
+    useUploadChatRoomImage,
   };
 };

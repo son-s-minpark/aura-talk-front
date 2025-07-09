@@ -7,7 +7,7 @@ import { useFriend } from "@/hooks/friend/useFriend";
 import { useFriendList } from "@/hooks/friend/useFriendList";
 
 const BlockingList = () => {
-  const { useCancelBlockFriendMutation } = useFriend();
+  const { useCancelBlockFriend } = useFriend();
   const { getBlockedFriendsList } = useFriendList();
   const [blockingList, setBlockingList] = useState<friendType[]>([]);
   const router = useRouter();
@@ -26,7 +26,7 @@ const BlockingList = () => {
   }, []);
 
   function onCancelBlock(id: number) {
-    useCancelBlockFriendMutation.mutateAsync(id);
+    useCancelBlockFriend.mutateAsync(id);
     setBlockingList(blockingList.filter((item) => item.friendUserId !== id));
   }
 

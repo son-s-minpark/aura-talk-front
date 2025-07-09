@@ -7,7 +7,7 @@ export const useInvitationChat = () => {
   // const dispatch = useDispatch();
 
   // 초대 코드 생성 요청
-  const useCreateInviteCodeMuatation = useMutation({
+  const useCreateInviteCode = useMutation({
     mutationFn: async ({ id }: { id: number }) => {
       return await axiosInstance
         .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
@@ -20,8 +20,8 @@ export const useInvitationChat = () => {
     },
   });
 
-  // 초대코드 친구에게 보내기 요청
-  const useSendInviteMutation = useMutation({
+  // 초대 코드 친구에게 보내기 요청
+  const useSendInvite = useMutation({
     mutationFn: async ({
       roomId,
       userId,
@@ -59,8 +59,8 @@ export const useInvitationChat = () => {
   });
 
   return {
-    useCreateInviteCodeMuatation,
-    useSendInviteMutation,
+    useCreateInviteCode,
+    useSendInvite,
     useJoinChatRoom,
   };
 };

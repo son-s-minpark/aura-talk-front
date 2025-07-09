@@ -13,8 +13,7 @@ import { useImageUpload } from "@/hooks/useImageUpload";
 const ProfileImg = () => {
   const user = useSelector((state: RootState) => state.user);
   const [termsModalDown, setTermsModalDown] = useState<boolean>(false);
-  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
-    useImageUpload();
+  const { useUploadProfileImage, useDeleteProfileImage } = useImageUpload();
 
   return (
     <div className="w-full h-full overflow-scroll text-white">
@@ -34,8 +33,8 @@ const ProfileImg = () => {
           btnHeight={24}
           btnWidth={54}
           img={user.profileImage.thumbnailImageUrl}
-          setImg={useProfileImageUploadMutation.mutateAsync}
-          deleteImg={useDeleteProfileImageMutation.mutateAsync}
+          setImg={useUploadProfileImage.mutateAsync}
+          deleteImg={useDeleteProfileImage.mutateAsync}
         />
       </div>
       <div className="flex flex-col mt-[55px] ml-[37px] gap-[22px]">

@@ -11,7 +11,7 @@ export const useAuth = () => {
   const dispatch = useDispatch();
 
   // 회원가입 요청
-  const useSignupMutation = useMutation({
+  const useSignup = useMutation({
     mutationFn: async (signupData: signType) => {
       return await axios
         .post(apiRoute.USER_SIGNIN, signupData, {
@@ -46,7 +46,7 @@ export const useAuth = () => {
   });
 
   // 로그인 요청
-  const useSigninMutation = useMutation({
+  const useSignin = useMutation({
     mutationFn: async (signinData: signType) => {
       return await axios
         .post(apiRoute.USER_LOGIN, signinData, {
@@ -87,7 +87,7 @@ export const useAuth = () => {
   });
 
   // 로그아웃 요청
-  const useLogoutMutation = useMutation({
+  const useLogout = useMutation({
     mutationFn: async () => {
       return await axiosInstance
         .post(apiRoute.USER_LOGOUT)
@@ -109,7 +109,7 @@ export const useAuth = () => {
   });
 
   // 회원탈퇴 요청
-  const useDeleteAccoutMutation = useMutation({
+  const useDeleteAccout = useMutation({
     mutationFn: async (pwData: string) => {
       return await axiosInstance
         .delete(apiRoute.USER_DELETE_ACCOUNT, { data: pwData })
@@ -131,10 +131,10 @@ export const useAuth = () => {
   });
 
   return {
-    useSigninMutation,
-    useSignupMutation,
-    useLogoutMutation,
-    useDeleteAccoutMutation,
+    useSignin,
+    useSignup,
+    useLogout,
+    useDeleteAccout,
   };
 };
 
@@ -143,7 +143,7 @@ export const useMailAuth = () => {
   const token = localStorage.getItem("accessToken") || "";
 
   // 인증 요청 메일 보내기
-  const useMailValidateMutation = useMutation({
+  const useMailValidate = useMutation({
     mutationFn: async (mail: string) => {
       return await axios.post(apiRoute.USER_VERIFY_EMAIL, {
         email: mail,
@@ -153,7 +153,7 @@ export const useMailAuth = () => {
   });
 
   // 인증 요청 매일 다시 보내기
-  const useMailResendMutation = useMutation({
+  const useMailResend = useMutation({
     mutationFn: async (mail: string) => {
       return await axios.post(apiRoute.USER_RESEND_EMAIL, {
         email: mail,
@@ -162,5 +162,5 @@ export const useMailAuth = () => {
     },
   });
 
-  return { useMailValidateMutation, useMailResendMutation };
+  return { useMailValidate, useMailResend };
 };

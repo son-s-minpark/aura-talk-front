@@ -4,6 +4,7 @@ const USER_IMAGE = `${USER}/me/profile-image`;
 const INTEREST = `${API}/api/interests`;
 const CHATROOM = `${API}/api/chatrooms`;
 const RANDOMCHAT = `${API}/api/random-chat`;
+const CHATROOM_IMAGE = `${CHATROOM}/room-image`;
 const CHAT = `${API}/api/chats`;
 const FRIEND = `${API}/api/friends`;
 
@@ -54,6 +55,9 @@ export const apiRoute = {
 
   // 랜덤채팅방
   RANDOMCHAT_START: `${RANDOMCHAT}/start`,
+
+  // 채팅방 이미지
+  CHATROOM_IMAGE_UPLOAD: `${CHATROOM_IMAGE}/presigned-url`,
 
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,

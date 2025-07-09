@@ -13,14 +13,14 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const roomNameRef = useRef<HTMLInputElement>(null);
   const currChat = useSelector((state: RootState) => state.currChat);
   const [img, setImg] = useState<string>(currChat.roomImageUrl);
-  const { usePutChatRoomMutation } = useChatRoom();
+  const { usePutChatRoom } = useChatRoom();
 
   function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
     if (roomname == "") {
       return;
     } else {
-      usePutChatRoomMutation.mutateAsync({
+      usePutChatRoom.mutateAsync({
         id: currChat.id,
         name: roomname,
         imageUrl: img,
