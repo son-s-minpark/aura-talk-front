@@ -1,13 +1,14 @@
 "use client";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
-import ChatSetUser from "../ChatSetUser";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
+import ChatUserList from "../ChatUserList";
+import { chatUserType } from "@/type/chat/chatUserType";
 
 // 채팅방 생성 시 설정 모달
 const SetChatModal = ({
@@ -22,6 +23,12 @@ const SetChatModal = ({
   const router = useRouter();
   const { useCreateChatRoom, useCreateOnetoOneChatRoom } = useChatRoom();
   const user = useSelector((state: RootState) => state.user);
+
+  const chatUsers: chatUserType[] = friendList.map((friend) => ({
+    id: friend.friendUserId,
+    thumbnailImg: friend.thumbnailImageUrl,
+    nickname: friend.nickname,
+  }));
 
   async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
@@ -77,18 +84,7 @@ const SetChatModal = ({
         <div>
           <>
             <h1>친구 목록</h1>
-            <div className="flex gap-[11px] mt-[9px]">
-              {friendList.map((friend, index) => (
-                <ChatSetUser
-                  user={{
-                    id: friend.friendUserId,
-                    thumbnailImg: friend.thumbnailImageUrl,
-                    nickname: friend.nickname,
-                  }}
-                  key={index}
-                />
-              ))}
-            </div>
+            <ChatUserList userList={chatUsers} listType="None" />
           </>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
