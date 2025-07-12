@@ -180,6 +180,10 @@ const useChatRoom = () => {
     },
   });
 
+  const getSearchedChatRoom = async (keyword: string) => {
+    await axiosInstance.get(apiRoute.CHATROOM_SEARCH);
+  };
+
   return {
     useCreateChatRoom,
     useGetChatList,
@@ -189,6 +193,7 @@ const useChatRoom = () => {
     useCreateOnetoOneChatRoom,
     usePutChatRoom,
     useCreateRandomChatroom,
+    getSearchedChatRoom,
   };
 };
 

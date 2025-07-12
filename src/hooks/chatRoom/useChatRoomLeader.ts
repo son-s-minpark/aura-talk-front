@@ -1,6 +1,6 @@
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useChatRoomLeader = () => {
   // 채팅방 삭제 요청
@@ -37,6 +37,24 @@ const useChatRoomLeader = () => {
     },
   });
 
+  const useGetBlockedChatUserList = (id: number) =>
+    useQuery({
+      queryKey: ["getBlockedChatUserList"],
+      queryFn: async () => {
+        return axiosInstance
+          .get(apiRoute.CHATROOM_GET_BLOCKED_CHAT_USER(id))
+          .then((res) => {
+            if (res.data.success) {
+              return res.data.data;
+            } else {
+              throw new Error("차단된 사용자 가져오기 오류");
+            }
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      },
+    });
   // 강퇴한 사용자 취소 요청
   const useUnbanUser = useMutation({
     mutationFn: async ({
@@ -58,6 +76,7 @@ const useChatRoomLeader = () => {
 
   return {
     useDeleteChatRoom,
+    useGetBlockedChatUserList,
     useKickUser,
     useUnbanUser,
   };

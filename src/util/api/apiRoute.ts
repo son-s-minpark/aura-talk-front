@@ -46,7 +46,8 @@ export const apiRoute = {
   CHATROOM_CREATE_INVITE_LINK: (id: number) => `${CHATROOM}/${id}/invite-link`,
   CHATROOM_KICK_USER: (chatId: number, userId: number) =>
     `${CHATROOM}/${chatId}/kick/${userId}`,
-
+  CHATROOM_GET_BLOCKED_CHAT_USER: (id: number) =>
+    `${CHATROOM}/${id}/banned-users`,
   CHATROOM_UNBAN_USER: (chatId: number, userId: number) =>
     `${CHATROOM}/${chatId}/unban/${userId}`,
   CHATROOM_DELETE: (id: number) => `${CHATROOM}/${id}/delete`,
