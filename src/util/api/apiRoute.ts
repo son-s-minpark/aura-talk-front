@@ -63,6 +63,11 @@ export const apiRoute = {
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,
   CHAT_DELETE: (roomId: number) => `${CHAT}/${roomId}`,
+  CHAT_FILE_PRESIGNED: (roomId: number) => `${CHAT}/${roomId}/presigned-url`,
+  CHAT_FILE_COMPLETE: (roomId: number) => `${CHAT}/upload/${roomId}`,
+  CHAT_GET_FILES: (roomId: number) => `${CHAT}/${roomId}/files`,
+  CHAT_FILE_DOWNLOAD: (fileId: number) => `${CHAT}/download/${fileId}`,
+  CHAT_FILE_DELETE: (fileId: number) => `${CHAT}/files/${fileId}`,
 
   // 친구
   FRIEND_GET_LIST: FRIEND,

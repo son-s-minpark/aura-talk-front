@@ -9,11 +9,11 @@ import ChatExit from "./modal/ChatExit";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
-
-type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
+import { chatModalTpe } from "@/type/chat/setModalDownType";
+import InviteFriendModal from "./modal/InviteFriendModal";
 
 const ChatHeader = () => {
-  const [modalDown, setModalDown] = useState<setModalType>("none");
+  const [modalDown, setModalDown] = useState<chatModalTpe>("none");
   const currChat = useSelector((state: RootState) => state.currChat);
 
   return (
@@ -32,6 +32,9 @@ const ChatHeader = () => {
             )}
             {modalDown == "share" && <ChatShare setModalDown={setModalDown} />}
             {modalDown == "exit" && <ChatExit />}
+            {modalDown == "invite" && (
+              <InviteFriendModal setModalDown={setModalDown} />
+            )}
           </div>
         </div>
       ) : null}
