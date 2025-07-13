@@ -2,10 +2,11 @@ import CheckBtn from "@/components/common/CheckBtn";
 import { RootState } from "@/store/store";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Image from "next/image";
 import { friendType } from "@/type/friend/friendType";
 import SelectBtn from "@/components/common/SelectBtn";
 import { setModalDownType } from "@/type/chat/setModalDownType";
+import { useInvitationChat } from "@/hooks/chatRoom/useInvitationChat";
+import ImageComponent from "@/components/common/ImageComponent";
 
 const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
   const [selectedList, setSelectedList] = useState<friendType[]>([]);
@@ -15,6 +16,7 @@ const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
   const unInvitedFriends = friendList.filter(
     (item) => !invitedUserIds.includes(item.friendUserId)
   );
+  const { useSendInvite } = useInvitationChat();
 
   function onFriendCLicked(friend: friendType) {
     const isSelected = selectedList.some(
@@ -30,7 +32,13 @@ const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
     }
   }
 
-  function onSubmit() {
+  async function onSubmit() {
+    selectedList.map((friend) =>
+      useSendInvite.mutateAsync({
+        roomId: currChat.id,
+        userId: friend.friendUserId,
+      })
+    );
     // 초대 보내기
     setModalDown("none");
   }
@@ -47,13 +55,7 @@ const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
           >
             <CheckBtn isChecked={false} />
             <div className="h-[50px] ">
-              <div className="w-[45px] h-[45px] rounded-full relative overflow-hidden">
-                <Image
-                  src={friend.thumbnailImageUrl}
-                  alt="사용자 프로필"
-                  fill
-                />
-              </div>
+              <ImageComponent size={45} img={friend.thumbnailImageUrl} />
               <div className="flex flex-col gap-[4px] ">
                 <p className="font-bold">{friend.nickname}</p>
                 <p className="text-[12px] text-[var(--color-commonGray)]">

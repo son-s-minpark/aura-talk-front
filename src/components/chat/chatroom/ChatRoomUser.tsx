@@ -1,8 +1,8 @@
 import { chatUserType } from "@/type/chat/chatUserType";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import React from "react";
 import { FaCrown } from "react-icons/fa";
+import ImageComponent from "@/components/common/ImageComponent";
 
 const ChatRoomUser = ({
   user,
@@ -18,13 +18,7 @@ const ChatRoomUser = ({
   return (
     <div className="h-[35px] w-full flex justify-between" onClick={goProfile}>
       <div className="flex items-center gap-[7px]">
-        <div className="w-[35px] h-[35px] rounded-full border-1 border-[var(--color-gray)]">
-          {user.thumbnailImg ? (
-            <Image src={user.thumbnailImg} alt="사용자 프로필" fill />
-          ) : (
-            <div className="bg-[var(--color-commonGray)]" />
-          )}
-        </div>
+        <ImageComponent size={35} img={user.thumbnailImg} />
         <p className="text-[14px] font-bold w-[140px]">{user.nickname}</p>
         {isLeader && <FaCrown className="text-[#FFE8A3] w-[20px] h-[18px]" />}
       </div>

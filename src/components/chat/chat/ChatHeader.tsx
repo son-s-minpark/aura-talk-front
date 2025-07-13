@@ -8,9 +8,9 @@ import ChatShare from "./modal/ChatShare";
 import ChatExit from "./modal/ChatExit";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import Image from "next/image";
 import { chatModalTpe } from "@/type/chat/setModalDownType";
 import InviteFriendModal from "./modal/InviteFriendModal";
+import ImageComponent from "@/components/common/ImageComponent";
 
 const ChatHeader = () => {
   const [modalDown, setModalDown] = useState<chatModalTpe>("none");
@@ -44,13 +44,7 @@ const ChatHeader = () => {
             <IoArrowBackOutline className="w-[24px] h-[24px]" />
           </button>
           <div className="flex gap-[12px] items-center">
-            <div className="w-[44px] h-[44px] rounded-full border-1 border-[var(--color-commonGray)] relative overflow-hidden">
-              {currChat.roomImageUrl ? (
-                <Image src={currChat.roomImageUrl} alt="채팅방 이미지" fill />
-              ) : (
-                <div className="bg-[var(--color-commonGray)]" />
-              )}
-            </div>
+            <ImageComponent size={44} img={currChat.roomImageUrl} />
             <p className="text-[20px] font-bold"> {currChat.name}</p>
           </div>
         </div>

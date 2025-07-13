@@ -10,9 +10,9 @@ import LogoutModal from "../../components/setting/modal/LogoutModal";
 import RandomModal from "../../components/setting/modal/RandomModal";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import ImageComponent from "@/components/common/ImageComponent";
 
 type modalType =
   | "modeModal"
@@ -51,16 +51,7 @@ const SettingList = () => {
         className="w-full h-[102px] px-[21px] border-b-1 border-commonGray flex gap-[12px] items-center"
         onClick={() => router.push(`/profile/self`)}
       >
-        <div className="h-[60px] w-[60px] border-1 border-commonGray rounded-full relative overflow-hidden">
-          {user.profileImage.thumbnailImageUrl && (
-            <Image
-              src={user.profileImage.thumbnailImageUrl}
-              alt="Profile"
-              fill
-              className="rounded-full object-cover"
-            />
-          )}
-        </div>
+        <ImageComponent size={68} img={user.profileImage.thumbnailImageUrl} />
         <div className="flex flex-col">
           <p className="text-[20px] font-bold leading-[20px]">
             {user.nickname}

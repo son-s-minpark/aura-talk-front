@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Image from "next/image";
+import ImageComponent from "./ImageComponent";
 
 type AddImageProps = {
   imgSize: number;
@@ -47,23 +47,9 @@ const AddImage = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
-        style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
-      >
-        {prevImg ? (
-          <Image
-            src={prevImg}
-            alt="Profile"
-            fill
-            className="rounded-full object-cover"
-          />
-        ) : (
-          <div className="bg-[var(--color-commonGray)]" />
-        )}
-      </div>
+      <ImageComponent size={imgSize} img={prevImg} />
 
-      <div className="flex gap-[15px]">
+      <div className="flex gap-[15px] mt-[15px]">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
