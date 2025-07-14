@@ -51,7 +51,7 @@ const SettingList = () => {
         className="w-full h-[102px] px-[21px] border-b-1 border-commonGray flex gap-[12px] items-center"
         onClick={() => router.push(`/profile/self`)}
       >
-        <ImageComponent size={68} img={user.profileImage.thumbnailImageUrl} />
+        <ImageComponent size={60} img={user.profileImage.thumbnailImageUrl} />
         <div className="flex flex-col">
           <p className="text-[20px] font-bold leading-[20px]">
             {user.nickname}
@@ -69,7 +69,10 @@ const SettingList = () => {
           <div className="rounded-full bg-[#F2F8F7] h-[44px] w-[44px] flex items-center justify-center">
             <IoMdPerson className="w-[25px] h-[25px] text-[#787878] dark:text-[var(--color-gray)]" />
           </div>
-          <div className="ml-[12px]">
+          <div
+            className="ml-[12px]"
+            onClick={() => router.push(`/profile/self`)}
+          >
             <p className="font-semibold text-[18px]"> 프로필 설정 </p>
             <p className="text-[12px] text-commonGray">
               이름, 한 줄 소개 등의 설정이 가능해요.

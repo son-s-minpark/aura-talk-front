@@ -6,7 +6,7 @@ import { friendType } from "@/type/friend/friendType";
 import SelectBtn from "@/components/common/SelectBtn";
 import { setModalDownType } from "@/type/chat/setModalDownType";
 import { useInvitationChat } from "@/hooks/chatRoom/useInvitationChat";
-import ImageComponent from "@/components/common/ImageComponent";
+import ModalFriendComponent from "@/components/friend/ModalFriendComponent";
 
 const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
   const [selectedList, setSelectedList] = useState<friendType[]>([]);
@@ -33,40 +33,38 @@ const InviteFriendModal = ({ setModalDown }: setModalDownType) => {
   }
 
   async function onSubmit() {
-    selectedList.map((friend) =>
+    selectedList.forEach((friend) =>
       useSendInvite.mutateAsync({
         roomId: currChat.id,
         userId: friend.friendUserId,
       })
     );
-    // 초대 보내기
+    // 웹소켓에서 채팅으로 링크 보내기
     setModalDown("none");
   }
 
   return (
-    <div className="modal-content px-[20px] pt-[25px]">
+    <div className="modal-content px-[20px] pt-[25px] pb-[14px] w-[303px]">
       <h1>초대할 친구</h1>
-      <div className="mt-[24px] flex flex-col gap-[15px]">
+      <div className="mt-[20px] flex flex-col gap-[15px] h-[248px] overflow-y-scroll">
         {unInvitedFriends.map((friend, index) => (
           <div
             key={index}
-            className="flex gap-[15px]"
+            className="flex gap-[10px] items-center "
             onClick={() => onFriendCLicked(friend)}
           >
-            <CheckBtn isChecked={false} />
-            <div className="h-[50px] ">
-              <ImageComponent size={45} img={friend.thumbnailImageUrl} />
-              <div className="flex flex-col gap-[4px] ">
-                <p className="font-bold">{friend.nickname}</p>
-                <p className="text-[12px] text-[var(--color-commonGray)]">
-                  @{friend.username}
-                </p>
-              </div>
-            </div>
+            <CheckBtn
+              isChecked={selectedList.some(
+                (item) => item.friendUserId === friend.friendUserId
+              )}
+            />
+            <ModalFriendComponent friend={friend} />
           </div>
         ))}
       </div>
-      <SelectBtn label="완료" onClick={onSubmit} />
+      <div className="w-full flex justify-end">
+        <SelectBtn label="완료" onClick={onSubmit} />
+      </div>
     </div>
   );
 };

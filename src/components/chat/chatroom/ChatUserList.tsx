@@ -2,8 +2,9 @@ import { chatUserType } from "@/type/chat/chatUserType";
 import ChatSetUser from "./ChatSetUser";
 import React from "react";
 import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { setRemoveUser } from "@/store/chat/setCurrChat";
 
 const ChatUserList = ({
   userList,
@@ -14,6 +15,7 @@ const ChatUserList = ({
   listType: "User" | "Blocked" | "None";
   setListType?: React.Dispatch<React.SetStateAction<chatUserType[]>>;
 }) => {
+  const dispatch = useDispatch();
   const currChat = useSelector((state: RootState) => state.currChat);
   const { useKickUser, useUnbanUser } = useChatRoomLeader();
 
@@ -29,18 +31,22 @@ const ChatUserList = ({
       }
     }
     if (res) {
+      if (listType == "User") {
+        dispatch(setRemoveUser({ id }));
+      }
     }
   }
 
   return (
     <div className="flex gap-[11px] h-[75px]">
       {userList.map((user, index) => (
-        <div key={index} className="relative">
+        <div
+          key={index}
+          className="relative"
+          onClick={() => onUserDelete(user.id)}
+        >
           <ChatSetUser user={user} />
-          <button
-            className="absolute -top-1 -right-1 rounded-full w-[16px] h-[16px] bg-commonGray text-white text-[10px] flex items-center justify-center"
-            onClick={() => onUserDelete(user.id)}
-          >
+          <button className="absolute -top-1 -right-1 rounded-full w-[16px] h-[16px] bg-commonGray text-white text-[10px] flex items-center justify-center">
             -
           </button>
         </div>

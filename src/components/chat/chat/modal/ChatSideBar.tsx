@@ -44,7 +44,10 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
             />
           ))}
         </div>
-        <button className="text-[var(--color-gray)] flex items-center gap-[14px]">
+        <button
+          className="text-[var(--color-gray)] flex items-center gap-[14px]"
+          onClick={() => setModalDown("invite")}
+        >
           <IoPersonAdd className="h-[28px] w-[28px]" />
           <p className="text-[14px] font-bold"> 친구 추가하기</p>
         </button>

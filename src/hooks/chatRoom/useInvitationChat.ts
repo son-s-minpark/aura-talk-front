@@ -1,10 +1,11 @@
+import { setCurrChat } from "@/store/chat/setCurrChat";
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
 import { useMutation } from "@tanstack/react-query";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const useInvitationChat = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // 초대 코드 생성 요청
   const useCreateInviteCode = useMutation({
@@ -12,7 +13,16 @@ export const useInvitationChat = () => {
       return await axiosInstance
         .post(apiRoute.CHATROOM_CREATE_INVITE_LINK(id))
         .then((res) => {
-          return res.data.success;
+          if (res.data.success) {
+            const { data } = res;
+            dispatch(
+              setCurrChat({
+                inviteCode: data.inviteCode,
+                inviteCodeExpiredAt: data.expiredAt,
+                inviteLink: data.inviteLink,
+              })
+            );
+          }
         })
         .catch((err) => {
           throw Error(err);
@@ -35,7 +45,14 @@ export const useInvitationChat = () => {
         })
         .then((res) => {
           if (res.data.success) {
-            // 뭘해야 하지?
+            const { data } = res;
+            dispatch(
+              setCurrChat({
+                inviteCode: data.inviteCode,
+                inviteCodeExpiredAt: data.expiredAt,
+                inviteLink: data.inviteLink,
+              })
+            );
           }
         })
         .catch((err) => {

@@ -24,7 +24,7 @@ export const apiRoute = {
   USER_RANDOM_CHAT_TOGGLE: (id: number) => `${USER}/${id}/chat-settings`,
 
   // 유저 프로필 이미지
-  USER_IMAGE_PRESIGN: `${USER_IMAGE}/presigned-url`,
+  USER_IMAGE_PRESIGNED_URL: `${USER_IMAGE}/presigned-url`,
   USER_IMAGE_COMPLETE: `${USER_IMAGE}/upload-complete`,
   USER_IMAGE_PROFILE_DELETE: `${USER_IMAGE}/profile-image`,
   USER_IMAGE_PROFILE_GET: (id: number) => `${USER}/${id}/profile-image`,
@@ -58,7 +58,7 @@ export const apiRoute = {
   RANDOMCHAT_START: `${RANDOMCHAT}/start`,
 
   // 채팅방 이미지
-  CHATROOM_IMAGE_UPLOAD: `${CHATROOM_IMAGE}/presigned-url`,
+  CHATROOM_PRESIGNED_URL: `${CHATROOM_IMAGE}/presigned-url`,
 
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,

@@ -1,5 +1,5 @@
 export type chatUserType = {
   id: number;
-  thumbnailImg: string;
+  thumbnailImageUrl: string;
   nickname: string;
 };

@@ -26,7 +26,7 @@ const SetChatModal = ({
 
   const chatUsers: chatUserType[] = friendList.map((friend) => ({
     id: friend.friendUserId,
-    thumbnailImg: friend.thumbnailImageUrl,
+    thumbnailImageUrl: friend.thumbnailImageUrl,
     nickname: friend.nickname,
   }));
 

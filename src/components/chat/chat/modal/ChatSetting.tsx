@@ -67,15 +67,13 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
         </>
         <>
           <h1>채팅방 이름</h1>
-          <div>
-            <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
-              <input
-                className="w-full h-full"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-              />
-            </div>
+          <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
+            <input
+              className="w-full h-full"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+            />
           </div>
         </>
         <>
@@ -85,7 +83,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
               {listType == "User" ? "차단한 친구" : "친구 목록"}
             </p>
           </div>
-          <ChatUserList userList={list} listType={listType} />
+          <ChatUserList userList={list.slice(1)} listType={listType} />
         </>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="수정" onClick={onSubmit} />

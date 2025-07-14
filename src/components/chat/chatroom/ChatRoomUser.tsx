@@ -18,7 +18,7 @@ const ChatRoomUser = ({
   return (
     <div className="h-[35px] w-full flex justify-between" onClick={goProfile}>
       <div className="flex items-center gap-[7px]">
-        <ImageComponent size={35} img={user.thumbnailImg} />
+        <ImageComponent size={35} img={user.thumbnailImageUrl} />
         <p className="text-[14px] font-bold w-[140px]">{user.nickname}</p>
         {isLeader && <FaCrown className="text-[#FFE8A3] w-[20px] h-[18px]" />}
       </div>
