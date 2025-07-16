@@ -28,6 +28,7 @@ const useChatRoom = () => {
           const { data } = res;
           if (data.success) {
             dispatch(addChat(data.data));
+            console.error(res);
             return { success: true, roomId: data.data.id };
           } else {
             throw new Error("채팅방 생성 에러");
