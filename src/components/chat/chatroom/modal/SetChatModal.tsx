@@ -1,14 +1,14 @@
-"use client";
+import React, { useEffect, useRef, useState } from "react";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
 import ChatUserList from "../ChatUserList";
 import { chatUserType } from "@/type/chat/chatUserType";
+import { useImageUpload } from "@/hooks/useImageUpload";
 
 // 채팅방 생성 시 설정 모달
 const SetChatModal = ({
@@ -18,11 +18,19 @@ const SetChatModal = ({
   friendList: friendType[];
   chatType: string | null;
 }) => {
-  const [img, setImg] = useState<string>("");
+  const [file, setFile] = useState<{ file: File | null; fileName: string }>({
+    file: null,
+    fileName: "",
+  });
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { useCreateChatRoom, useCreateOnetoOneChatRoom } = useChatRoom();
+  const { useUploadChatRoomImage } = useImageUpload();
   const user = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    console.error(file);
+  }, [file]);
 
   const chatUsers: chatUserType[] = friendList.map((friend) => ({
     id: friend.friendUserId,
@@ -32,31 +40,34 @@ const SetChatModal = ({
 
   async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
-    if (roomname != "") {
-      if (chatType == "group") {
-        try {
+    if (roomname !== "") {
+      try {
+        if (chatType === "group") {
           const res = await useCreateChatRoom.mutateAsync({
             name: roomname,
             userIds: [user.id],
           });
           if (res.success) {
+            if (file.file) {
+              await useUploadChatRoomImage.mutateAsync({
+                file: file.file,
+                fileName: file.fileName,
+              });
+            }
             router.push(`/chat/${res.roomId}`);
           }
-        } catch {
-          console.error("error");
-        }
-      } else if (chatType == "one") {
-        try {
+        } else if (chatType === "one") {
           const res = await useCreateOnetoOneChatRoom.mutateAsync(
             friendList[0].friendUserId
           );
-          router.push(`chat/${res}`);
-        } catch (err) {
-          console.error(err);
+          router.push(`/chat/${res}`);
         }
+      } catch (err) {
+        console.error(err);
       }
     }
   }
+
   return (
     <div
       className="modal-content w-[303px] px-[21px] pt-[25px]"
@@ -69,8 +80,8 @@ const SetChatModal = ({
             imgSize={70}
             btnHeight={15}
             btnWidth={42}
-            img={img}
-            setImg={() => setImg}
+            img={file.file ? URL.createObjectURL(file.file) : ""}
+            setImg={({ fileName, file }) => setFile({ file, fileName })}
           />
         </div>
         <div>
@@ -82,10 +93,8 @@ const SetChatModal = ({
           </div>
         </div>
         <div>
-          <>
-            <h1>친구 목록</h1>
-            <ChatUserList userList={chatUsers} listType="None" />
-          </>
+          <h1>친구 목록</h1>
+          <ChatUserList userList={chatUsers} listType="None" />
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="생성" onClick={onSubmit} />

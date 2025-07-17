@@ -15,12 +15,14 @@ const ChatExit = () => {
 
   async function onExit() {
     let res;
+    console.error(isLeader, currChat.users.length);
     if (isLeader) {
-      if (currChat.users.length != 1)
+      if (currChat.users.length == 1)
         res = await useDeleteChatRoom.mutateAsync(currChat.id);
     } else {
       res = await useExitChatRoom.mutateAsync(currChat.id);
     }
+
     if (res) {
       redirect("/home");
     } else {
@@ -37,8 +39,8 @@ const ChatExit = () => {
             : "나가면 이전 대화 기록은 볼 수 없어져요."}
         </p>
       </div>
-      <div className="flex justify-end mr-[16px] mt-[6px]">
-        {!isLeader && <SelectBtn label="확인" onClick={onExit} />}
+      <div className="flex justify-end mr-[16px] mt-[6px] pb-[14px]">
+        <SelectBtn label="확인" onClick={onExit} />
       </div>
     </div>
   );

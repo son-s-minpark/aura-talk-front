@@ -9,7 +9,7 @@ const useChatRoomLeader = () => {
       await axiosInstance
         .delete(apiRoute.CHATROOM_DELETE(id))
         .then((res) => {
-          return res.data.success;
+          return res.data;
         })
         .catch((err) => {
           throw new Error(err);
@@ -55,6 +55,7 @@ const useChatRoomLeader = () => {
           });
       },
     });
+
   // 강퇴한 사용자 취소 요청
   const useUnbanUser = useMutation({
     mutationFn: async ({

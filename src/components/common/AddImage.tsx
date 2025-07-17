@@ -37,6 +37,8 @@ const AddImage = ({
 
     reader.readAsDataURL(file);
 
+    console.error(file);
+
     if (setImg) {
       setImg({
         fileName: file.name,

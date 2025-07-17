@@ -84,6 +84,7 @@ export const useImageUpload = () => {
     },
   });
 
+  // 채팅방 이미지 업로드 요청
   const useUploadChatRoomImage = useMutation({
     mutationFn: async ({ file, fileName }: ImageProps) => {
       // presigned url 받기 요청
@@ -102,7 +103,14 @@ export const useImageUpload = () => {
         });
 
         if (uploadResponse.status === 200) {
-          return s3Key;
+          axiosInstance
+            .post(apiRoute.CHATROOM__UPLOAD_COMPLETE, { s3Key: s3Key })
+            .then((res) => {
+              return res.data.success;
+            })
+            .catch((err) => {
+              throw new Error(err);
+            });
         }
       } catch (err) {
         console.error("Image upload failed:", err);
