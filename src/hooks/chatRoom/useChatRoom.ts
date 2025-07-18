@@ -43,20 +43,21 @@ const useChatRoom = () => {
   // 개인 채팅방 생성 요청
   const useCreateOnetoOneChatRoom = useMutation({
     mutationFn: async (id: number) => {
-      await axiosInstance
-        .post(apiRoute.CHATROOM_CREATE_ONE_TO_ONE, {
+      const res = await axiosInstance.post(
+        apiRoute.CHATROOM_CREATE_ONE_TO_ONE,
+        {
           targetUserId: id,
-        })
-        .then((res) => {
-          if (res.data.success) {
-            return res.data.data.id;
-          } else {
-            throw new Error("개인 채팅 생성 에러");
-          }
-        })
-        .catch((err) => {
-          throw new Error(err);
-        });
+        }
+      );
+
+      const { data } = res;
+
+      if (data.success) {
+        dispatch(addChat(data.data));
+        return { success: true, roomId: data.data.id };
+      } else {
+        throw new Error("개인 채팅 생성 에러");
+      }
     },
   });
 

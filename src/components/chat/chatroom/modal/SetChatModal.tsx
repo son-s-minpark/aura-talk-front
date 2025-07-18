@@ -18,10 +18,9 @@ const SetChatModal = ({
   friendList: friendType[];
   chatType: string | null;
 }) => {
-  const [file, setFile] = useState<{ file: File | null; fileName: string }>({
-    file: null,
-    fileName: "",
-  });
+  const [file, setFile] = useState<{ file: File; fileName: string } | null>(
+    null
+  );
   const roomNameRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { useCreateChatRoom, useCreateOnetoOneChatRoom } = useChatRoom();
@@ -48,7 +47,7 @@ const SetChatModal = ({
             userIds: [user.id],
           });
           if (res.success) {
-            if (file.file) {
+            if (file) {
               await useUploadChatRoomImage.mutateAsync({
                 file: file.file,
                 fileName: file.fileName,
@@ -60,7 +59,15 @@ const SetChatModal = ({
           const res = await useCreateOnetoOneChatRoom.mutateAsync(
             friendList[0].friendUserId
           );
-          router.push(`/chat/${res}`);
+          if (res.success) {
+            if (file) {
+              await useUploadChatRoomImage.mutateAsync({
+                file: file.file,
+                fileName: file.fileName,
+              });
+            }
+            router.push(`/chat/${res}`);
+          }
         }
       } catch (err) {
         console.error(err);
@@ -80,7 +87,7 @@ const SetChatModal = ({
             imgSize={70}
             btnHeight={15}
             btnWidth={42}
-            img={file.file ? URL.createObjectURL(file.file) : ""}
+            img=""
             setImg={({ fileName, file }) => setFile({ file, fileName })}
           />
         </div>

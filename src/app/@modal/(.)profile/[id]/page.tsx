@@ -1,3 +1,4 @@
+"use client";
 import { useProfile } from "@/hooks/useProfile";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";

@@ -4,15 +4,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
-import { profileImageType } from "@/type/user/profileImageType";
-
-type profileType = {
-  nickname: string;
-  username: string;
-  description: string;
-  interests: string[];
-  profileImage: profileImageType;
-};
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -55,7 +46,12 @@ export const useProfile = () => {
 
   // 프로필 수정/등록 요청
   const useSetProfile = useMutation({
-    mutationFn: async (profileData: profileType) => {
+    mutationFn: async (profileData: {
+      nickname: string;
+      username: string;
+      description: string;
+      interests: string[];
+    }) => {
       return await axiosInstance
         .put(apiRoute.USER_PUT_PROFILE, {
           nickname: profileData.nickname,
