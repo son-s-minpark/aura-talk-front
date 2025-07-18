@@ -33,8 +33,12 @@ export const setUserSlice = createSlice({
         (interest) => interest !== action.payload
       );
     },
+    setResetUser: () => {
+      return initialState;
+    },
   },
 });
 
-export const { setUser, addInterest, removeInterest } = setUserSlice.actions;
+export const { setUser, addInterest, removeInterest, setResetUser } =
+  setUserSlice.actions;
 export default setUserSlice.reducer;

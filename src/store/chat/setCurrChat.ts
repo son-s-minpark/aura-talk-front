@@ -29,8 +29,12 @@ export const setCurrChatSlice = createSlice({
     setRemoveUser: (state, action: PayloadAction<Partial<chatUserType>>) => {
       state.users = state.users.filter((user) => user.id !== action.payload.id);
     },
+    setResetCurrChat: () => {
+      return initialState;
+    },
   },
 });
 
-export const { setCurrChat, setRemoveUser } = setCurrChatSlice.actions;
+export const { setCurrChat, setRemoveUser, setResetCurrChat } =
+  setCurrChatSlice.actions;
 export default setCurrChatSlice.reducer;

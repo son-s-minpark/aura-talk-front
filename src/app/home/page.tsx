@@ -6,14 +6,16 @@ import SettingList from "@/app/home/Setting";
 import Header from "@/components/home/Header";
 import Nav from "@/components/home/Nav";
 import Container from "@/components/common/Container";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useProfile } from "@/hooks/useProfile";
 import { connectWebsocket } from "@/util/socket/connectSocket";
+import { setResetCurrChat } from "@/store/chat/setCurrChat";
 
 type ListType = "chat" | "friend" | "setting";
 
 const Page = () => {
+  const dispatch = useDispatch();
   const [list, setList] = useState<ListType>("chat");
   const user = useSelector((state: RootState) => state.user);
   const { getProfileImg } = useProfile();
@@ -23,6 +25,7 @@ const Page = () => {
     if (user.profileImage.thumbnailImageUrl == "") {
       getProfileImg();
     }
+    dispatch(setResetCurrChat());
   });
 
   return (

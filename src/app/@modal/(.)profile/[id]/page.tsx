@@ -25,25 +25,27 @@ const Page = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="model-content w-[274px]">
-      <div>
-        <ImageComponent size={70} img={data.profileImage.thumbnailImageUrl} />
-        <p>{data.nickname}</p>
-        <p>{data.username}</p>
-      </div>
-      <FriendButtonList
-        status={friendStatus}
-        setFriendStatus={setFriendStatus}
-        id={profileId}
-      />
-      <div>
+    <div className="modal">
+      <div className="modal-content w-[274px]">
         <div>
-          <p>한 줄 소개</p>
-          <p>{data.description}</p>
+          <ImageComponent size={70} img={data.profileImage.thumbnailImageUrl} />
+          <p>{data.nickname}</p>
+          <p>{data.username}</p>
         </div>
+        <FriendButtonList
+          status={friendStatus}
+          setFriendStatus={setFriendStatus}
+          id={profileId}
+        />
         <div>
-          <p>관심사</p>
-          <InterestBtnList isScrollable={false} />
+          <div>
+            <p>한 줄 소개</p>
+            <p>{data.description}</p>
+          </div>
+          <div>
+            <p>관심사</p>
+            <InterestBtnList isScrollable={false} />
+          </div>
         </div>
       </div>
     </div>

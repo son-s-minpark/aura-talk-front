@@ -27,15 +27,17 @@ const SetChatModal = ({
   const { useUploadChatRoomImage } = useImageUpload();
   const user = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    console.error(file);
-  }, [file]);
-
   const chatUsers: chatUserType[] = friendList.map((friend) => ({
     id: friend.friendUserId,
     thumbnailImageUrl: friend.thumbnailImageUrl,
     nickname: friend.nickname,
   }));
+
+  const [list, setList] = useState<chatUserType[]>(chatUsers);
+
+  useEffect(() => {
+    console.error(file);
+  }, [file]);
 
   async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
@@ -101,7 +103,11 @@ const SetChatModal = ({
         </div>
         <div>
           <h1>친구 목록</h1>
-          <ChatUserList userList={chatUsers} listType="None" />
+          <ChatUserList
+            userList={list}
+            listType="None"
+            setList={() => setList}
+          />
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="생성" onClick={onSubmit} />
