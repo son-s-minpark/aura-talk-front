@@ -25,7 +25,7 @@ const ChatList = () => {
       )}
       <div className="relative h-full px-[21px]">
         <p className="font-semibold">채팅</p>
-        <div className="h-full mt-[9px]  overflow-y-scroll whitespace-nowrap">
+        <div className="h-[419px] mt-[9px] overflow-y-scroll whitespace-nowrap">
           <div className="w-full flex flex-col gap-[22px]">
             {chattingList.map((chatroom, index) => (
               <ChatComponent chatroom={chatroom} key={index} />

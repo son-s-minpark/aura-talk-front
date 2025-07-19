@@ -69,7 +69,11 @@ const Page = () => {
     <div className="h-full w-full">
       {modal && (
         <div className="modal" onClick={() => setModal(false)}>
-          <SetChatModal friendList={selectedList} chatType={chatType} />
+          <SetChatModal
+            selectedList={selectedList}
+            chatType={chatType}
+            setSelectedList={setSelectedList}
+          />
         </div>
       )}
       <Back />

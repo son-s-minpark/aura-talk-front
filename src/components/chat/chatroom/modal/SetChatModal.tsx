@@ -6,17 +6,19 @@ import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
-import ChatUserList from "../ChatUserList";
 import { chatUserType } from "@/type/chat/chatUserType";
 import { useImageUpload } from "@/hooks/useImageUpload";
+import ChatSetUser from "../ChatSetUser";
 
 // 채팅방 생성 시 설정 모달
 const SetChatModal = ({
-  friendList,
+  selectedList,
   chatType,
+  setSelectedList,
 }: {
-  friendList: friendType[];
+  selectedList: friendType[];
   chatType: string | null;
+  setSelectedList: React.Dispatch<React.SetStateAction<friendType[]>>;
 }) => {
   const [file, setFile] = useState<{ file: File; fileName: string } | null>(
     null
@@ -27,13 +29,11 @@ const SetChatModal = ({
   const { useUploadChatRoomImage } = useImageUpload();
   const user = useSelector((state: RootState) => state.user);
 
-  const chatUsers: chatUserType[] = friendList.map((friend) => ({
+  const chatUsers: chatUserType[] = selectedList.map((friend) => ({
     id: friend.friendUserId,
     thumbnailImageUrl: friend.thumbnailImageUrl,
     nickname: friend.nickname,
   }));
-
-  const [list, setList] = useState<chatUserType[]>(chatUsers);
 
   useEffect(() => {
     console.error(file);
@@ -59,7 +59,7 @@ const SetChatModal = ({
           }
         } else if (chatType === "one") {
           const res = await useCreateOnetoOneChatRoom.mutateAsync(
-            friendList[0].friendUserId
+            selectedList[0].friendUserId
           );
           if (res.success) {
             if (file) {
@@ -103,11 +103,24 @@ const SetChatModal = ({
         </div>
         <div>
           <h1>친구 목록</h1>
-          <ChatUserList
-            userList={list}
-            listType="None"
-            setList={() => setList}
-          />
+          <div className="flex items-center gap-[11px] h-[90px] overflow-x-scroll whitespace-nowrap">
+            {chatUsers.map((user, index) => (
+              <div
+                key={index}
+                className="relative"
+                onClick={() =>
+                  setSelectedList(
+                    selectedList.filter((item) => item.friendUserId !== user.id)
+                  )
+                }
+              >
+                <ChatSetUser user={user} />
+                <button className="absolute -top-1 -right-1 rounded-full w-[16px] h-[16px] bg-commonGray text-white text-[10px] flex items-center justify-center">
+                  -
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="생성" onClick={onSubmit} />
