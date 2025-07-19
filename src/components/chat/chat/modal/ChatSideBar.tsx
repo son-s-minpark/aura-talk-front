@@ -4,12 +4,14 @@ import { IoPersonAdd, IoSettings, IoShareSocial } from "react-icons/io5";
 import { BsDoorOpenFill } from "react-icons/bs";
 import { IoNotifications, IoNotificationsOff } from "react-icons/io5";
 import ChatRoomUser from "../../chatroom/ChatRoomUser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import { useInvitationChat } from "@/hooks/chatRoom/useInvitationChat";
+import { setCurrChat } from "@/store/chat/setCurrChat";
 
 const ChatSideBar = ({ setModalDown }: setModalDownType) => {
+  const dispatch = useDispatch();
   const currChat = useSelector((state: RootState) => state.currChat);
   const user = useSelector((state: RootState) => state.user);
   const { useChatNotification } = useChatRoom();
@@ -55,10 +57,14 @@ const ChatSideBar = ({ setModalDown }: setModalDownType) => {
       <div className="text-[var(--color-gray)] flex gap-[5px] items-center justify-end mt-[25px] mr-[22px]">
         <button
           onClick={() =>
-            useChatNotification.mutateAsync({
-              id: currChat.id,
-              isActive: currChat.active,
-            })
+            useChatNotification
+              .mutateAsync({
+                id: currChat.id,
+                isActive: !currChat.active,
+              })
+              .then(() => {
+                dispatch(setCurrChat({ active: !currChat.active }));
+              })
           }
         >
           {currChat.active ? (

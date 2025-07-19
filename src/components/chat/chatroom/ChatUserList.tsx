@@ -9,11 +9,9 @@ import { setRemoveUser } from "@/store/chat/setCurrChat";
 const ChatUserList = ({
   userList,
   listType,
-  setList,
 }: {
   userList: chatUserType[];
   listType: "User" | "Blocked" | "None";
-  setList: React.Dispatch<React.SetStateAction<chatUserType[]>>;
 }) => {
   const dispatch = useDispatch();
   const currChat = useSelector((state: RootState) => state.currChat);
@@ -25,9 +23,8 @@ const ChatUserList = ({
       res = useKickUser.mutateAsync({ chatId: currChat.id, userId: id });
     } else if (listType == "Blocked") {
       res = useUnbanUser.mutateAsync({ chatId: currChat.id, userId: id });
-    } else if (listType == "None") {
-      setList(userList.filter((item) => item.id !== id));
     }
+
     if (res) {
       if (listType == "User") {
         dispatch(setRemoveUser({ id }));

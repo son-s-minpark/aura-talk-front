@@ -170,10 +170,9 @@ const useChatRoom = () => {
   const useChatNotification = useMutation({
     mutationFn: async ({ id, isActive }: { id: number; isActive: boolean }) => {
       return await axiosInstance
-        .put(apiRoute.CHATROOM_NOTIFICATION(id), {
-          enabled: isActive,
-        })
+        .put(apiRoute.CHATROOM_NOTIFICATION(id, isActive))
         .then((res) => {
+          console.error(res);
           return res.data.success;
         })
         .catch((err) => {

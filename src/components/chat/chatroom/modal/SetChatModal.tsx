@@ -83,7 +83,7 @@ const SetChatModal = ({
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex flex-col gap-[17px]">
-        <div>
+        <>
           <h1>대표 사진</h1>
           <AddImage
             imgSize={70}
@@ -92,16 +92,16 @@ const SetChatModal = ({
             img=""
             setImg={({ fileName, file }) => setFile({ file, fileName })}
           />
-        </div>
-        <div>
+        </>
+        <>
           <h1>채팅방 이름</h1>
           <div>
             <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
               <input className="h-full w-full" ref={roomNameRef} type="text" />
             </div>
           </div>
-        </div>
-        <div>
+        </>
+        <>
           <h1>친구 목록</h1>
           <div className="flex items-center gap-[11px] h-[90px] overflow-x-scroll whitespace-nowrap">
             {chatUsers.map((user, index) => (
@@ -121,7 +121,7 @@ const SetChatModal = ({
               </div>
             ))}
           </div>
-        </div>
+        </>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="생성" onClick={onSubmit} />
         </div>
