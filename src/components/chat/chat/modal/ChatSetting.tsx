@@ -9,6 +9,7 @@ import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import ChatUserList from "../../chatroom/ChatUserList";
 import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
 import { chatUserType } from "@/type/chat/chatUserType";
+import NameInput from "@/components/common/NameInput";
 
 // 채팅방 정보 수정 모달
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
@@ -53,7 +54,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
   }
 
   return (
-    <div className="modal-content px-[21px] pt-[25px]">
+    <div className="modal-content px-[21px] pt-[25px] w-[303px]">
       <div className="flex flex-col gap-[17px]">
         <>
           <h1>대표 사진</h1>
@@ -67,14 +68,14 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
         </>
         <>
           <h1>채팅방 이름</h1>
-          <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
+          <NameInput>
             <input
               className="w-full h-full"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={() => setName}
               type="text"
             />
-          </div>
+          </NameInput>
         </>
         <>
           <div className="flex justify-between items-center">

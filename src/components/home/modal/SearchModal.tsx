@@ -30,7 +30,7 @@ const SearchModal = () => {
         )}
         {data.map((friend) => (
           <div className="flex justify-between" key={friend}>
-            <ModalFriendComponent id={friend} />
+            <ModalFriendComponent friend={friend} />
             <SelectBtn label="추가" onClick={() => onSendFriendRequest()} />
           </div>
         ))}

@@ -3,11 +3,12 @@ import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
 import { removeChat } from "@/store/chat/setChatList";
 import { RootState } from "@/store/store";
+import { setModalDownType } from "@/type/chat/setModalDownType";
 import { redirect } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const ChatExit = () => {
+const ChatExit = ({ setModalDown }: setModalDownType) => {
   const dispatch = useDispatch();
   const currChat = useSelector((state: RootState) => state.currChat);
   const user = useSelector((state: RootState) => state.user);
@@ -17,10 +18,12 @@ const ChatExit = () => {
 
   async function onExit() {
     let res;
-    console.error(isLeader, currChat.users.length);
     if (isLeader) {
-      if (currChat.users.length == 1)
+      if (currChat.users.length == 1) {
         res = await useDeleteChatRoom.mutateAsync(currChat.id);
+      } else {
+        setModalDown("none");
+      }
     } else {
       res = await useExitChatRoom.mutateAsync(currChat.id);
     }

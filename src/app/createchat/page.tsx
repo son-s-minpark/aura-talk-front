@@ -1,5 +1,4 @@
 "use client";
-import Search from "@/components/common/Search";
 import React, { useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -11,6 +10,8 @@ import CheckBtn from "@/components/common/CheckBtn";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useFriendList } from "@/hooks/friend/useFriendList";
+import NameInput from "@/components/common/NameInput";
+import { FaSearch } from "react-icons/fa";
 
 const Page = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -78,7 +79,19 @@ const Page = () => {
       )}
       <Back />
       <div className="w-full h-[33px] flex items-center px-[24px]">
-        <Search val={searchVal} onChange={onChangVal} />
+        <NameInput>
+          <div className="flex justify-between w-full px-[10px]">
+            <input
+              type="text"
+              className="flex-1"
+              value={searchVal}
+              onChange={onChangVal}
+            />
+            <button>
+              <FaSearch className="h-[17px] w-[17px] mr-[3px]" />
+            </button>
+          </div>
+        </NameInput>
       </div>
       <div className="mt-[34px] px-[24px]">
         <div className="flex flex-col gap-[20px]">

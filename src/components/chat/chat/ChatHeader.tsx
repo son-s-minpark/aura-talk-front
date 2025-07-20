@@ -31,7 +31,7 @@ const ChatHeader = () => {
               <ChatSetting setModalDown={setModalDown} />
             )}
             {modalDown == "share" && <ChatShare setModalDown={setModalDown} />}
-            {modalDown == "exit" && <ChatExit />}
+            {modalDown == "exit" && <ChatExit setModalDown={setModalDown} />}
             {modalDown == "invite" && (
               <InviteFriendModal setModalDown={setModalDown} />
             )}

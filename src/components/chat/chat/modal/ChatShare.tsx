@@ -5,6 +5,7 @@ import { IoIosCopy } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useInvitationChat } from "@/hooks/chatRoom/useInvitationChat";
+import NameInput from "@/components/common/NameInput";
 
 const ChatShare = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
@@ -41,22 +42,24 @@ const ChatShare = ({ setModalDown }: setModalDownType) => {
   const formattedDate = formatDate(inviteCodeExpiredAt);
 
   return (
-    <div className="modal-content w-[303px] pt-[21px] pl-[22px]">
+    <div className="modal-content w-[303px] pt-[21px] px-[22px]">
       <h1 className="mb-[15px]"> 공유 링크</h1>
-      <div className="flex w-[253px] h-[32px] rounded-[12px] px-[8px] bg-[#F3F6F6] dark:bg-[#4B4B4B] items-center justify-between">
-        <p className="text-[14px] overflow-x-scroll whitespace-nowrap">
-          {code}
-        </p>
-        <button onClick={copyCode} className="w-[25px] flex justify-end">
-          <IoIosCopy className="h-[15px] w-[15px]" />
-        </button>
-      </div>
+      <NameInput>
+        <div className="flex items-center justify-between">
+          <p className="text-[14px] overflow-x-scroll whitespace-nowrap">
+            {code}
+          </p>
+          <button onClick={copyCode} className="w-[25px] flex justify-end">
+            <IoIosCopy className="h-[15px] w-[15px]" />
+          </button>
+        </div>
+      </NameInput>
       <div className="mt-[10px] mb-[15px]">
         <p className="text-[12px] text-[var(--color-commonGray)]">
           만료: {formattedDate}
         </p>
       </div>
-      <div className="flex justify-end pb-[14px] mr-[21px]">
+      <div className="flex justify-end pb-[14px]">
         <SelectBtn label="확인" onClick={() => setModalDown("none")} />
       </div>
     </div>
