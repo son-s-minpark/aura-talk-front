@@ -84,10 +84,8 @@ export const useImageUpload = () => {
     },
   });
 
-  // 채팅방 이미지 업로드 요청
   const useUploadChatRoomImage = useMutation({
     mutationFn: async ({ file, fileName }: ImageProps) => {
-      // presigned url 받기 요청
       try {
         const res = await axiosInstance.post(
           apiRoute.CHATROOM_PRESIGNED_URL,
@@ -95,7 +93,6 @@ export const useImageUpload = () => {
         );
         const { url, s3Key } = res.data.data;
 
-        // s3 업로드 요청
         const uploadResponse = await axios.put(url, file, {
           headers: {
             "Content-Type": file.type,
@@ -103,17 +100,17 @@ export const useImageUpload = () => {
         });
 
         if (uploadResponse.status === 200) {
-          axiosInstance
-            .post(apiRoute.CHATROOM__UPLOAD_COMPLETE, { s3Key: s3Key })
-            .then((res) => {
-              return res.data.success;
-            })
-            .catch((err) => {
-              throw new Error(err);
-            });
+          const completeRes = await axiosInstance.post(
+            apiRoute.CHATROOM_UPLOAD_COMPLETE,
+            { s3Key }
+          );
+          return { url: completeRes.data.data.originalImageUrl };
         }
+
+        throw new Error("Image upload failed");
       } catch (err) {
         console.error("Image upload failed:", err);
+        throw err;
       }
     },
   });

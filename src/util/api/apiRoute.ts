@@ -60,7 +60,7 @@ export const apiRoute = {
 
   // 채팅방 이미지
   CHATROOM_PRESIGNED_URL: `${CHATROOM_IMAGE}/presigned-url`,
-  CHATROOM__UPLOAD_COMPLETE: `${CHATROOM_IMAGE}/upload-complete`,
+  CHATROOM_UPLOAD_COMPLETE: `${CHATROOM_IMAGE}/upload-complete`,
 
   // 채팅
   CHAT_GET: (roomId: number) => `${CHAT}/${roomId}`,

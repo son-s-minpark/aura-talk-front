@@ -32,6 +32,8 @@ const ProfileImg = () => {
             throw new Error("이미지 업로드 에러");
           }
         });
+    } else {
+      setTermsModalDown(true);
     }
   }
 
@@ -64,13 +66,13 @@ const ProfileImg = () => {
           <p className="text-lightGray text-[14px] leading-[14px]">
             사용자 이름
           </p>
-          <p className="text-white text-[18px] font-semibold mt-[12px]">
+          <p className="text-white text-[18px] font-semibold">
             {user.nickname}
           </p>
         </>
         <>
           <p className="text-lightGray text-[14px] leading-[14px]">아이디</p>
-          <p className="text-white text-[18px] font-semibold mt-[12px]">
+          <p className="text-white text-[18px] font-semibold">
             {user.username}
           </p>
         </>
@@ -78,13 +80,13 @@ const ProfileImg = () => {
           <p className="text-lightGray text-[14px] leading-[14px]">
             한 줄 소개
           </p>
-          <p className="text-white text-[18px] font-semibold mt-[12px]">
+          <p className="text-white text-[18px] font-semibold">
             {user.description}
           </p>
         </>
         <>
           <p className="text-lightGray text-[14px] leading-[14px]">관심사</p>
-          <div className="w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold mt-[12px]">
+          <div className="w-[300px] mb-[6px] flex-none flex gap-[5px] flex-wrap text-white text-[18px] font-semibold">
             <InterestBtnList isScrollable={true} />
           </div>
         </>

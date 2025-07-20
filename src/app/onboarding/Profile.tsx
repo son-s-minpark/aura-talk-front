@@ -88,12 +88,6 @@ const Profile = () => {
             username: username,
             description: description,
             interests: user.interests,
-            profileImage: {
-              userId: user.id,
-              thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
-              originalImageUrl: user.profileImage.originalImageUrl,
-              isDefaultImg: user.profileImage.isDefaultImg,
-            },
           });
           if (res) {
             dispatch(setPage("profileImg"));

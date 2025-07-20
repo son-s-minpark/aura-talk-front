@@ -28,7 +28,7 @@ export const useAuth = () => {
 
             if (token) {
               localStorage.setItem("accessToken", token);
-              dispatch(setUser(data.data));
+              dispatch(setUser(data.data.user));
 
               return { success: true };
             } else {

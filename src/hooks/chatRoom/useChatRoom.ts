@@ -15,14 +15,17 @@ const useChatRoom = () => {
     mutationFn: async ({
       name,
       userIds,
+      roomImageUrl,
     }: {
       name: string;
       userIds: number[];
+      roomImageUrl: string;
     }) => {
       return await axiosInstance
         .post(apiRoute.CHATROOM_CREATE, {
           name: name,
           userIds: userIds,
+          roomImageUrl: roomImageUrl,
         })
         .then((res) => {
           const { data } = res;
@@ -139,6 +142,7 @@ const useChatRoom = () => {
         return await axiosInstance
           .get(apiRoute.CHATROOM_GET_ROOM(id))
           .then((res) => {
+            console.error(res);
             if (res.data.success) {
               dispatch(setCurrChat(res.data.data));
               return res.data.data;

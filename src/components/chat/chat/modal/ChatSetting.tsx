@@ -10,15 +10,20 @@ import ChatUserList from "../../chatroom/ChatUserList";
 import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
 import { chatUserType } from "@/type/chat/chatUserType";
 import NameInput from "@/components/common/NameInput";
+import { useImageUpload } from "@/hooks/useImageUpload";
 
 // 채팅방 정보 수정 모달
 const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const currChat = useSelector((state: RootState) => state.currChat);
   const [img, setImg] = useState<string>(currChat.roomImageUrl);
+  const [file, setFile] = useState<{ file: File; fileName: string } | null>(
+    null
+  );
   const [name, setName] = useState<string>(currChat.name);
   const [listType, setListType] = useState<"User" | "Blocked">("User");
   const [list, setList] = useState<chatUserType[]>(currChat.users);
   const { usePutChatRoom } = useChatRoom();
+  const { useUploadChatRoomImage } = useImageUpload();
   const { useGetBlockedChatUserList } = useChatRoomLeader();
   const { isLoading, data } = useGetBlockedChatUserList(currChat.id);
 
@@ -30,10 +35,17 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
     }
   }, [listType, currChat.users, data]);
 
-  function onSubmit() {
+  async function onSubmit() {
     if (name == "") {
       return;
     } else {
+      if (file) {
+        const res = await useUploadChatRoomImage.mutateAsync({
+          file: file.file,
+          fileName: file.fileName,
+        });
+        setImg(res.url);
+      }
       usePutChatRoom.mutateAsync({
         id: currChat.id,
         name: name,
@@ -63,7 +75,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
             btnHeight={15}
             btnWidth={42}
             img={img}
-            setImg={() => setImg}
+            setImg={({ fileName, file }) => setFile({ file, fileName })}
           />
         </>
         <>

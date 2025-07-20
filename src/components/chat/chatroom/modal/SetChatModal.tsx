@@ -43,36 +43,40 @@ const SetChatModal = ({
     const roomname = roomNameRef.current?.value || "";
     if (roomname !== "") {
       try {
+        let url = "";
+        if (file) {
+          const res = await useUploadChatRoomImage.mutateAsync({
+            file: file.file,
+            fileName: file.fileName,
+          });
+          url = res.url;
+        }
+
         if (chatType === "group") {
-          const res = await useCreateChatRoom.mutateAsync({
+          const createRoomRes = await useCreateChatRoom.mutateAsync({
             name: roomname,
             userIds: [user.id],
+            roomImageUrl: url,
           });
-          if (res.success) {
-            if (file) {
-              await useUploadChatRoomImage.mutateAsync({
-                file: file.file,
-                fileName: file.fileName,
-              });
-            }
-            router.push(`/chat/${res.roomId}`);
+          if (createRoomRes.success) {
+            router.push(`/chat/${createRoomRes.roomId}`);
           }
         } else if (chatType === "one") {
-          const res = await useCreateOnetoOneChatRoom.mutateAsync(
+          const createOneToOneRes = await useCreateOnetoOneChatRoom.mutateAsync(
             selectedList[0].friendUserId
           );
-          if (res.success) {
+          if (createOneToOneRes.success) {
             if (file) {
               await useUploadChatRoomImage.mutateAsync({
                 file: file.file,
                 fileName: file.fileName,
               });
             }
-            router.push(`/chat/${res}`);
+            router.push(`/chat/${createOneToOneRes}`);
           }
         }
       } catch (err) {
-        console.error(err);
+        console.error("Error:", err);
       }
     }
   }
