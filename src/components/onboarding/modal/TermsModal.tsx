@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setPage } from "@/store/sign/setPage";
-import { setResetUser } from "@/store/user/setUser";
 
 type CheckType = "all" | "fir" | "sec" | "thr";
 
@@ -60,7 +59,6 @@ const TermsModal = () => {
   function onSubmit() {
     if (isAllChecked) {
       dispatch(setPage("onboarding"));
-      dispatch(setResetUser());
       router.push("/home");
     } else {
       // 모두 체크되지 않았다면 아무것도 하지 않음

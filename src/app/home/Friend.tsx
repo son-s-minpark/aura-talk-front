@@ -13,13 +13,13 @@ const FriendList = () => {
     useState<boolean>(false);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const friendList = useSelector((state: RootState) => state.friendList);
-  const { getFriendList, getWaitingFriendList } = useFriendList();
+  const { useGetFriendList, getWaitingFriendList } = useFriendList();
+  const { isLoading } = useGetFriendList();
   const router = useRouter();
 
   useEffect(() => {
     async function fetchFriendList() {
       try {
-        await getFriendList();
         const waiting = await getWaitingFriendList();
         setIsWaiting(waiting.length !== 0);
       } catch (err) {
@@ -28,7 +28,11 @@ const FriendList = () => {
     }
 
     fetchFriendList();
-  }, []);
+  }, [isOtherFriendModalDown]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
