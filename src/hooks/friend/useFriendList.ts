@@ -18,6 +18,7 @@ export const useFriendList = () => {
           .then((res) => {
             if (res.data.success) {
               dispatch(setFriendList(res.data.data));
+              return res.data.success;
             }
           })
           .catch((err) => {

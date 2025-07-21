@@ -15,10 +15,9 @@ const Page = () => {
   const { useGetUserProfile } = useProfile();
   const params = useParams();
   const profileId = Number(params.id);
+  const [friendStatus, setFriendStatus] = useState<string>("");
 
   const { data, isLoading, isError, error } = useGetUserProfile(profileId);
-
-  const [friendStatus, setFriendStatus] = useState<string>("");
 
   useEffect(() => {
     if (data?.data) {
@@ -33,6 +32,7 @@ const Page = () => {
       </div>
     );
   }
+  console.error(data);
 
   if (isError) {
     const err = error as AxiosError;

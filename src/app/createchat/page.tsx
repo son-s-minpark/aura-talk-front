@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IoArrowBackOutline } from "react-icons/io5";
 import SelectBtn from "@/components/common/SelectBtn";
@@ -20,12 +20,13 @@ const Page = () => {
   const router = useRouter();
   const searchParam = useSearchParams();
   const chatType = useMemo(() => searchParam.get("type"), []);
-  const { getFriendList } = useFriendList();
+  const { useGetFriendList } = useFriendList();
+  const { isLoading } = useGetFriendList();
   const friendList = useSelector((state: RootState) => state.friendList);
 
-  useEffect(() => {
-    getFriendList();
-  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const Back = () => {
     return (

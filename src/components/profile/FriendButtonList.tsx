@@ -30,7 +30,11 @@ const FriendButtonList = ({
 
   function goOnetoOneChat() {
     useCreateOnetoOneChatRoom.mutateAsync(id).then((res) => {
-      router.push(`chat/${res}`);
+      if (res.success) {
+        router.push(`/chat/${id}`);
+      } else {
+        console.error(res);
+      }
     });
   }
 

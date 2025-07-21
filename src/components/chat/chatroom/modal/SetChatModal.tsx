@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import { friendType } from "@/type/friend/friendType";
 import { chatUserType } from "@/type/chat/chatUserType";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import ChatSetUser from "../ChatSetUser";
+import NameInput from "@/components/common/NameInput";
 
 // 채팅방 생성 시 설정 모달
 const SetChatModal = ({
@@ -34,10 +35,6 @@ const SetChatModal = ({
     thumbnailImageUrl: friend.thumbnailImageUrl,
     nickname: friend.nickname,
   }));
-
-  useEffect(() => {
-    console.error(file);
-  }, [file]);
 
   async function onSubmit() {
     const roomname = roomNameRef.current?.value || "";
@@ -99,11 +96,9 @@ const SetChatModal = ({
         </>
         <>
           <h1>채팅방 이름</h1>
-          <div>
-            <div className="bg-[#F3F6F6] dark:bg-[#787878] rounded-[20px] w-[253px] h-[32px] mt-[11px]">
-              <input className="h-full w-full" ref={roomNameRef} type="text" />
-            </div>
-          </div>
+          <NameInput>
+            <input className="h-full w-full" ref={roomNameRef} type="text" />
+          </NameInput>
         </>
         <>
           <h1>친구 목록</h1>
