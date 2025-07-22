@@ -3,8 +3,6 @@ import AddImage from "@/components/common/AddImage";
 import SelectBtn from "@/components/common/SelectBtn";
 import { useRouter } from "next/navigation";
 import useChatRoom from "@/hooks/chatRoom/useChatRoom";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import { friendType } from "@/type/friend/friendType";
 import { chatUserType } from "@/type/chat/chatUserType";
 import { useImageUpload } from "@/hooks/useImageUpload";
@@ -28,7 +26,6 @@ const SetChatModal = ({
   const router = useRouter();
   const { useCreateChatRoom, useCreateOnetoOneChatRoom } = useChatRoom();
   const { useUploadChatRoomImage } = useImageUpload();
-  const user = useSelector((state: RootState) => state.user);
 
   const chatUsers: chatUserType[] = selectedList.map((friend) => ({
     id: friend.friendUserId,
@@ -52,7 +49,7 @@ const SetChatModal = ({
         if (chatType === "group") {
           const createRoomRes = await useCreateChatRoom.mutateAsync({
             name: roomname,
-            userIds: [user.id],
+            userIds: selectedList.map((friend) => friend.friendUserId),
             roomImageUrl: url,
           });
           if (createRoomRes.success) {

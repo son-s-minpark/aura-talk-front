@@ -1,8 +1,8 @@
 export type setModalDownType = {
-  setModalDown: React.Dispatch<React.SetStateAction<chatModalTpe>>;
+  setModalDown: React.Dispatch<React.SetStateAction<chatModalType>>;
 };
 
-export type chatModalTpe =
+export type chatModalType =
   | "none"
   | "sidebar"
   | "setting"

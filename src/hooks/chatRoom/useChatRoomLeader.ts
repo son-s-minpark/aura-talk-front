@@ -1,6 +1,6 @@
 import { apiRoute } from "@/util/api/apiRoute";
 import axiosInstance from "@/util/api/axiosInstance";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 const useChatRoomLeader = () => {
   // 채팅방 삭제 요청
@@ -37,24 +37,21 @@ const useChatRoomLeader = () => {
     },
   });
 
-  const useGetBlockedChatUserList = (id: number) =>
-    useQuery({
-      queryKey: ["getBlockedChatUserList"],
-      queryFn: async () => {
-        return axiosInstance
-          .get(apiRoute.CHATROOM_GET_BLOCKED_CHAT_USER(id))
-          .then((res) => {
-            if (res.data.success) {
-              return res.data.data;
-            } else {
-              throw new Error("차단된 사용자 가져오기 오류");
-            }
-          })
-          .catch((err) => {
-            throw new Error(err);
-          });
-      },
-    });
+  // 채팅방에서 차단한 사용자 리스트 가져오기 요청
+  const getBlockedChatUserList = async (id: number) => {
+    try {
+      const res = await axiosInstance.get(
+        apiRoute.CHATROOM_GET_BLOCKED_CHAT_USER(id)
+      );
+      if (res.data.success) {
+        return res.data.data;
+      } else {
+        throw new Error("차단된 사용자 가져오기 오류");
+      }
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : "알 수 없는 오류");
+    }
+  };
 
   // 강퇴한 사용자 취소 요청
   const useUnbanUser = useMutation({
@@ -65,7 +62,8 @@ const useChatRoomLeader = () => {
       chatId: number;
       userId: number;
     }) => {
-      await axiosInstance(apiRoute.CHATROOM_UNBAN_USER(chatId, userId))
+      await axiosInstance
+        .put(apiRoute.CHATROOM_UNBAN_USER(chatId, userId))
         .then((res) => {
           return res.data.success;
         })
@@ -77,7 +75,7 @@ const useChatRoomLeader = () => {
 
   return {
     useDeleteChatRoom,
-    useGetBlockedChatUserList,
+    getBlockedChatUserList,
     useKickUser,
     useUnbanUser,
   };

@@ -8,12 +8,12 @@ import ChatShare from "./modal/ChatShare";
 import ChatExit from "./modal/ChatExit";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { chatModalTpe } from "@/type/chat/setModalDownType";
+import { chatModalType } from "@/type/chat/setModalDownType";
 import InviteFriendModal from "./modal/InviteFriendModal";
 import ImageComponent from "@/components/common/ImageComponent";
 
 const ChatHeader = () => {
-  const [modalDown, setModalDown] = useState<chatModalTpe>("none");
+  const [modalDown, setModalDown] = useState<chatModalType>("none");
   const currChat = useSelector((state: RootState) => state.currChat);
 
   return (

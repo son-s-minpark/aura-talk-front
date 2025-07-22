@@ -21,6 +21,7 @@ const useChatRoom = () => {
       userIds: number[];
       roomImageUrl: string;
     }) => {
+      console.error(userIds);
       return await axiosInstance
         .post(apiRoute.CHATROOM_CREATE, {
           name: name,

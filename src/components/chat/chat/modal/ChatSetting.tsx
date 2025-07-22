@@ -24,16 +24,20 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
   const [list, setList] = useState<chatUserType[]>(currChat.users);
   const { usePutChatRoom } = useChatRoom();
   const { useUploadChatRoomImage } = useImageUpload();
-  const { useGetBlockedChatUserList } = useChatRoomLeader();
-  const { isLoading, data } = useGetBlockedChatUserList(currChat.id);
+  const { getBlockedChatUserList } = useChatRoomLeader();
 
   useEffect(() => {
+    async function getBlockedList() {
+      const res = await getBlockedChatUserList(currChat.id);
+      setList(res);
+    }
+
     if (listType === "User") {
       setList(currChat.users);
-    } else if (listType === "Blocked" && data) {
-      setList(data);
+    } else if (listType === "Blocked") {
+      getBlockedList();
     }
-  }, [listType, currChat.users, data]);
+  }, [listType, currChat.users]);
 
   async function onSubmit() {
     if (name == "") {
@@ -61,10 +65,6 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
     else if (listType == "Blocked") setListType("User");
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="modal-content px-[21px] pt-[25px] w-[303px]">
       <div className="flex flex-col gap-[17px]">
@@ -72,7 +72,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
           <h1>대표 사진</h1>
           <AddImage
             imgSize={70}
-            btnHeight={15}
+            btnHeight={20}
             btnWidth={42}
             img={img}
             setImg={({ fileName, file }) => setFile({ file, fileName })}
@@ -82,7 +82,7 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
           <h1>채팅방 이름</h1>
           <NameInput>
             <input
-              className="w-full h-full"
+              className="w-full h-full mx-[10px]"
               value={name}
               onChange={() => setName}
               type="text"
@@ -96,7 +96,10 @@ const ChatSetting = ({ setModalDown }: setModalDownType) => {
               {listType == "User" ? "차단한 친구" : "친구 목록"}
             </p>
           </div>
-          <ChatUserList userList={list.slice(1)} listType={listType} />
+          <ChatUserList
+            userList={listType == "User" ? list.slice(1) : list}
+            listType={listType}
+          />
         </>
         <div className="mt-[7px] mb-[14px] flex justify-end">
           <SelectBtn label="수정" onClick={onSubmit} />

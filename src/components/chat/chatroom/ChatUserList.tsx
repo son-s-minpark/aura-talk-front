@@ -1,6 +1,6 @@
 import { chatUserType } from "@/type/chat/chatUserType";
 import ChatSetUser from "./ChatSetUser";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -16,6 +16,11 @@ const ChatUserList = ({
   const dispatch = useDispatch();
   const currChat = useSelector((state: RootState) => state.currChat);
   const { useKickUser, useUnbanUser } = useChatRoomLeader();
+  const [list, setList] = useState<chatUserType[]>(userList);
+
+  useEffect(() => {
+    setList(userList);
+  }, [listType, userList]);
 
   function onUserDelete(id: number) {
     let res;
@@ -28,6 +33,9 @@ const ChatUserList = ({
     if (res) {
       if (listType == "User") {
         dispatch(setRemoveUser({ id }));
+        setList(list.filter((item) => item.id !== id));
+      } else if (listType == "Blocked") {
+        setList(list.filter((item) => item.id !== id));
       }
     }
   }
