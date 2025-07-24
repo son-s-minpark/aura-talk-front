@@ -17,24 +17,23 @@ const ChatExit = ({ setModalDown }: setModalDownType) => {
   const isLeader = currChat.owner.id === user.id;
 
   async function onExit() {
-    let res;
     if (isLeader) {
       if (currChat.users.length == 1) {
-        res = await useDeleteChatRoom.mutateAsync(currChat.id);
+        await useDeleteChatRoom.mutateAsync(currChat.id).then(() => {
+          dispatch(removeChat(currChat.id));
+          redirect("/home");
+        });
       } else {
         setModalDown("none");
       }
     } else {
-      res = await useExitChatRoom.mutateAsync(currChat.id);
-    }
-
-    if (res) {
-      dispatch(removeChat(currChat.id));
-      redirect("/home");
-    } else {
-      console.error(res);
+      await useExitChatRoom.mutateAsync(currChat.id).then(() => {
+        dispatch(removeChat(currChat.id));
+        redirect("/home");
+      });
     }
   }
+
   return (
     <div className="modal-content w-[284px] pl-[22px] pt-[20px]">
       <h1> {isLeader ? "채팅방 삭제하기 " : "채팅방 나가기"}</h1>

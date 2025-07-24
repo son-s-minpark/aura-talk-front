@@ -187,7 +187,16 @@ const useChatRoom = () => {
   });
 
   const getSearchedChatRoom = async (keyword: string) => {
-    await axiosInstance.get(apiRoute.CHATROOM_SEARCH);
+    try {
+      const res = await axiosInstance.get(apiRoute.CHATROOM_SEARCH(keyword));
+      if (res.data.success) {
+        return res.data.data;
+      }
+      return [];
+    } catch (err) {
+      console.error("Failed to fetch searched chat rooms:", err);
+      return [];
+    }
   };
 
   return {

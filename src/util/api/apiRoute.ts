@@ -53,7 +53,7 @@ export const apiRoute = {
     `${CHATROOM}/${chatId}/unban/${userId}`,
   CHATROOM_DELETE: (id: number) => `${CHATROOM}/${id}/delete`,
   CHATROOM_JOIN: `${CHATROOM}/join`,
-  CHATROOM_SEARCH: `${CHATROOM}/search`,
+  CHATROOM_SEARCH: (keyword: string) => `${CHATROOM}/search?keyword=${keyword}`,
 
   // 랜덤채팅방
   RANDOMCHAT_START: `${RANDOMCHAT}/start`,
