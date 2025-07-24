@@ -10,17 +10,15 @@ import { useProfile } from "@/hooks/useProfile";
 import { AxiosError } from "axios";
 import { IoChevronDown } from "react-icons/io5";
 import InterestModal from "@/components/onboarding/modal/InterestModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useImageUpload } from "@/hooks/useImageUpload";
-import { setUser } from "@/store/user/setUser";
 
 type ProfileEditModalProps = {
   setIsModalDown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
-  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const [nickname, setnickname] = useState<string>(user.nickname);
   const [username, setusername] = useState<string>(user.username);
@@ -28,10 +26,12 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [errMsg, setErrMsg] = useState<string>("");
+  const [file, setFile] = useState<{ file: File; fileName: string } | null>(
+    null
+  );
   const [isInterestDown, setIsInterestDown] = useState<boolean>(false);
-  const { useSetProfileMutation } = useProfile();
-  const { useProfileImageUploadMutation, useDeleteProfileImageMutation } =
-    useImageUpload();
+  const { useSetProfile } = useProfile();
+  const { useUploadProfileImage, useDeleteProfileImage } = useImageUpload();
 
   function onChangeNickname(e: React.ChangeEvent<HTMLInputElement>) {
     setnickname(e.target.value);
@@ -85,39 +85,30 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
   }
 
   async function onSubmit() {
-    if (!isFull()) {
-      // 빈 값이 있을 때 아무것도 하지 않음
-      return;
-    } else {
-      if (isProfileValid()) {
-        dispatch(
-          setUser({
-            nickname: nickname,
-            username: username,
-            description: description,
-          })
-        );
-        try {
-          const res = await useSetProfileMutation.mutateAsync({
-            nickname: nickname,
-            username: username,
-            description: description,
-            interests: user.interests,
-            profileImage: {
-              userId: user.id,
-              thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
-              originalImageUrl: user.profileImage.originalImageUrl,
-              isDefaultImg: user.profileImage.isDefaultImg,
-            },
-          });
-          if (res.success) {
-            setIsModalDown(false);
-          }
-        } catch (error: unknown) {
-          const err = error as AxiosError;
-          console.error(err);
-        }
+    if (!isFull()) return;
+
+    if (!isProfileValid()) return;
+    try {
+      if (file) {
+        await useUploadProfileImage.mutateAsync({
+          file: file.file,
+          fileName: file.fileName,
+        });
       }
+
+      const res = await useSetProfile.mutateAsync({
+        nickname: nickname,
+        username: username,
+        description: description,
+        interests: user.interests,
+      });
+
+      if (res?.success) {
+        setIsModalDown(false);
+      }
+    } catch (error: unknown) {
+      const err = error as AxiosError;
+      console.error(err);
     }
   }
 
@@ -142,8 +133,10 @@ const ProfileEditModal = ({ setIsModalDown }: ProfileEditModalProps) => {
               btnHeight={15}
               btnWidth={42}
               img={user.profileImage.thumbnailImageUrl}
-              setImg={useProfileImageUploadMutation.mutateAsync}
-              deleteImg={useDeleteProfileImageMutation.mutateAsync}
+              setImg={({ file, fileName }) =>
+                setFile({ file: file, fileName: fileName })
+              }
+              deleteImg={useDeleteProfileImage.mutateAsync}
             />
           </div>
           <div className="flex flex-col mt-[34px]">

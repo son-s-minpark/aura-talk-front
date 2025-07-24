@@ -8,7 +8,7 @@ const ValidateModal = ({ email }: { email: string }) => {
   const dispatch = useDispatch();
   const [codeInput, setCodeInput] = useState<string>("");
   const [isSent, setIsSent] = useState<boolean>(false);
-  const { useMailValidateMutation, useMailResendMutation } = useMailAuth();
+  const { useMailValidate, useMailResend } = useMailAuth();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ const ValidateModal = ({ email }: { email: string }) => {
     if (!isSent) {
       try {
         setIsSent(true);
-        const data = await useMailValidateMutation.mutateAsync(email);
+        const data = await useMailValidate.mutateAsync(email);
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {
@@ -31,7 +31,7 @@ const ValidateModal = ({ email }: { email: string }) => {
       }
     } else {
       try {
-        const data = await useMailResendMutation.mutateAsync(email);
+        const data = await useMailResend.mutateAsync(email);
         console.error(data);
         const code = data.data.code;
         if (code == codeInput) {

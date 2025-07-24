@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Image from "next/image";
+import ImageComponent from "./ImageComponent";
 
 type AddImageProps = {
   imgSize: number;
@@ -8,7 +8,7 @@ type AddImageProps = {
   btnWidth: number;
   img: string;
   setImg: (params: { fileName: string; file: File }) => void;
-  deleteImg: () => void;
+  deleteImg?: () => void;
 };
 
 const AddImage = ({
@@ -37,6 +37,7 @@ const AddImage = ({
 
     reader.readAsDataURL(file);
 
+    console.error(file);
     setImg({
       fileName: file.name,
       file: file,
@@ -45,18 +46,9 @@ const AddImage = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div
-        className="rounded-full border-1 text-commonGray mb-[15px] relative overflow-hidden"
-        style={{ height: `${imgSize}px`, width: `${imgSize}px` }}
-      >
-        <Image
-          src={prevImg}
-          alt="Profile"
-          fill
-          className="rounded-full object-cover"
-        />
-      </div>
-      <div className="flex gap-[15px]">
+      <ImageComponent size={imgSize} img={prevImg} />
+
+      <div className="flex gap-[15px] mt-[15px]">
         <button
           type="button"
           onClick={() => fileRef.current?.click()}

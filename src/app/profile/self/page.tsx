@@ -38,7 +38,7 @@ const Page = () => {
           </div>
           <div className="mt-[20px] flex flex-col items-center">
             <p className="text-[20px] font-bold">{user.nickname}</p>
-            <p className="text-[12px]">{user.username}</p>
+            <p className="text-[12px]">@{user.username}</p>
           </div>
         </div>
         <div>

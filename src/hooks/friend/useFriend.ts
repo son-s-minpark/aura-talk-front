@@ -8,7 +8,7 @@ export const useFriend = () => {
   const friendList = useSelector((state: RootState) => state.friendList);
 
   // 친구 신청하기 요청
-  const useRequestFriendMutation = useMutation({
+  const useRequestFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .post(apiRoute.FRIEND_REQUEST(id))
@@ -27,7 +27,7 @@ export const useFriend = () => {
   };
 
   // 받은 친구 신청 수락 요청
-  const useAcceptFriendMutation = useMutation({
+  const useAcceptFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .put(apiRoute.FRIEND_REQUEST_ACCEPT(id))
@@ -41,7 +41,7 @@ export const useFriend = () => {
   });
 
   // 받은 친구 신청 거절 요청
-  const useRejectFriendMutation = useMutation({
+  const useRejectFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .delete(apiRoute.FRIEND_REQUEST_REJECT(id))
@@ -56,7 +56,7 @@ export const useFriend = () => {
   });
 
   // 보낸 친구 신청 취소 요청
-  const useCancelFriendRequestMuration = useMutation({
+  const useCancelFriendRequest = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .delete(apiRoute.FRIEND_REQUEST_SENT_CANCEL(id))
@@ -70,7 +70,7 @@ export const useFriend = () => {
   });
 
   // 친구 차단하기 요청
-  const useBlockFriendMutation = useMutation({
+  const useBlockFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .post(apiRoute.FRIEND_BLOCK(id))
@@ -85,7 +85,7 @@ export const useFriend = () => {
   });
 
   // 친구 차단 취소 요청
-  const useCancelBlockFriendMutation = useMutation({
+  const useCancelBlockFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .delete(apiRoute.FRIEND_BLOCK(id))
@@ -99,7 +99,7 @@ export const useFriend = () => {
   });
 
   // 친구 삭제하기 요청
-  const useDeleteFriendMutation = useMutation({
+  const useDeleteFriend = useMutation({
     mutationFn: async (id: number) => {
       await axiosInstance
         .delete(apiRoute.FRIEND_DELETE(id))
@@ -113,13 +113,13 @@ export const useFriend = () => {
   });
 
   return {
-    useRequestFriendMutation,
+    useRequestFriend,
     isFriend,
-    useAcceptFriendMutation,
-    useRejectFriendMutation,
-    useCancelFriendRequestMuration,
-    useBlockFriendMutation,
-    useCancelBlockFriendMutation,
-    useDeleteFriendMutation,
+    useAcceptFriend,
+    useRejectFriend,
+    useCancelFriendRequest,
+    useBlockFriend,
+    useCancelBlockFriend,
+    useDeleteFriend,
   };
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import ChatBubble from "./ChatBubble";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
 const ChatList = () => {
   return (

@@ -1,39 +1,68 @@
-import Search from "@/components/common/Search";
 import React, { useState } from "react";
-import ModalFriendComponent from "../../friend/ModalFriendComponent";
-import SelectBtn from "@/components/common/SelectBtn";
-
-const data = [1, 2, 3, 4, 5];
+import NameInput from "@/components/common/NameInput";
+import { chatRoomType } from "@/type/chat/chatRoomType";
+import useSearchDebounce from "@/hooks/useSearchDebounce";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
+import ChatComponent from "@/components/chat/chatroom/ChatComponent";
 
 const SearchModal = () => {
   const [searchVal, setSearchVal] = useState<string>("");
+  const [searchedChatList, setSearchedChatList] = useState<chatRoomType[]>([]);
+  const { getSearchedChatRoom } = useChatRoom();
+
+  useSearchDebounce<chatRoomType[]>(searchVal, async (keyword: string) => {
+    if (keyword.trim() === "") {
+      setSearchedChatList([]);
+      return [];
+    }
+    const result = await getSearchedChatRoom(keyword);
+    setSearchedChatList(result || []);
+    return result || [];
+  });
 
   function onChangVal(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchVal(e.target.value);
+    const value = e.target.value;
+    setSearchVal(value);
   }
 
-  function onSendFriendRequest() {}
   return (
     <div
       className="modal-content h-[364px] w-[304px] px-[17px] pt-[29px]"
       onClick={(e) => e.stopPropagation()}
     >
       <h1> 검색하기 </h1>
-      <div className="h-[25px] w-[265px] mt-[24px] mb-[21px]">
-        <Search val={searchVal} onChange={onChangVal} />
-      </div>
-      <div className="flex flex-col gap-[20px] h-[217px] overflow-y-scroll">
-        {searchVal != "" && (
-          <div className="w-full px-[20px] flex items-center">
-            <p>초대 코드로 입장하기</p>
+      <NameInput>
+        <input
+          type="text"
+          value={searchVal}
+          onChange={onChangVal}
+          className="w-full h-full mx-[10px]"
+        />
+      </NameInput>
+
+      <div className="w-[265px] mt-[24px] mb-[10px]">
+        {searchVal !== "" && (
+          <div>
+            {searchedChatList.length === 0 ? (
+              <p>검색 결과가 없습니다.</p>
+            ) : (
+              <p>채팅</p>
+            )}
           </div>
         )}
-        {data.map((friend) => (
-          <div className="flex justify-between" key={friend}>
-            <ModalFriendComponent id={friend} />
-            <SelectBtn label="추가" onClick={() => onSendFriendRequest()} />
+      </div>
+
+      <div className="flex flex-col gap-[20px] max-h-[217px] overflow-y-auto">
+        {searchVal !== "" && searchedChatList.length > 0 && (
+          <div className="flex flex-col gap-[10px]">
+            <p>채팅</p>
+            <div className="flex flex-col gap-[20px] w-full">
+              {searchedChatList.map((chat) => (
+                <ChatComponent chatroom={chat} key={chat.id} />
+              ))}
+            </div>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

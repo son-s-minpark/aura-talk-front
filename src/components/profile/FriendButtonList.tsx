@@ -4,6 +4,8 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { MdBlock } from "react-icons/md";
 import { CgUnblock } from "react-icons/cg";
 import { useFriend } from "@/hooks/friend/useFriend";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
+import { useRouter } from "next/navigation";
 
 const FriendButtonList = ({
   status,
@@ -15,45 +17,55 @@ const FriendButtonList = ({
   setFriendStatus: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const {
-    useRequestFriendMutation,
-    useAcceptFriendMutation,
-    useRejectFriendMutation,
-    useCancelFriendRequestMuration,
-    useBlockFriendMutation,
-    useCancelBlockFriendMutation,
-    useDeleteFriendMutation,
+    useRequestFriend,
+    useAcceptFriend,
+    useRejectFriend,
+    useCancelFriendRequest,
+    useBlockFriend,
+    useCancelBlockFriend,
+    useDeleteFriend,
   } = useFriend();
+  const { useCreateOnetoOneChatRoom } = useChatRoom();
+  const router = useRouter();
 
-  function goOnetoOneChat() {}
+  function goOnetoOneChat() {
+    useCreateOnetoOneChatRoom.mutateAsync(id).then((res) => {
+      if (res.success) {
+        router.push(`/chat/${id}`);
+      } else {
+        console.error(res);
+      }
+    });
+  }
 
   function addFriend() {
     if (status === "NONE") {
-      useRequestFriendMutation.mutateAsync(id);
+      useRequestFriend.mutateAsync(id);
       setFriendStatus("REQUEST_SENT");
     } else if (status === "REQUEST_RECEIVED") {
-      useAcceptFriendMutation.mutateAsync(id);
+      useAcceptFriend.mutateAsync(id);
       setFriendStatus("FRIENDS");
     }
   }
 
   function removeFriend() {
     if (status === "REQUEST_RECEIVED") {
-      useRejectFriendMutation.mutateAsync(id);
+      useRejectFriend.mutateAsync(id);
     } else if (status === "REQUEST_SENT") {
-      useCancelFriendRequestMuration.mutateAsync(id);
+      useCancelFriendRequest.mutateAsync(id);
     } else if (status === "FRIENDS") {
-      useDeleteFriendMutation.mutateAsync(id);
+      useDeleteFriend.mutateAsync(id);
     }
     setFriendStatus("NONE");
   }
 
   function blockFriend() {
-    useBlockFriendMutation.mutateAsync(id);
+    useBlockFriend.mutateAsync(id);
     setFriendStatus("BLOCKED");
   }
 
   function unBlockFriend() {
-    useCancelBlockFriendMutation.mutateAsync(id);
+    useCancelBlockFriend.mutateAsync(id);
     setFriendStatus("NONE");
   }
 

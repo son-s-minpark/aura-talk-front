@@ -7,18 +7,17 @@ import { AxiosError } from "axios";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import InterestBtn from "@/components/profile/InterestBtn";
 import Container from "@/components/common/Container";
-import Image from "next/image";
 import { friendUserType } from "@/type/user/friendUserType";
 import FriendButtonList from "@/components/profile/FriendButtonList";
+import ImageComponent from "@/components/common/ImageComponent";
 
 const Page = () => {
   const { useGetUserProfile } = useProfile();
   const params = useParams();
   const profileId = Number(params.id);
+  const [friendStatus, setFriendStatus] = useState<string>("");
 
   const { data, isLoading, isError, error } = useGetUserProfile(profileId);
-
-  const [friendStatus, setFriendStatus] = useState<string>("");
 
   useEffect(() => {
     if (data?.data) {
@@ -33,6 +32,7 @@ const Page = () => {
       </div>
     );
   }
+  console.error(data);
 
   if (isError) {
     const err = error as AxiosError;
@@ -68,16 +68,12 @@ const Page = () => {
       <Back />
       <div className="flex flex-col items-center">
         <div className="h-[139px] flex flex-col items-center text-white">
-          <div className="w-[75px] h-[80px] border-1 border-[var(--color-background)] rounded-full relative overflow-hidden">
-            {userData && userData.profileImage.thumbnailImageUrl && (
-              <Image
-                src={userData.profileImage.thumbnailImageUrl}
-                alt="Profile"
-                fill
-                className="rounded-full object-cover"
-              />
-            )}
-          </div>
+          {userData && (
+            <ImageComponent
+              size={80}
+              img={userData.profileImage.thumbnailImageUrl}
+            />
+          )}
           <div className="mt-[20px] flex flex-col items-center">
             <p className="text-[20px] font-bold">{userData?.nickname}</p>
             <p className="text-[12px]">@{userData?.username}</p>

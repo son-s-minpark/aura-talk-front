@@ -8,11 +8,11 @@ import { RootState } from "@/store/store";
 
 const RandomModal = () => {
   const user = useSelector((state: RootState) => state.user);
-  const { useRandomChatToggleMutation } = useProfile();
+  const { useRandomChatToggle } = useProfile();
 
   async function setRandomChatToggle(isRandom: boolean) {
     try {
-      await useRandomChatToggleMutation.mutateAsync(isRandom);
+      await useRandomChatToggle.mutateAsync(isRandom);
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error(err);

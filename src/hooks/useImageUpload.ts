@@ -16,12 +16,12 @@ export const useImageUpload = () => {
   const user = useSelector((state: RootState) => state.user);
 
   // 프로필 이미지 업로드 (presigned -> s3 업로드 -> 업로드 완료)
-  const useProfileImageUploadMutation = useMutation({
+  const useUploadProfileImage = useMutation({
     mutationFn: async ({ fileName, file }: ImageProps) => {
       // presigned url 받기 요청
       try {
         const res = await axiosInstance.post(
-          apiRoute.USER_IMAGE_PRESIGN,
+          apiRoute.USER_IMAGE_PRESIGNED_URL,
           fileName
         );
         const url = res.data.data.url;
@@ -61,7 +61,7 @@ export const useImageUpload = () => {
   });
 
   // 기본 프로필 이미지 제거
-  const useDeleteProfileImageMutation = useMutation({
+  const useDeleteProfileImage = useMutation({
     mutationFn: async () => {
       await axiosInstance
         .delete(apiRoute.USER_IMAGE_PROFILE_DELETE)
@@ -84,8 +84,40 @@ export const useImageUpload = () => {
     },
   });
 
+  const useUploadChatRoomImage = useMutation({
+    mutationFn: async ({ file, fileName }: ImageProps) => {
+      try {
+        const res = await axiosInstance.post(
+          apiRoute.CHATROOM_PRESIGNED_URL,
+          fileName
+        );
+        const { url, s3Key } = res.data.data;
+
+        const uploadResponse = await axios.put(url, file, {
+          headers: {
+            "Content-Type": file.type,
+          },
+        });
+
+        if (uploadResponse.status === 200) {
+          const completeRes = await axiosInstance.post(
+            apiRoute.CHATROOM_UPLOAD_COMPLETE,
+            { s3Key }
+          );
+          return { url: completeRes.data.data.originalImageUrl };
+        }
+
+        throw new Error("Image upload failed");
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        throw err;
+      }
+    },
+  });
+
   return {
-    useProfileImageUploadMutation,
-    useDeleteProfileImageMutation,
+    useUploadProfileImage,
+    useDeleteProfileImage,
+    useUploadChatRoomImage,
   };
 };

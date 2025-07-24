@@ -10,7 +10,7 @@ import { useFriendList } from "@/hooks/friend/useFriendList";
 
 const WaitingList = () => {
   const [waitingList, setWaitingList] = useState<friendType[]>([]);
-  const { useAcceptFriendMutation, useRejectFriendMutation } = useFriend();
+  const { useAcceptFriend, useRejectFriend } = useFriend();
   const { getWaitingFriendList } = useFriendList();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,14 +29,14 @@ const WaitingList = () => {
   }, []);
 
   function onAcceptWaiting(friend: friendType) {
-    useAcceptFriendMutation.mutateAsync(friend.friendUserId).then(() => {
+    useAcceptFriend.mutateAsync(friend.friendUserId).then(() => {
       deleteFriend(friend.friendUserId);
       dispatch(addFriend(friend));
     });
   }
 
   function onRejectWaiting(userId: number) {
-    useRejectFriendMutation.mutateAsync(userId).then(() => {
+    useRejectFriend.mutateAsync(userId).then(() => {
       deleteFriend(userId);
     });
   }

@@ -1,28 +1,50 @@
 import SelectBtn from "@/components/common/SelectBtn";
-import useChatRoom from "@/hooks/useChatRoom";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
+import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
+import { removeChat } from "@/store/chat/setChatList";
 import { RootState } from "@/store/store";
+import { setModalDownType } from "@/type/chat/setModalDownType";
 import { redirect } from "next/navigation";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const ChatExit = () => {
-  const currId = useSelector((state: RootState) => state.currChat.id);
-  const { useChatRoomExitMutation } = useChatRoom();
+const ChatExit = ({ setModalDown }: setModalDownType) => {
+  const dispatch = useDispatch();
+  const currChat = useSelector((state: RootState) => state.currChat);
+  const user = useSelector((state: RootState) => state.user);
+  const { useExitChatRoom } = useChatRoom();
+  const { useDeleteChatRoom } = useChatRoomLeader();
+  const isLeader = currChat.owner.id === user.id;
+
   async function onExit() {
-    const res = await useChatRoomExitMutation.mutateAsync(currId);
-    if (res) {
-      redirect("/home");
+    if (isLeader) {
+      if (currChat.users.length == 1) {
+        await useDeleteChatRoom.mutateAsync(currChat.id).then(() => {
+          dispatch(removeChat(currChat.id));
+          redirect("/home");
+        });
+      } else {
+        setModalDown("none");
+      }
     } else {
-      console.error(res);
+      await useExitChatRoom.mutateAsync(currChat.id).then(() => {
+        dispatch(removeChat(currChat.id));
+        redirect("/home");
+      });
     }
   }
+
   return (
-    <div className="modal-content w-[284px] h-[120px] pl-[22px] pt-[20px]">
-      <h1> 채팅방 나가기 </h1>
+    <div className="modal-content w-[284px] pl-[22px] pt-[20px]">
+      <h1> {isLeader ? "채팅방 삭제하기 " : "채팅방 나가기"}</h1>
       <div className="ml-[11px] mt-[10px]">
-        <p className="text-[12px]"> 나가면 이전 대화 기록은 볼 수 없어져요.</p>
+        <p className="text-[12px]">
+          {isLeader
+            ? "모든 방 인원이 나가야 삭제할 수 있어요."
+            : "나가면 이전 대화 기록은 볼 수 없어져요."}
+        </p>
       </div>
-      <div className="flex justify-end mr-[16px] mt-[6px]">
+      <div className="flex justify-end mr-[16px] mt-[6px] pb-[14px]">
         <SelectBtn label="확인" onClick={onExit} />
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { chatRoomType } from "@/type/chat/chatRoomType";
+import { chatUserType } from "@/type/chat/chatUserType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: chatRoomType = {
@@ -8,7 +9,7 @@ const initialState: chatRoomType = {
   type: "UNDEFINED",
   owner: {
     id: 0,
-    thumbnailImg: "",
+    thumbnailImageUrl: "",
     nickname: "",
   },
   users: [],
@@ -25,8 +26,15 @@ export const setCurrChatSlice = createSlice({
     setCurrChat: (state, action: PayloadAction<Partial<chatRoomType>>) => {
       return { ...state, ...action.payload };
     },
+    setRemoveUser: (state, action: PayloadAction<Partial<chatUserType>>) => {
+      state.users = state.users.filter((user) => user.id !== action.payload.id);
+    },
+    setResetCurrChat: () => {
+      return initialState;
+    },
   },
 });
 
-export const { setCurrChat } = setCurrChatSlice.actions;
+export const { setCurrChat, setRemoveUser, setResetCurrChat } =
+  setCurrChatSlice.actions;
 export default setCurrChatSlice.reducer;

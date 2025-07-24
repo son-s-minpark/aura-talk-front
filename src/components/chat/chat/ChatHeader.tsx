@@ -8,12 +8,14 @@ import ChatShare from "./modal/ChatShare";
 import ChatExit from "./modal/ChatExit";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-
-type setModalType = "none" | "sidebar" | "setting" | "share" | "exit";
+import { chatModalType } from "@/type/chat/setModalDownType";
+import InviteFriendModal from "./modal/InviteFriendModal";
+import ImageComponent from "@/components/common/ImageComponent";
 
 const ChatHeader = () => {
-  const [modalDown, setModalDown] = useState<setModalType>("none");
+  const [modalDown, setModalDown] = useState<chatModalType>("none");
   const currChat = useSelector((state: RootState) => state.currChat);
+
   return (
     <div className="bg-[var(--color-point)]">
       {modalDown !== "none" ? (
@@ -29,7 +31,10 @@ const ChatHeader = () => {
               <ChatSetting setModalDown={setModalDown} />
             )}
             {modalDown == "share" && <ChatShare setModalDown={setModalDown} />}
-            {modalDown == "exit" && <ChatExit />}
+            {modalDown == "exit" && <ChatExit setModalDown={setModalDown} />}
+            {modalDown == "invite" && (
+              <InviteFriendModal setModalDown={setModalDown} />
+            )}
           </div>
         </div>
       ) : null}
@@ -39,7 +44,7 @@ const ChatHeader = () => {
             <IoArrowBackOutline className="w-[24px] h-[24px]" />
           </button>
           <div className="flex gap-[12px] items-center">
-            <div className="w-[44px] h-[44px] rounded-full"></div>
+            <ImageComponent size={44} img={currChat.roomImageUrl} />
             <p className="text-[20px] font-bold"> {currChat.name}</p>
           </div>
         </div>

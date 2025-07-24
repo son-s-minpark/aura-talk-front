@@ -8,13 +8,16 @@ import { validatePw } from "@/util/validate/signValidate";
 import ErrorMessage from "@/components/common/ErrorMessage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setResetUser } from "@/store/user/setUser";
 
 const DeleteAccountModal = () => {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [pw, setPw] = useState<string>("");
   const [errMsg, setErrMsg] = useState<string>("");
-  const { useDeleteAccoutMutation } = useAuth();
+  const { useDeleteAccout } = useAuth();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   function onChangePw(e: React.ChangeEvent<HTMLInputElement>) {
     setPw(e.target.value);
@@ -37,8 +40,9 @@ const DeleteAccountModal = () => {
       if (validatePassword()) {
         setErrMsg("");
         try {
-          const res = await useDeleteAccoutMutation.mutateAsync(pw);
+          const res = await useDeleteAccout.mutateAsync(pw);
           if (res) {
+            dispatch(setResetUser());
             router.replace("/onboarding");
           }
         } catch (error: unknown) {

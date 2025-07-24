@@ -4,15 +4,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setUser } from "@/store/user/setUser";
-import { profileImageType } from "@/type/user/profileImageType";
-
-type profileType = {
-  nickname: string;
-  username: string;
-  description: string;
-  interests: string[];
-  profileImage: profileImageType;
-};
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -54,8 +45,13 @@ export const useProfile = () => {
   };
 
   // 프로필 수정/등록 요청
-  const useSetProfileMutation = useMutation({
-    mutationFn: async (profileData: profileType) => {
+  const useSetProfile = useMutation({
+    mutationFn: async (profileData: {
+      nickname: string;
+      username: string;
+      description: string;
+      interests: string[];
+    }) => {
       return await axiosInstance
         .put(apiRoute.USER_PUT_PROFILE, {
           nickname: profileData.nickname,
@@ -88,7 +84,7 @@ export const useProfile = () => {
   });
 
   // 랜덤채팅 설정 수정 요청
-  const useRandomChatToggleMutation = useMutation({
+  const useRandomChatToggle = useMutation({
     mutationFn: async (randomData: boolean) => {
       return await axiosInstance
         .put(apiRoute.USER_RANDOM_CHAT_TOGGLE(user.id), {
@@ -121,8 +117,8 @@ export const useProfile = () => {
   return {
     useGetUserProfile,
     useGetMyProfile,
-    useSetProfileMutation,
-    useRandomChatToggleMutation,
+    useSetProfile,
+    useRandomChatToggle,
     getProfileImg,
   };
 };

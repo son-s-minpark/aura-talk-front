@@ -12,4 +12,5 @@ export type chatRoomType = {
   lastMessageAt?: Date;
   inviteCode: string;
   inviteCodeExpiredAt: Date;
+  inviteLink?: string;
 };

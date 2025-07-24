@@ -1,0 +1,61 @@
+import { chatUserType } from "@/type/chat/chatUserType";
+import ChatSetUser from "./ChatSetUser";
+import React, { useEffect, useState } from "react";
+import useChatRoomLeader from "@/hooks/chatRoom/useChatRoomLeader";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setRemoveUser } from "@/store/chat/setCurrChat";
+
+const ChatUserList = ({
+  userList,
+  listType,
+}: {
+  userList: chatUserType[];
+  listType: "User" | "Blocked" | "None";
+}) => {
+  const dispatch = useDispatch();
+  const currChat = useSelector((state: RootState) => state.currChat);
+  const { useKickUser, useUnbanUser } = useChatRoomLeader();
+  const [list, setList] = useState<chatUserType[]>(userList);
+
+  useEffect(() => {
+    setList(userList);
+  }, [listType, userList]);
+
+  function onUserDelete(id: number) {
+    let res;
+    if (listType == "User") {
+      res = useKickUser.mutateAsync({ chatId: currChat.id, userId: id });
+    } else if (listType == "Blocked") {
+      res = useUnbanUser.mutateAsync({ chatId: currChat.id, userId: id });
+    }
+
+    if (res) {
+      if (listType == "User") {
+        dispatch(setRemoveUser({ id }));
+        setList(list.filter((item) => item.id !== id));
+      } else if (listType == "Blocked") {
+        setList(list.filter((item) => item.id !== id));
+      }
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-[11px] h-[90px] overflow-x-scroll whitespace-nowrap">
+      {userList.map((user, index) => (
+        <div
+          key={index}
+          className="relative"
+          onClick={() => onUserDelete(user.id)}
+        >
+          <ChatSetUser user={user} />
+          <button className="absolute -top-1 -right-1 rounded-full w-[16px] h-[16px] bg-commonGray text-white text-[10px] flex items-center justify-center">
+            -
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default ChatUserList;

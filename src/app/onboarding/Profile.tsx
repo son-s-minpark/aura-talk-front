@@ -18,9 +18,13 @@ import { RootState } from "@/store/store";
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  const { useSetProfileMutation } = useProfile();
-  const [nickname, setnickname] = useState<string>(user.nickname);
-  const [username, setusername] = useState<string>(user.username);
+  const { useSetProfile } = useProfile();
+  const [nickname, setnickname] = useState<string>(
+    user.nickname == "임시 닉네임" ? "" : user.nickname
+  );
+  const [username, setusername] = useState<string>(
+    user.username == "임시 사용자명" ? "" : user.username
+  );
   const [description, setDescription] = useState<string>(user.description);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [isusernameValid, setIsUsernameValid] = useState<boolean>(true);
@@ -83,17 +87,11 @@ const Profile = () => {
     } else {
       if (isProfileValid()) {
         try {
-          const res = await useSetProfileMutation.mutateAsync({
+          const res = await useSetProfile.mutateAsync({
             nickname: nickname,
             username: username,
             description: description,
             interests: user.interests,
-            profileImage: {
-              userId: user.id,
-              thumbnailImageUrl: user.profileImage.thumbnailImageUrl,
-              originalImageUrl: user.profileImage.originalImageUrl,
-              isDefaultImg: user.profileImage.isDefaultImg,
-            },
           });
           if (res) {
             dispatch(setPage("profileImg"));

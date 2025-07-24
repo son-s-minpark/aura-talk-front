@@ -7,12 +7,23 @@ import { IoPeople } from "react-icons/io5";
 import { FaRandom } from "react-icons/fa";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import useChatRoom from "@/hooks/chatRoom/useChatRoom";
 
-type selectedChatType = "friend" | "group" | "random";
+type selectedChatType = "one" | "group" | "random";
 
 const CreateChatModal = () => {
-  const [chatType, setChatType] = useState<selectedChatType>("friend");
+  const [chatType, setChatType] = useState<selectedChatType>("one");
+  const { useCreateRandomChatroom } = useChatRoom();
   const router = useRouter();
+
+  function createChatRoom() {
+    if (chatType != "random") {
+      router.push(`/createchat?type=${chatType}`);
+    } else {
+      const res = useCreateRandomChatroom.mutateAsync();
+      router.push(`chat/${res}`);
+    }
+  }
   return (
     <div
       className="modal-content w-[360px] h-[215px]"
@@ -24,10 +35,10 @@ const CreateChatModal = () => {
       <div className="flex items-end justify-center gap-[15px] mt-[9px]">
         <div
           className={clsx("flex flex-col items-center", {
-            "text-[var(--color-point)]": chatType == "friend",
-            "text-[var(--color-gray)]": chatType != "friend",
+            "text-[var(--color-point)]": chatType == "one",
+            "text-[var(--color-gray)]": chatType != "one",
           })}
-          onClick={() => setChatType("friend")}
+          onClick={() => setChatType("one")}
         >
           <IoMdPerson className="w-[70px] h-[70px]" />
           <p className="text-[10px]">기존 친구와 대화하기</p>
@@ -54,10 +65,7 @@ const CreateChatModal = () => {
         </div>
       </div>
       <div className="flex justify-end mt-[20px] mr-[17px]">
-        <SelectBtn
-          label="완료"
-          onClick={() => router.push(`/createchat?type=${chatType}`)}
-        />
+        <SelectBtn label="완료" onClick={createChatRoom} />
       </div>
     </div>
   );
